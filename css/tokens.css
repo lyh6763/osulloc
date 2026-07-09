@@ -1,0 +1,70 @@
+/* ============================================================
+   OSULLOC Redesign — Design Tokens
+   plan_C_osulloc.md §8: 차분한 프리미엄 · 딥그린 + 웜 뉴트럴
+   라이트 단일 테마 (브랜드 사이트 — 다크 스코프 제외)
+   ============================================================ */
+
+:root {
+  /* ---- Color · Green (브랜드 재해석) ---- */
+  --green-950: #0D2620;
+  --green-900: #12332B;   /* 다크 섹션 배경 */
+  --green-700: #1D4B3F;   /* 주 액센트 — cream 배경 대비 8.8:1 */
+  --green-500: #2E6B57;   /* 보조 — 대비 5.6:1 */
+  --green-200: #BFD5C9;
+  --green-100: #DFE9E2;   /* subtle 배경 */
+
+  /* ---- Color · Warm Neutral ---- */
+  --cream-50:  #F9F6F0;   /* 기본 배경 */
+  --cream-100: #F1EBDF;   /* 카드·교차 섹션 */
+  --cream-200: #E4DBC9;   /* 보더 */
+  --ink-900:   #26231F;   /* 헤딩 */
+  --ink-700:   #423E38;   /* 본문 — 대비 9.4:1 */
+  --ink-500:   #6E675E;   /* 보조 텍스트 — 대비 4.9:1 */
+
+  /* ---- Color · Amber (우린 찻물 — 포인트 한정) ---- */
+  --amber-600: #96621F;   /* 소형 텍스트 가능 — 대비 4.8:1 */
+  --amber-300: #D8B26A;   /* 장식·대형 요소 전용 */
+
+  /* ---- Semantic ---- */
+  --bg:          var(--cream-50);
+  --surface:     #FFFFFF;
+  --surface-alt: var(--cream-100);
+  --border:      var(--cream-200);
+  --text:        var(--ink-700);
+  --text-strong: var(--ink-900);
+  --text-muted:  var(--ink-500);
+  --accent:      var(--green-700);
+  --accent-deep: var(--green-900);
+
+  /* ---- Typography ---- */
+  --font-serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
+  --font-sans: "Pretendard Variable", Pretendard, -apple-system, system-ui, sans-serif;
+
+  --fs-display: clamp(2.25rem, 5.5vw, 4rem);
+  --fs-h2:      clamp(1.625rem, 3vw, 2.25rem);
+  --fs-h3:      1.375rem;
+  --fs-lead:    1.125rem;
+  --fs-body:    1rem;
+  --fs-sm:      0.875rem;
+  --fs-xs:      0.75rem;
+
+  /* ---- Spacing (4px) ---- */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+  --sp-9: 96px; --sp-10: 128px;
+
+  /* ---- Shape · Motion ---- */
+  --radius-sm: 6px;
+  --radius-md: 14px;
+  --radius-lg: 24px;
+  --shadow-1: 0 1px 3px rgb(38 35 31 / 0.07);
+  --shadow-2: 0 10px 30px rgb(38 35 31 / 0.12);
+
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 600ms;
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+
+  --measure: 62ch;
+  --container: 1200px;
+}

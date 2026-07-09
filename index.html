@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오설록 — 제주에서 찻잔까지 | OSULLOC Redesign</title>
+  <meta name="description" content="한라산 안개가 키운 차밭에서 당신의 찻잔까지. 오설록의 차가 만들어지는 사계절의 여정. (웹 퍼블리싱 학습용 리디자인)">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 44C8 34 8 16 24 4c16 12 16 30 0 40Z' fill='%231D4B3F'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">본문 바로가기</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand" aria-label="오설록 홈">OSULLOC</a>
+      <nav class="gnb" aria-label="주요 메뉴">
+        <ul>
+          <li><a href="story.html">브랜드 스토리</a></li>
+          <li><a href="products.html">티 컬렉션</a></li>
+          <li><a href="#museum">티뮤지엄</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- Hero: LCP는 텍스트 — 즉시 렌더 -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <p class="eyebrow">Tea from Jeju Island</p>
+        <h1 id="hero-title">제주에서 찻잔까지,<br>차 한 잔의 여정</h1>
+        <p class="lead">한라산이 내린 안개와 현무암 토양, 그리고 마흔일곱 해의 기다림.
+        오설록의 차가 만들어지는 사계절을 따라 내려갑니다.</p>
+        <p class="scroll-hint" aria-hidden="true">SCROLL ↓</p>
+      </div>
+    </section>
+
+    <!-- Journey: 사계 챕터 (sticky 장면 + 스크롤 오버 캡션 — 하이재킹 없음) -->
+    <article class="chapter" aria-labelledby="ch1-title">
+      <div class="chapter__scene" aria-hidden="false">
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ch1-scene">
+          <title id="ch1-scene">봄 안개가 내려앉은 제주 차밭의 능선</title>
+          <rect width="1440" height="900" fill="#E9F0E6"/>
+          <circle cx="1080" cy="220" r="110" fill="#F6EFD9"/>
+          <path d="M0 520 Q 360 430 720 500 T 1440 480 V900 H0 Z" fill="#9DBFAB"/>
+          <path d="M0 620 Q 400 540 800 610 T 1440 590 V900 H0 Z" fill="#6E9C82"/>
+          <path d="M0 730 Q 380 660 760 720 T 1440 700 V900 H0 Z" fill="#3E6E56"/>
+          <path d="M0 830 Q 420 780 840 820 T 1440 810 V900 H0 Z" fill="#24503D"/>
+          <g fill="none" stroke="#1D4B3F" stroke-width="3" opacity="0.35">
+            <path d="M60 858 q 40 -18 80 0 M200 862 q 40 -18 80 0 M340 858 q 40 -18 80 0 M480 864 q 40 -18 80 0"/>
+          </g>
+          <ellipse cx="420" cy="560" rx="380" ry="60" fill="#FFFFFF" opacity="0.45"/>
+          <ellipse cx="980" cy="640" rx="420" ry="70" fill="#FFFFFF" opacity="0.35"/>
+        </svg>
+      </div>
+      <div class="chapter__caption reveal">
+        <p class="season">SPRING · 봄</p>
+        <h2 id="ch1-title">안개가 먼저 도착합니다</h2>
+        <p>해발 100미터, 한라산 남서쪽 자락. 새벽마다 내려앉는 안개가
+        찻잎의 떫음을 달래고 감칠맛을 깨웁니다. 차나무는 서두르지 않습니다.</p>
+      </div>
+    </article>
+
+    <article class="chapter" aria-labelledby="ch2-title">
+      <div class="chapter__scene">
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ch2-scene">
+          <title id="ch2-scene">여름 햇살 아래 어린 찻잎의 잎맥</title>
+          <rect width="1440" height="900" fill="#1D4B3F"/>
+          <circle cx="240" cy="160" r="180" fill="#2E6B57" opacity="0.6"/>
+          <path d="M720 780 C 430 640 400 330 720 130 C 1040 330 1010 640 720 780 Z" fill="#8FBE9F"/>
+          <path d="M720 760 V 170" stroke="#2E6B57" stroke-width="10" fill="none" stroke-linecap="round"/>
+          <g stroke="#2E6B57" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.85">
+            <path d="M720 640 Q 620 600 560 520 M720 640 Q 820 600 880 520"/>
+            <path d="M720 500 Q 630 460 585 390 M720 500 Q 810 460 855 390"/>
+            <path d="M720 370 Q 650 340 620 280 M720 370 Q 790 340 820 280"/>
+          </g>
+          <circle cx="1180" cy="700" r="10" fill="#D8B26A"/>
+          <circle cx="1240" cy="640" r="6" fill="#D8B26A" opacity="0.7"/>
+        </svg>
+      </div>
+      <div class="chapter__caption reveal">
+        <p class="season">SUMMER · 여름</p>
+        <h2 id="ch2-title">가장 어린 잎만 고릅니다</h2>
+        <p>이슬이 마르기 전의 새벽, 손끝으로 한 심(芯) 두 잎만을 땁니다.
+        하루 중 찻잎이 가장 부드러운 시간은 짧고, 그래서 귀합니다.</p>
+      </div>
+    </article>
+
+    <article class="chapter" aria-labelledby="ch3-title">
+      <div class="chapter__scene">
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ch3-scene">
+          <title id="ch3-scene">가을, 무쇠솥에서 찻잎을 덖는 열기</title>
+          <rect width="1440" height="900" fill="#2A1E12"/>
+          <circle cx="1150" cy="180" r="90" fill="#D8B26A" opacity="0.5"/>
+          <path d="M300 620 A 420 300 0 0 0 1140 620 L 1080 700 A 360 240 0 0 1 360 700 Z" fill="#4A3826"/>
+          <path d="M340 620 A 380 260 0 0 0 1100 620" fill="#1A1108"/>
+          <g fill="#8FBE9F">
+            <ellipse cx="620" cy="600" rx="26" ry="10" transform="rotate(-15 620 600)"/>
+            <ellipse cx="720" cy="585" rx="26" ry="10" transform="rotate(10 720 585)"/>
+            <ellipse cx="820" cy="600" rx="26" ry="10" transform="rotate(-8 820 600)"/>
+            <ellipse cx="700" cy="620" rx="24" ry="9" transform="rotate(18 700 620)"/>
+          </g>
+          <g stroke="#D8B26A" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8">
+            <path d="M560 460 q 24 -50 0 -100 q -24 -50 0 -100"/>
+            <path d="M720 440 q 24 -50 0 -100 q -24 -50 0 -100"/>
+            <path d="M880 460 q 24 -50 0 -100 q -24 -50 0 -100"/>
+          </g>
+        </svg>
+      </div>
+      <div class="chapter__caption reveal">
+        <p class="season">AUTUMN · 가을</p>
+        <h2 id="ch3-title">불이 향을 깨웁니다</h2>
+        <p>320도의 무쇠솥. 덖고 비비기를 아홉 번 반복하는 동안
+        풋내는 사라지고 구수한 향이 자리를 잡습니다. 온도는 장인의 손등이 기억합니다.</p>
+      </div>
+    </article>
+
+    <article class="chapter" aria-labelledby="ch4-title">
+      <div class="chapter__scene">
+        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ch4-scene">
+          <title id="ch4-scene">겨울, 김이 오르는 따뜻한 찻잔</title>
+          <rect width="1440" height="900" fill="#F1EBDF"/>
+          <ellipse cx="720" cy="760" rx="360" ry="36" fill="#E4DBC9"/>
+          <path d="M500 480 L 540 700 A 60 40 0 0 0 900 700 L 940 480 Z" fill="#FFFFFF" stroke="#E4DBC9" stroke-width="3"/>
+          <ellipse cx="720" cy="480" rx="220" ry="42" fill="#B98A3D"/>
+          <ellipse cx="720" cy="474" rx="196" ry="34" fill="#96621F"/>
+          <path d="M950 520 q 80 10 70 80 q -8 56 -90 60" fill="none" stroke="#E4DBC9" stroke-width="16"/>
+          <g stroke="#C9BFA8" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.8">
+            <path d="M640 400 q 20 -46 0 -92 q -20 -46 0 -92"/>
+            <path d="M760 380 q 20 -46 0 -92 q -20 -46 0 -92"/>
+          </g>
+        </svg>
+      </div>
+      <div class="chapter__caption reveal">
+        <p class="season">WINTER · 겨울</p>
+        <h2 id="ch4-title">마지막 여정은 당신의 찻잔</h2>
+        <p>사계절을 건너온 찻잎이 뜨거운 물을 만나 다시 피어납니다.
+        제주에서 시작된 여정의 끝은, 지금 당신 앞의 한 잔입니다.</p>
+      </div>
+    </article>
+
+    <!-- 스토리 티저 -->
+    <section class="story-teaser" aria-labelledby="teaser-title">
+      <div class="container reveal">
+        <h2 id="teaser-title">"불모의 땅에 차밭을 일구는 데 마흔일곱 해가 걸렸습니다"</h2>
+        <p>1979년, 아무도 차나무가 자랄 거라 믿지 않았던 제주의 돌밭에서
+        이야기는 시작되었습니다. 오설록이 걸어온 시간을 연대기로 정리했습니다.</p>
+        <a class="btn btn--ghost-light" href="story.html">브랜드 스토리 보기</a>
+      </div>
+    </section>
+
+    <!-- 시그니처 라인업 -->
+    <section class="lineup" aria-labelledby="lineup-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="lineup-title">시그니처 컬렉션</h2>
+          <p class="sub">가장 오설록다운 네 가지 차</p>
+        </div>
+        <div class="card-grid">
+          <article class="tea-card reveal">
+            <div class="tea-card__visual tv-green" role="img" aria-label="세작 — 밝은 녹색 톤의 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 44 C 8 34 8 16 24 4 C 40 16 40 34 24 44 Z M24 40 V 10" fill="none" stroke="#1D4B3F" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">GREEN TEA</p>
+              <h3>세작</h3>
+              <p class="desc">곡우 무렵의 어린 잎. 맑고 순한 첫맛과 은은한 단맛.</p>
+              <span class="price">₩24,000</span>
+            </div>
+          </article>
+          <article class="tea-card reveal">
+            <div class="tea-card__visual tv-dark" role="img" aria-label="삼다연 — 딥그린 톤의 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="none" stroke="#D8B26A" stroke-width="2.5"/><path d="M24 12 V 36 M14 18 Q 24 26 34 18" fill="none" stroke="#D8B26A" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">FERMENTED</p>
+              <h3>삼다연</h3>
+              <p class="desc">삼나무 통에서 후발효한 깊고 부드러운 바디감.</p>
+              <span class="price">₩38,000</span>
+            </div>
+          </article>
+          <article class="tea-card reveal">
+            <div class="tea-card__visual tv-amber" role="img" aria-label="제주숲홍차 — 앰버 톤의 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 38 Q 24 6 38 38 M16 30 H 32" fill="none" stroke="#96621F" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">BLACK TEA</p>
+              <h3>제주숲홍차</h3>
+              <p class="desc">제주 숲의 서늘함을 닮은 묵직한 홍차.</p>
+              <span class="price">₩26,000</span>
+            </div>
+          </article>
+          <article class="tea-card reveal">
+            <div class="tea-card__visual tv-blossom" role="img" aria-label="동백꽃 블렌드 — 블러섬 톤의 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="6" fill="#96621F"/><g fill="none" stroke="#96621F" stroke-width="2.5"><circle cx="24" cy="11" r="6"/><circle cx="35" cy="20" r="6"/><circle cx="31" cy="33" r="6"/><circle cx="17" cy="33" r="6"/><circle cx="13" cy="20" r="6"/></g></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">BLENDED</p>
+              <h3>동백꽃 블렌드</h3>
+              <p class="desc">겨울 제주의 동백을 담은 화사한 블렌디드 티.</p>
+              <span class="price">₩22,000</span>
+            </div>
+          </article>
+        </div>
+        <p style="margin-top: var(--sp-6); text-align: center;">
+          <a class="btn" href="products.html">전체 컬렉션 보기</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 티뮤지엄 -->
+    <section id="museum" class="museum" aria-labelledby="museum-title">
+      <div class="container split">
+        <div class="museum__visual reveal" >
+          <svg viewBox="0 0 800 550" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="museum-scene">
+            <title id="museum-scene">차밭 사이에 자리한 오설록 티뮤지엄 건물</title>
+            <rect width="800" height="550" fill="#DFE9E2"/>
+            <path d="M0 380 Q 200 330 400 370 T 800 360 V550 H0 Z" fill="#9DBFAB"/>
+            <path d="M0 450 Q 240 410 480 445 T 800 440 V550 H0 Z" fill="#6E9C82"/>
+            <rect x="250" y="220" width="300" height="180" rx="8" fill="#F9F6F0"/>
+            <rect x="250" y="220" width="300" height="180" rx="8" fill="none" stroke="#E4DBC9" stroke-width="3"/>
+            <ellipse cx="400" cy="220" rx="150" ry="46" fill="#12332B"/>
+            <rect x="330" y="300" width="60" height="100" fill="#12332B" opacity="0.85"/>
+            <rect x="420" y="300" width="52" height="64" fill="#12332B" opacity="0.35"/>
+            <circle cx="640" cy="150" r="52" fill="#F6EFD9"/>
+          </svg>
+        </div>
+        <div class="reveal">
+          <h2 id="museum-title">오설록 티뮤지엄</h2>
+          <p class="body">차밭 한가운데, 찻잔을 닮은 건축물. 차의 역사와 다구를 만나고
+          갓 덖은 차를 바로 우려 마실 수 있는 곳입니다. 서광다원 산책로와 이어집니다.</p>
+          <ul class="meta">
+            <li>제주 서귀포시 안덕면 신화역사로 15</li>
+            <li>매일 09:00 – 18:00 · 연중무휴</li>
+            <li>입장 무료 · 티 클래스는 예약제</li>
+          </ul>
+          <a class="btn btn--solid" href="story.html#visit">방문 안내</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="cols">
+        <p class="brand" style="color:#fff;">OSULLOC</p>
+        <nav aria-label="푸터 메뉴">
+          <ul>
+            <li><a href="story.html">브랜드 스토리</a></li>
+            <li><a href="products.html">티 컬렉션</a></li>
+            <li><a href="index.html#museum">티뮤지엄</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="disclaimer">본 사이트는 웹 퍼블리싱 학습을 위한 오설록 브랜드 리디자인 습작입니다.
+      실제 오설록·아모레퍼시픽과 무관하며, 제품·가격·연혁 정보는 학습용으로 재구성된 것입니다.
+      © <span data-year>2026</span> Lee Yunhyoung — Redesign Study</p>
+    </div>
+  </footer>
+</body>
+</html>

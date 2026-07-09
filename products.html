@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>티 컬렉션 — 전 제품 | OSULLOC Redesign</title>
+  <meta name="description" content="녹차·발효차·블렌디드 티·티웨어. 오설록 티 컬렉션 전 제품. (웹 퍼블리싱 학습용 리디자인)">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 44C8 34 8 16 24 4c16 12 16 30 0 40Z' fill='%231D4B3F'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+  <a href="#main" class="skip-link">본문 바로가기</a>
+
+  <header class="site-header">
+    <div class="container">
+      <a href="index.html" class="brand" aria-label="오설록 홈">OSULLOC</a>
+      <nav class="gnb" aria-label="주요 메뉴">
+        <ul>
+          <li><a href="story.html">브랜드 스토리</a></li>
+          <li><a href="products.html" aria-current="page">티 컬렉션</a></li>
+          <li><a href="index.html#museum">티뮤지엄</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <section class="page-hero" aria-labelledby="products-title">
+      <div class="container">
+        <p class="eyebrow">Tea Collection</p>
+        <h1 id="products-title">티 컬렉션</h1>
+        <p class="lead">순수한 녹차부터 후발효차, 계절의 블렌드까지.
+        JS가 없어도 전 제품이 그대로 보이고, 필터는 편의를 더할 뿐입니다.</p>
+      </div>
+    </section>
+
+    <section class="products-section" aria-labelledby="list-title">
+      <div class="container">
+        <h2 id="list-title" class="visually-hidden">제품 목록</h2>
+
+        <div class="filter-bar" role="group" aria-label="카테고리 필터">
+          <button type="button" class="filter-btn" data-filter="all" aria-pressed="true">전체</button>
+          <button type="button" class="filter-btn" data-filter="green" aria-pressed="false">녹차</button>
+          <button type="button" class="filter-btn" data-filter="fermented" aria-pressed="false">발효차</button>
+          <button type="button" class="filter-btn" data-filter="blended" aria-pressed="false">블렌디드</button>
+          <button type="button" class="filter-btn" data-filter="teaware" aria-pressed="false">티웨어</button>
+        </div>
+        <p class="product-count" aria-live="polite">전체 — 12개 제품</p>
+
+        <div class="card-grid">
+
+          <article class="tea-card" data-category="green">
+            <div class="tea-card__visual tv-green" role="img" aria-label="우전 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 44 C 8 34 8 16 24 4 C 40 16 40 34 24 44 Z M24 40 V 10" fill="none" stroke="#1D4B3F" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">GREEN TEA</p>
+              <h3>우전</h3>
+              <p class="desc">곡우 전 가장 어린 잎. 한 해 가장 먼저 만나는 차.</p>
+              <span class="price">₩42,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="green">
+            <div class="tea-card__visual tv-green" role="img" aria-label="세작 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 44 C 8 34 8 16 24 4 C 40 16 40 34 24 44 Z M24 40 V 10" fill="none" stroke="#1D4B3F" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">GREEN TEA</p>
+              <h3>세작</h3>
+              <p class="desc">맑고 순한 첫맛, 은은한 단맛의 대표 녹차.</p>
+              <span class="price">₩24,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="green">
+            <div class="tea-card__visual tv-green" role="img" aria-label="가루녹차 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="16" fill="none" stroke="#1D4B3F" stroke-width="2.5"/><path d="M16 28 Q 24 20 32 28" fill="none" stroke="#1D4B3F" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">GREEN TEA</p>
+              <h3>가루녹차</h3>
+              <p class="desc">덖은 잎을 곱게 갈아낸 진한 초록. 라떼와 베이킹에.</p>
+              <span class="price">₩18,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="fermented">
+            <div class="tea-card__visual tv-dark" role="img" aria-label="삼다연 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" fill="none" stroke="#D8B26A" stroke-width="2.5"/><path d="M24 12 V 36 M14 18 Q 24 26 34 18" fill="none" stroke="#D8B26A" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">FERMENTED</p>
+              <h3>삼다연</h3>
+              <p class="desc">삼나무 통 후발효. 깊고 부드러운 바디감.</p>
+              <span class="price">₩38,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="fermented">
+            <div class="tea-card__visual tv-amber" role="img" aria-label="제주숲홍차 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 38 Q 24 6 38 38 M16 30 H 32" fill="none" stroke="#96621F" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">BLACK TEA</p>
+              <h3>제주숲홍차</h3>
+              <p class="desc">제주 숲의 서늘함을 닮은 묵직한 홍차.</p>
+              <span class="price">₩26,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="fermented">
+            <div class="tea-card__visual tv-dark" role="img" aria-label="후발효차 티백 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><rect x="14" y="10" width="20" height="26" rx="4" fill="none" stroke="#D8B26A" stroke-width="2.5"/><path d="M24 10 V 4" stroke="#D8B26A" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">FERMENTED</p>
+              <h3>삼다연 티백</h3>
+              <p class="desc">일상에서 간편하게 즐기는 후발효차.</p>
+              <span class="price">₩16,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="blended">
+            <div class="tea-card__visual tv-blossom" role="img" aria-label="동백꽃 블렌드 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="6" fill="#96621F"/><g fill="none" stroke="#96621F" stroke-width="2.5"><circle cx="24" cy="11" r="6"/><circle cx="35" cy="20" r="6"/><circle cx="31" cy="33" r="6"/><circle cx="17" cy="33" r="6"/><circle cx="13" cy="20" r="6"/></g></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">BLENDED</p>
+              <h3>동백꽃 블렌드</h3>
+              <p class="desc">겨울 제주의 동백을 담은 화사한 블렌드.</p>
+              <span class="price">₩22,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="blended">
+            <div class="tea-card__visual tv-amber" role="img" aria-label="영귤 블렌드 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="14" fill="none" stroke="#96621F" stroke-width="2.5"/><path d="M24 10 Q 30 16 24 24 Q 18 16 24 10" fill="#96621F"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">BLENDED</p>
+              <h3>제주 영귤 블렌드</h3>
+              <p class="desc">영귤의 산뜻함과 녹차의 감칠맛.</p>
+              <span class="price">₩20,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="blended">
+            <div class="tea-card__visual tv-green" role="img" aria-label="안개 캐모마일 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="28" rx="16" ry="6" fill="none" stroke="#1D4B3F" stroke-width="2.5"/><ellipse cx="24" cy="20" rx="12" ry="5" fill="none" stroke="#1D4B3F" stroke-width="2.5" opacity="0.6"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">BLENDED</p>
+              <h3>안개 캐모마일</h3>
+              <p class="desc">잠들기 전 한 잔. 캐모마일과 순한 녹차 베이스.</p>
+              <span class="price">₩19,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="teaware">
+            <div class="tea-card__visual tv-blossom" role="img" aria-label="백자 찻잔 세트 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><path d="M12 18 L 15 34 A 6 4 0 0 0 33 34 L 36 18 Z" fill="none" stroke="#96621F" stroke-width="2.5"/><path d="M36 22 q 8 2 0 10" fill="none" stroke="#96621F" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">TEAWARE</p>
+              <h3>백자 찻잔 세트</h3>
+              <p class="desc">찻물 색이 잘 보이는 넉넉한 백자 잔 2객.</p>
+              <span class="price">₩46,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="teaware">
+            <div class="tea-card__visual tv-dark" role="img" aria-label="무쇠 다관 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="24" cy="28" rx="14" ry="10" fill="none" stroke="#D8B26A" stroke-width="2.5"/><path d="M10 26 q -6 -2 -4 -8 M24 18 v -6 h 6" fill="none" stroke="#D8B26A" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">TEAWARE</p>
+              <h3>무쇠 다관</h3>
+              <p class="desc">열을 오래 품는 무쇠. 발효차와 좋은 짝.</p>
+              <span class="price">₩58,000</span>
+            </div>
+          </article>
+
+          <article class="tea-card" data-category="teaware">
+            <div class="tea-card__visual tv-green" role="img" aria-label="티 메저 스푼 제품 비주얼">
+              <svg class="leaf-mark" viewBox="0 0 48 48" aria-hidden="true"><ellipse cx="18" cy="30" rx="8" ry="10" fill="none" stroke="#1D4B3F" stroke-width="2.5"/><path d="M24 22 L 38 8" stroke="#1D4B3F" stroke-width="2.5"/></svg>
+            </div>
+            <div class="tea-card__body">
+              <p class="tea-card__cat">TEAWARE</p>
+              <h3>티 메저 스푼</h3>
+              <p class="desc">한 잔 분량 2g을 정확하게. 대나무 소재.</p>
+              <span class="price">₩12,000</span>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="cols">
+        <p class="brand" style="color:#fff;">OSULLOC</p>
+        <nav aria-label="푸터 메뉴">
+          <ul>
+            <li><a href="story.html">브랜드 스토리</a></li>
+            <li><a href="products.html">티 컬렉션</a></li>
+            <li><a href="index.html#museum">티뮤지엄</a></li>
+          </ul>
+        </nav>
+      </div>
+      <p class="disclaimer">본 사이트는 웹 퍼블리싱 학습을 위한 오설록 브랜드 리디자인 습작입니다.
+      실제 오설록·아모레퍼시픽과 무관하며, 제품·가격·연혁 정보는 학습용으로 재구성된 것입니다.
+      © <span data-year>2026</span> Lee Yunhyoung — Redesign Study</p>
+    </div>
+  </footer>
+</body>
+</html>
