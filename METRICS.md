@@ -2,6 +2,22 @@
 
 > 케이스 스터디 ⑤결과 블록의 근거 데이터. 2026-07-09 실측값과 이후 자동 검증 기록을 함께 관리한다.
 
+## 최신 라이브 실측 (2026-09-28 · WebP 비주얼 배포 버전)
+
+- 대상: `https://lyh6763.github.io/osulloc/`
+- Lighthouse 13.5.0, Chrome for Testing 153, 모바일 시뮬레이션 기본 프리셋
+
+| 페이지 | Performance | Accessibility | Best Practices | SEO | FCP | LCP | CLS | TBT |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| index | **90** | **100** | **100** | **100** | 0.8s | 2.0s | 0 | 383ms |
+| story | **98** | **100** | **100** | **100** | 0.8s | 0.9s | 0 | 179ms |
+| products | **97** | **100** | **100** | **100** | 1.0s | 1.3s | 0 | 193ms |
+
+- 최종 세 실행에는 Lighthouse 실행 경고가 없었다.
+- 메인은 인라인 사계 비주얼의 초기 렌더링 작업으로 TBT 변동 폭이 있지만 LCP 2.5초 미만, CLS 0.1 미만,
+  Lighthouse 90+ 목표를 모두 충족한다. 강제 리플로우 감사 항목도 0건이다.
+- 보고서: [`reports/lighthouse-live`](reports/lighthouse-live)의 페이지별 HTML·JSON 파일
+
 ## 최신 로컬 실측 (2026-09-28 · WebP 비주얼 적용 버전)
 
 - Lighthouse 13.5.0, 모바일 시뮬레이션 기본 프리셋
@@ -75,4 +91,4 @@
 - [x] JS off 콘텐츠 완전성 자동 검증 (2026-09-28)
 - [x] 키보드 탐색 자동 검증 (스킵링크 → GNB → 필터, 연대기 방향키)
 - [x] WebP 비주얼 적용 버전 Lighthouse 재측정 (2026-09-28)
-- [ ] 새 버전 배포 후 라이브 URL 기준 Lighthouse 재확인
+- [x] 새 버전 배포 후 라이브 URL 기준 Lighthouse 재확인 (2026-09-28)
