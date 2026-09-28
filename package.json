@@ -1,0 +1,13 @@
+{
+  "name": "osulloc-redesign",
+  "version": "1.0.0",
+  "private": true,
+  "description": "OSULLOC brand redesign portfolio site",
+  "scripts": {
+    "test": "node --test tests/smoke.test.cjs"
+  },
+  "devDependencies": {
+    "lighthouse": "^13.5.0",
+    "playwright": "^1.61.1"
+  }
+}
