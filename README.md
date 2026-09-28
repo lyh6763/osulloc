@@ -23,15 +23,18 @@
 - **모션 배려** — `prefers-reduced-motion` 시 챕터가 정적 레이아웃으로 재구성
 - **애니메이션은 `transform`/`opacity`만** — 레이아웃 유발 속성 금지
 
-## 측정 결과 (2026-07-09 · 로컬, 배포 후 재측정 예정)
+## 최신 측정 결과 (2026-09-28 · 로컬 모바일 프리셋)
 
 | 페이지 | Lighthouse (Perf/A11y/BP/SEO) | LCP | CLS | axe |
 |---|---|---|---|---|
-| index | 99 / 100 / 100 / 100 | 1.7s | 0 | 0건 |
-| story | 99 / 100 / 100 / 100 | 1.5s | 0 | 0건 |
-| products | 100 / 100 / 100 / 100 | 1.2s | 0 | 0건 |
+| index | 95 / 100 / 100 / 100 | 2.3s | 0 | Lighthouse 접근성 0건 |
+| story | 97 / 100 / 100 / 100 | 1.3s | 0 | Lighthouse 접근성 0건 |
+| products | 98 / 100 / 100 / 100 | 1.2s | 0 | Lighthouse 접근성 0건 |
 
-측정 방법·트러블슈팅 기록: [METRICS.md](METRICS.md) · 이미지 교체 가이드: [ASSETS.md](ASSETS.md)
+WebP 비주얼 적용 후 재측정한 결과입니다. 세부 수치와 이전 라이브 기준값은
+[METRICS.md](METRICS.md), HTML·JSON 원본 보고서는 [`reports/lighthouse`](reports/lighthouse)에서 확인할 수 있습니다.
+
+이미지 자산 기록: [ASSETS.md](ASSETS.md)
 
 ## 로컬 실행
 
@@ -39,4 +42,15 @@
 
 ```bash
 npx serve .
+```
+
+## 자동 검증
+
+Playwright 스모크 테스트가 페이지 로딩, 제품 필터, JS-off 폴백, 연대기 키보드 탐색,
+키보드 포커스 순서, 360px 모바일 오버플로를 확인합니다.
+
+```bash
+npm install
+npx playwright install chromium
+npm test
 ```

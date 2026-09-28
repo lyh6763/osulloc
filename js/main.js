@@ -6,19 +6,20 @@
 (function () {
   'use strict';
 
-  // JS 사용 가능 표시 — CSS는 .js 스코프에서만 리빌 초기 상태를 숨김
-  document.documentElement.classList.add('js');
-
   var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* ---------- 1. 헤더: 스크롤 시 배경 부여 ---------- */
   var header = document.querySelector('.site-header');
   if (header) {
+    var headerScrolled = header.classList.contains('is-scrolled');
     var onScroll = function () {
-      header.classList.toggle('is-scrolled', window.scrollY > 8);
+      var shouldBeScrolled = window.scrollY > 8;
+      if (shouldBeScrolled === headerScrolled) return;
+
+      headerScrolled = shouldBeScrolled;
+      header.classList.toggle('is-scrolled', shouldBeScrolled);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
   }
 
   /* ---------- 2. 스크롤 리빌 — IO 미지원 시 전부 노출 (방어적 폴백) ---------- */
@@ -69,7 +70,35 @@
     });
   }
 
-  /* ---------- 4. 푸터 연도 ---------- */
+  /* ---------- 4. 연대기 키보드 탐색 ---------- */
+  var timeline = document.querySelector('.timeline');
+  if (timeline) {
+    timeline.addEventListener('keydown', function (e) {
+      var supportedKeys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+      if (!supportedKeys.includes(e.key)) return;
+
+      e.preventDefault();
+      var firstCard = timeline.querySelector('.milestone');
+      var gap = parseFloat(getComputedStyle(timeline).gap) || 0;
+      var step = firstCard ? firstCard.getBoundingClientRect().width + gap : timeline.clientWidth * 0.8;
+      var behavior = prefersReduced.matches ? 'auto' : 'smooth';
+
+      if (e.key === 'Home' || e.key === 'End') {
+        timeline.scrollTo({
+          left: e.key === 'Home' ? 0 : timeline.scrollWidth,
+          behavior: behavior
+        });
+        return;
+      }
+
+      timeline.scrollBy({
+        left: e.key === 'ArrowRight' ? step : -step,
+        behavior: behavior
+      });
+    });
+  }
+
+  /* ---------- 5. 푸터 연도 ---------- */
   var yearEl = document.querySelector('[data-year]');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 })();
