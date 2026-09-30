@@ -57,3 +57,9 @@ npm install
 npx playwright install chromium
 npm test
 ```
+
+## 배포
+
+`main`에 push하면 GitHub Actions([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml))가
+스모크 테스트를 실행하고, **통과한 경우에만** 개발 전용 파일(`tests/`, `package*.json` 등)을 뺀 사이트 파일을
+`gh-pages` 브랜치에 커밋해 GitHub Pages로 배포합니다. Actions 탭에서 수동 실행(`workflow_dispatch`)도 가능합니다.
