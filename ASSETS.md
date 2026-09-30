@@ -32,6 +32,17 @@
 - 모바일(412×823 @1.75x) 히어로 전송량 196.9KB → 69.9KB, 로컬 Lighthouse 모바일 Perf 98 → 100, LCP 2.26s → 1.65s
 - 원본 소스가 생기면 원본에서 다시 생성해 재인코딩 손실을 없앨 것
 
+## 웹폰트
+
+| 파일 | 용도 | 크기 |
+|---|---|---|
+| `assets/fonts/noto-serif-kr-subset.woff2` | 제목 명조 (Noto Serif KR 가변 600–700, SIL OFL 1.1) | 62.6KB |
+| `assets/fonts/noto-serif-kr-subset.txt` | 서브셋에 담을 글자 목록 (원본 데이터) | — |
+
+제목에 쓰인 글자만 담은 서브셋이다. 제목에 새 글자를 쓰면 스모크 테스트가 빠진 글자를 알려준다 →
+txt에 추가 → `npm run fonts`(Google Fonts `text=` API로 재생성) → woff2와 txt를 함께 커밋.
+본문은 웹폰트 없이 OS 기본 한글 글꼴을 쓴다 (선택 근거: [METRICS.md](METRICS.md)).
+
 ## 남은 교체 슬롯
 
 | 슬롯 | 위치 | 권장 소재 (검색어) | 권장 스펙 |

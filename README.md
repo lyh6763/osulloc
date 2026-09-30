@@ -22,6 +22,7 @@
 - **점진적 향상** — 모든 콘텐츠는 정적 HTML에 존재, JS는 편의를 더할 뿐
 - **모션 배려** — `prefers-reduced-motion` 시 챕터가 정적 레이아웃으로 재구성
 - **애니메이션은 `transform`/`opacity`만** — 레이아웃 유발 속성 금지
+- **웹폰트는 제목 명조만** — 실제 쓰인 208자만 담은 자체 호스팅 서브셋(63KB), 본문은 OS 기본 한글 글꼴
 
 ## 최신 측정 결과 (2026-09-30 · GitHub Pages 모바일 프리셋)
 
@@ -57,3 +58,9 @@ npm install
 npx playwright install chromium
 npm test
 ```
+
+## 배포
+
+`main`에 push하면 GitHub Actions([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml))가
+스모크 테스트를 실행하고, **통과한 경우에만** 개발 전용 파일(`tests/`, `package*.json` 등)을 뺀 사이트 파일을
+`gh-pages` 브랜치에 커밋해 GitHub Pages로 배포합니다. Actions 탭에서 수동 실행(`workflow_dispatch`)도 가능합니다.
