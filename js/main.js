@@ -70,35 +70,50 @@
     });
   }
 
-  /* ---------- 4. 연대기 키보드 탐색 ---------- */
+  /* ---------- 4. 연대기 탐색 — 키보드 + 이전/다음 버튼 ---------- */
   var timeline = document.querySelector('.timeline');
   if (timeline) {
+    var navButtons = document.querySelectorAll('.timeline-btn');
+    var behavior = function () { return prefersReduced.matches ? 'auto' : 'smooth'; };
+
+    // 카드 한 장(+간격) 단위로 이동
+    var scrollByCard = function (dir) {
+      var firstCard = timeline.querySelector('.milestone');
+      var gap = parseFloat(getComputedStyle(timeline).gap) || 0;
+      var step = firstCard ? firstCard.getBoundingClientRect().width + gap : timeline.clientWidth * 0.8;
+      timeline.scrollBy({ left: dir * step, behavior: behavior() });
+    };
+
     timeline.addEventListener('keydown', function (e) {
       var supportedKeys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
       if (!supportedKeys.includes(e.key)) return;
 
       e.preventDefault();
-      var firstCard = timeline.querySelector('.milestone');
-      var gap = parseFloat(getComputedStyle(timeline).gap) || 0;
-      var step = firstCard ? firstCard.getBoundingClientRect().width + gap : timeline.clientWidth * 0.8;
-      var behavior = prefersReduced.matches ? 'auto' : 'smooth';
-
       if (e.key === 'Home' || e.key === 'End') {
         timeline.scrollTo({
           left: e.key === 'Home' ? 0 : timeline.scrollWidth,
-          behavior: behavior
+          behavior: behavior()
         });
         return;
       }
+      scrollByCard(e.key === 'ArrowRight' ? 1 : -1);
+    });
 
-      timeline.scrollBy({
-        left: e.key === 'ArrowRight' ? step : -step,
-        behavior: behavior
+    // aria-disabled: 끝에 닿아도 포커스를 잃지 않도록 disabled 대신 사용
+    navButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (btn.getAttribute('aria-disabled') === 'true') return;
+        scrollByCard(Number(btn.dataset.dir));
       });
     });
-  }
 
-  /* ---------- 5. 푸터 연도 ---------- */
-  var yearEl = document.querySelector('[data-year]');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+    // 초기 상태는 HTML에 선언(이전 버튼 비활성) — 로드 중 레이아웃 강제 읽기 방지, 스크롤 시에만 갱신
+    timeline.addEventListener('scroll', function () {
+      var max = timeline.scrollWidth - timeline.clientWidth;
+      navButtons.forEach(function (btn) {
+        var atEdge = btn.dataset.dir === '-1' ? timeline.scrollLeft <= 1 : timeline.scrollLeft >= max - 1;
+        btn.setAttribute('aria-disabled', String(atEdge));
+      });
+    }, { passive: true });
+  }
 })();

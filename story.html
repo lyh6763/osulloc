@@ -57,10 +57,19 @@
       <div class="container">
         <div class="section-head">
           <h2 id="timeline-title">연대기</h2>
-          <p class="sub">방향키 또는 스와이프로 탐색</p>
+          <div class="timeline-nav">
+            <p class="sub">방향키 또는 스와이프로 탐색</p>
+            <!-- 마우스 사용자용 이동 버튼 — JS 향상 (JS off 시 숨김, 네이티브 스크롤은 그대로) -->
+            <button type="button" class="timeline-btn" data-dir="-1" aria-controls="timeline" aria-label="이전 연대" aria-disabled="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <button type="button" class="timeline-btn" data-dir="1" aria-controls="timeline" aria-label="다음 연대">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
         </div>
       </div>
-      <div class="timeline" tabindex="0" role="group" aria-label="오설록 연대기 — 가로로 스크롤되는 목록">
+      <div class="timeline" id="timeline" tabindex="0" role="group" aria-label="오설록 연대기 — 가로로 스크롤되는 목록">
         <article class="milestone">
           <p class="year">1979</p>
           <h3>돌송이 차밭 개간</h3>
@@ -98,7 +107,6 @@
           여정은 여전히 진행형입니다.</p>
         </article>
       </div>
-      <p class="timeline-hint" aria-hidden="true">← DRAG / SCROLL →</p>
     </section>
 
     <!-- 철학 -->
@@ -166,7 +174,7 @@
       </div>
       <p class="disclaimer">본 사이트는 웹 퍼블리싱 학습을 위한 오설록 브랜드 리디자인 습작입니다.
       실제 오설록·아모레퍼시픽과 무관하며, 제품·가격·연혁 정보는 학습용으로 재구성된 것입니다.
-      © <span data-year>2026</span> Lee Yunhyoung — Redesign Study</p>
+      © 2026 Lee Yunhyoung — Redesign Study</p>
     </div>
   </footer>
 </body>

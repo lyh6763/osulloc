@@ -103,6 +103,76 @@ test('timeline supports card-sized keyboard navigation', async () => {
   await page.close();
 });
 
+test('timeline buttons move one card and reflect the scroll edges', async () => {
+  const page = await browser.newPage({ reducedMotion: 'reduce', viewport: { width: 1440, height: 900 } });
+  await page.goto(origin + '/story.html');
+
+  const timeline = page.locator('.timeline');
+  const prev = page.getByRole('button', { name: '이전 연대' });
+  const next = page.getByRole('button', { name: '다음 연대' });
+  assert.equal(await prev.getAttribute('aria-disabled'), 'true');
+
+  const step = await page.locator('.milestone').first().evaluate((card) =>
+    card.getBoundingClientRect().width + parseFloat(getComputedStyle(card.parentElement).gap));
+  await next.click();
+  await page.waitForFunction(() => document.querySelector('.timeline').scrollLeft > 0);
+  assert.ok(Math.abs(await timeline.evaluate((element) => element.scrollLeft) - step) <= 2, 'next should advance one card');
+  assert.equal(await prev.getAttribute('aria-disabled'), 'false');
+
+  await timeline.press('End');
+  await page.waitForFunction(() => {
+    const element = document.querySelector('.timeline');
+    return element.scrollLeft >= element.scrollWidth - element.clientWidth - 1;
+  });
+  await page.waitForFunction(() => document.querySelector('[aria-label="다음 연대"]').getAttribute('aria-disabled') === 'true');
+
+  await page.close();
+});
+
+test('timeline buttons stay hidden without JS', async () => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto(origin + '/story.html');
+  assert.equal(await page.locator('.timeline-btn:visible').count(), 0);
+  await context.close();
+});
+
+test('first timeline card lines up with the section heading', async () => {
+  for (const viewport of [{ width: 1440, height: 900 }, { width: 1920, height: 1080 }, { width: 360, height: 800 }]) {
+    const page = await browser.newPage({ viewport });
+    await page.goto(origin + '/story.html');
+    const [heading, card] = await Promise.all([
+      page.locator('#timeline-title').evaluate((element) => element.getBoundingClientRect().left),
+      page.locator('.milestone').first().evaluate((element) => element.getBoundingClientRect().left)
+    ]);
+    assert.ok(Math.abs(heading - card) <= 1, `${viewport.width}px: heading ${heading} vs card ${card}`);
+    await page.close();
+  }
+});
+
+test('signature cards on the home page match the catalog', async () => {
+  const page = await browser.newPage();
+  const readCards = (selector) => page.$$eval(selector, (cards) => cards.map((card) => ({
+    name: card.querySelector('h3').textContent.trim(),
+    price: card.querySelector('.price').textContent.trim(),
+    image: card.querySelector('img')?.getAttribute('src') ?? null
+  })));
+
+  await page.goto(origin + '/');
+  const signature = await readCards('.lineup .tea-card');
+  await page.goto(origin + '/products.html');
+  const catalog = await readCards('.tea-card');
+
+  assert.ok(signature.length > 0);
+  for (const card of signature) {
+    const match = catalog.find((item) => item.name === card.name);
+    assert.ok(match, `${card.name} should exist in the catalog`);
+    assert.deepEqual(match, card, `${card.name} should share price and image with the catalog`);
+  }
+
+  await page.close();
+});
+
 test('keyboard focus reaches skip link, navigation and filters in order', async () => {
   const page = await browser.newPage();
   await page.goto(origin + '/products.html');
@@ -265,6 +335,7 @@ test('print layout keeps the header in flow and the whole timeline on paper', as
   await page.emulateMedia({ media: 'print' });
 
   assert.equal(await page.locator('.site-header').evaluate((element) => getComputedStyle(element).position), 'static');
+  assert.equal(await page.locator('.timeline-btn:visible').count(), 0, 'timeline buttons are screen-only');
   const timeline = await page.locator('.timeline').evaluate((element) => ({
     scrollWidth: element.scrollWidth,
     clientWidth: element.clientWidth
