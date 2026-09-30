@@ -336,15 +336,35 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 /* 가로 타임라인 — 네이티브 스크롤 + snap (하이재킹 없음, plan_C §5) */
 .timeline-section { padding-block: var(--sp-8) var(--sp-9); }
 .timeline {
+  /* 첫 카드를 .container 안쪽 시작선(제목)과 맞춘다 — 넓은 화면에서도 좌측 끝에 붙지 않도록 */
+  --timeline-inset: 20px;
   display: flex; gap: var(--sp-5);
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  padding: var(--sp-2) 24px var(--sp-5);
+  scroll-padding-inline: var(--timeline-inset);
+  padding: var(--sp-2) var(--timeline-inset) var(--sp-5);
   scrollbar-color: var(--green-500) var(--cream-100);
 }
+@media (min-width: 768px) {
+  .timeline { --timeline-inset: max(24px, calc((100% - var(--container)) / 2 + 24px)); }
+}
 .timeline:focus-visible { outline-offset: -2px; }
+.timeline-nav { display: flex; align-items: center; gap: var(--sp-3); }
+.timeline-btn {
+  display: none; place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 999px;
+  border: 1.5px solid var(--accent);
+  background: var(--surface); color: var(--accent);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease);
+}
+.js .timeline-btn { display: inline-grid; }
+.timeline-btn svg { width: 20px; height: 20px; }
+.timeline-btn:hover { background: var(--green-100); }
+.timeline-btn[aria-disabled="true"] { opacity: 0.35; cursor: default; background: var(--surface); }
 .milestone {
-  scroll-snap-align: center;
+  scroll-snap-align: start;
   flex: 0 0 min(320px, 78vw);
   background: var(--surface);
   border: 1px solid var(--border);
@@ -357,7 +377,6 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 }
 .milestone h3 { font-size: var(--fs-h3); margin-top: var(--sp-3); }
 .milestone p { font-size: var(--fs-sm); color: var(--text-muted); margin-top: var(--sp-3); }
-.timeline-hint { text-align: center; font-size: var(--fs-xs); color: var(--text-muted); letter-spacing: 0.12em; margin-top: var(--sp-3); }
 
 /* 철학 섹션 */
 .philosophy { background: var(--surface-alt); padding-block: var(--sp-9); }
@@ -418,7 +437,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   /* 가로 스크롤 연대기는 종이에서 잘리므로 줄바꿈 그리드로 펼친다 */
   .timeline { flex-wrap: wrap; overflow: visible; padding-inline: 20px; }
   .milestone { flex: 1 1 240px; break-inside: avoid; }
-  .timeline-hint, .scroll-hint { display: none; }
+  .js .timeline-btn, .scroll-hint { display: none; }
   /* 흰 글자를 쓰는 배경은 인쇄 시 배경 생략으로 글자가 사라지므로 유지 */
   .site-footer, .btn--solid { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
