@@ -7,7 +7,10 @@
 
 | 파일 | 용도 | 크기 |
 |---|---|---|
-| `assets/images/jeju-tea-field.webp` | 메인 히어로 · 공유 이미지 | 1672×941 |
+| `assets/images/jeju-tea-field.webp` | 메인 히어로 (가로 화면 1672w) | 1672×941 |
+| `assets/images/jeju-tea-field-1280.webp` | 메인 히어로 (가로 화면 1280w) | 1280×720 |
+| `assets/images/jeju-tea-field-960.webp` | 메인 히어로 (가로 화면 960w) | 960×540 |
+| `assets/images/jeju-tea-field-portrait.webp` | 메인 히어로 (세로 화면 · 가운데 크롭) | 800×941 |
 | `assets/images/tea-collection.webp` | 녹차 대표 제품 | 1200×900 |
 | `assets/images/fermented-tea.webp` | 발효차 대표 제품 | 1200×900 |
 | `assets/images/black-tea.webp` | 홍차 대표 제품 | 1200×900 |
@@ -17,6 +20,17 @@
 | `assets/images/og-products.jpg` | 제품 공유 미리보기 | 1200×630 |
 
 제품 이미지는 브랜드 로고와 실제 패키지를 복제하지 않은 학습용 목업이다.
+
+### 히어로 반응형 변형 (2026-09-30)
+
+세로 화면에서는 `object-fit: cover`로 가로 이미지의 가운데 약 1/3만 보이므로, 너비별 `srcset`만으로는
+모바일 전송량이 줄지 않는다. `<picture>`로 세로 화면(`orientation: portrait`)에는 가운데 크롭본을,
+가로 화면에는 `srcset`(960w·1280w·1672w, `sizes="100vw"`)을 제공한다.
+
+- 원본 PNG가 없어 `jeju-tea-field.webp`에서 파생: Chromium canvas로 크롭·리사이즈 후 WebP 품질 0.72 인코딩
+  (세로 크롭 x=436, 800×941). 1672w 원본은 재인코딩하지 않는다.
+- 모바일(412×823 @1.75x) 히어로 전송량 196.9KB → 69.9KB, 로컬 Lighthouse 모바일 Perf 98 → 100, LCP 2.26s → 1.65s
+- 원본 소스가 생기면 원본에서 다시 생성해 재인코딩 손실을 없앨 것
 
 ## 남은 교체 슬롯
 

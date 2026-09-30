@@ -43,9 +43,15 @@
 
   <main id="main">
 
-    <!-- Hero: 대표 이미지는 우선 로딩하고 텍스트 대비를 별도 레이어로 보장 -->
+    <!-- Hero: 대표 이미지는 우선 로딩하고 텍스트 대비를 별도 레이어로 보장
+         세로 화면은 cover로 가운데만 보이므로 가운데 크롭본을, 가로 화면은 너비별 srcset을 사용 -->
     <section class="hero" aria-labelledby="hero-title">
-      <img class="hero__media" src="assets/images/jeju-tea-field.webp" alt="아침 안개가 내려앉은 제주 녹차밭" width="1672" height="941" fetchpriority="high">
+      <picture>
+        <source media="(orientation: portrait)" srcset="assets/images/jeju-tea-field-portrait.webp" width="800" height="941">
+        <img class="hero__media" src="assets/images/jeju-tea-field.webp"
+             srcset="assets/images/jeju-tea-field-960.webp 960w, assets/images/jeju-tea-field-1280.webp 1280w, assets/images/jeju-tea-field.webp 1672w"
+             sizes="100vw" alt="아침 안개가 내려앉은 제주 녹차밭" width="1672" height="941" fetchpriority="high">
+      </picture>
       <div class="container">
         <p class="eyebrow">Tea from Jeju Island</p>
         <h1 id="hero-title">제주에서 찻잔까지,<br>차 한 잔의 여정</h1>
