@@ -177,6 +177,44 @@ test('hero text over the photo meets WCAG AA contrast', async (t) => {
   }
 });
 
+test('hero picks one right-sized image per viewport', async () => {
+  const cases = [
+    // Lighthouse 모바일 프리셋과 같은 조건 — 세로 크롭본만 받아야 LCP 예산을 지킨다
+    { viewport: { width: 412, height: 823 }, deviceScaleFactor: 1.75, expected: 'jeju-tea-field-portrait.webp', maxKB: 80 },
+    { viewport: { width: 1024, height: 768 }, deviceScaleFactor: 1, expected: 'jeju-tea-field-1280.webp', maxKB: 100 },
+    { viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1, expected: 'jeju-tea-field.webp', maxKB: 210 }
+  ];
+
+  for (const { viewport, deviceScaleFactor, expected, maxKB } of cases) {
+    const context = await browser.newContext({ viewport, deviceScaleFactor });
+    const page = await context.newPage();
+    const heroRequests = [];
+    page.on('requestfinished', async (request) => {
+      if (!request.url().includes('/jeju-tea-field')) return;
+      const sizes = await request.sizes();
+      heroRequests.push({ file: path.basename(new URL(request.url()).pathname), bytes: sizes.responseBodySize });
+    });
+
+    await page.goto(origin + '/', { waitUntil: 'networkidle' });
+    const label = `${viewport.width}x${viewport.height}@${deviceScaleFactor}x`;
+    assert.equal(path.basename(await page.locator('.hero__media').evaluate((img) => new URL(img.currentSrc).pathname)), expected, label);
+    assert.deepEqual(heroRequests.map((request) => request.file), [expected], `${label} should download exactly one hero image`);
+    assert.ok(heroRequests[0].bytes <= maxKB * 1024, `${label}: ${(heroRequests[0].bytes / 1024).toFixed(1)}KB > ${maxKB}KB`);
+
+    // <picture> 래퍼가 그리드 행을 차지하면 히어로 텍스트가 중앙에서 밀려난다
+    const offset = await page.locator('.hero').evaluate((hero) => {
+      const box = hero.getBoundingClientRect();
+      const style = getComputedStyle(hero);
+      const contentCenter = (box.top + parseFloat(style.paddingTop) + box.bottom - parseFloat(style.paddingBottom)) / 2;
+      const text = hero.querySelector('.container').getBoundingClientRect();
+      return Math.abs((text.top + text.bottom) / 2 - contentCenter);
+    });
+    assert.ok(offset <= 1, `${label}: hero text is ${offset.toFixed(1)}px off center`);
+
+    await context.close();
+  }
+});
+
 test('Korean words are never split across lines', async () => {
   for (const viewport of [{ width: 1440, height: 900 }, { width: 360, height: 800 }]) {
     const page = await browser.newPage({ viewport });
