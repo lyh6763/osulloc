@@ -23,15 +23,17 @@
 - **모션 배려** — `prefers-reduced-motion` 시 챕터가 정적 레이아웃으로 재구성
 - **애니메이션은 `transform`/`opacity`만** — 레이아웃 유발 속성 금지
 
-## 최신 측정 결과 (2026-09-28 · GitHub Pages 모바일 프리셋)
+## 최신 측정 결과 (2026-09-30 · GitHub Pages 모바일 프리셋)
 
 | 페이지 | Lighthouse (Perf/A11y/BP/SEO) | LCP | CLS | axe |
 |---|---|---|---|---|
-| index | 90 / 100 / 100 / 100 | 2.0s | 0 | Lighthouse 접근성 0건 |
-| story | 98 / 100 / 100 / 100 | 0.9s | 0 | Lighthouse 접근성 0건 |
-| products | 97 / 100 / 100 / 100 | 1.3s | 0 | Lighthouse 접근성 0건 |
+| index | 100 / 100 / 100 / 100 | 1.35s | 0 | Lighthouse 접근성 0건 |
+| story | 100 / 100 / 100 / 100 | 0.86s | 0 | Lighthouse 접근성 0건 |
+| products | 100 / 100 / 100 / 100 | 0.87s | 0 | Lighthouse 접근성 0건 |
 
-WebP 비주얼 적용 버전을 공개 URL에서 재측정한 결과입니다. 세부 수치와 로컬 기준값은
+공개 URL에서 페이지당 3회 측정한 중앙값입니다. 메인은 히어로를 `<picture>` 아트 디렉션으로 바꿔
+모바일 이미지 전송량을 197KB → 70KB로 줄이며 90 → 100, LCP 2.0s → 1.35s로 개선했습니다.
+axe가 판정하지 못하는 사진 위 텍스트 대비는 스모크 테스트에서 픽셀 단위로 따로 검증합니다. 세부 수치와 로컬 기준값은
 [METRICS.md](METRICS.md), HTML·JSON 원본 보고서는 [`reports/lighthouse-live`](reports/lighthouse-live)에서 확인할 수 있습니다.
 
 이미지 자산 기록: [ASSETS.md](ASSETS.md)
@@ -47,7 +49,8 @@ npx serve .
 ## 자동 검증
 
 Playwright 스모크 테스트가 페이지 로딩, 제품 필터, JS-off 폴백, 연대기 키보드 탐색,
-키보드 포커스 순서, 360px 모바일 오버플로를 확인합니다.
+키보드 포커스 순서, 360px 모바일 오버플로, 히어로 텍스트 대비(픽셀 측정), 반응형 히어로 이미지 선택,
+한글 단어 줄바꿈, 인쇄 레이아웃을 확인합니다.
 
 ```bash
 npm install
