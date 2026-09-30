@@ -16,6 +16,8 @@ body {
   color: var(--text);
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+  word-break: keep-all;        /* 한글 어절 단위 줄바꿈 */
+  overflow-wrap: break-word;   /* 한 줄보다 긴 단어만 예외적으로 분리 */
 }
 
 img, svg { display: block; max-width: 100%; }
@@ -152,14 +154,15 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   font-weight: 600;
   margin-top: var(--sp-4);
 }
+/* 사진 위 텍스트: --text-muted는 배경 밝기에 따라 2:1까지 떨어져 진한 잉크 사용 (tests: hero contrast) */
 .hero .lead {
-  font-size: var(--fs-lead); color: var(--text-muted);
+  font-size: var(--fs-lead); color: var(--text-strong);
   max-width: 46ch; margin: var(--sp-5) auto 0;
 }
 .hero .scroll-hint {
   margin-top: var(--sp-7);
   font-size: var(--fs-xs); letter-spacing: 0.18em;
-  color: var(--text-muted);
+  color: var(--text-strong);
 }
 
 /* ---------- Journey (챕터 스토리텔링 — sticky scene, 하이재킹 없음) ---------- */
@@ -198,13 +201,16 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   .chapter__caption { margin-inline: 16px; margin-top: -30vh; padding: var(--sp-5); }
 }
 
-/* 스크롤 리빌 (JS 향상 — 실패 시에도 콘텐츠는 항상 보임) */
+/* 스크롤 리빌 (JS 향상 — 실패 시에도 콘텐츠는 항상 보임)
+   screen 한정: 인쇄 시 아직 스크롤되지 않은 요소가 빈칸으로 남지 않도록 */
 .reveal { opacity: 1; transform: none; }
-.js .reveal {
-  opacity: 0; transform: translateY(24px);
-  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+@media screen {
+  .js .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+  }
+  .js .reveal.is-visible { opacity: 1; transform: none; }
 }
-.js .reveal.is-visible { opacity: 1; transform: none; }
 
 /* scroll-timeline 지원 시: 장면 미세 줌 (점진적 향상, plan_C §5) */
 @supports (animation-timeline: view()) {
@@ -400,4 +406,16 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   .chapter { min-height: auto; }
   .chapter__scene { position: static; height: 52vh; }
   .chapter__caption { margin-top: calc(-1 * var(--sp-7)); }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  /* 고정 헤더가 매 페이지 상단에 반복되며 본문·푸터와 겹치지 않도록 */
+  .site-header { position: static; }
+  /* 가로 스크롤 연대기는 종이에서 잘리므로 줄바꿈 그리드로 펼친다 */
+  .timeline { flex-wrap: wrap; overflow: visible; padding-inline: 20px; }
+  .milestone { flex: 1 1 240px; break-inside: avoid; }
+  .timeline-hint, .scroll-hint { display: none; }
+  /* 흰 글자를 쓰는 배경은 인쇄 시 배경 생략으로 글자가 사라지므로 유지 */
+  .site-footer, .btn--solid { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
