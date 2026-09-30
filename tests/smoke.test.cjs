@@ -125,6 +125,117 @@ test('keyboard focus reaches skip link, navigation and filters in order', async 
   await page.close();
 });
 
+// axe는 이미지 위 텍스트 대비를 판정하지 못한다(incomplete). 글자를 투명하게 만든 뒤
+// 텍스트 박스 아래 실제 배경 픽셀을 캡처해, 가장 밝은 배경 픽셀 기준 최소 대비를 계산한다.
+async function minContrastOverBackground(page, selector) {
+  const target = page.locator(selector);
+  const color = await target.evaluate((element) => getComputedStyle(element).color);
+  const style = await page.addStyleTag({ content: `${selector} { color: transparent !important; }` });
+  const png = await target.screenshot({ animations: 'disabled' });
+  await style.evaluate((element) => element.remove());
+
+  return page.evaluate(async ({ base64, color }) => {
+    const image = new Image();
+    image.src = `data:image/png;base64,${base64}`;
+    await image.decode();
+    const canvas = document.createElement('canvas');
+    canvas.width = image.width;
+    canvas.height = image.height;
+    const context = canvas.getContext('2d');
+    context.drawImage(image, 0, 0);
+    const pixels = context.getImageData(0, 0, canvas.width, canvas.height).data;
+
+    const channel = (value) => {
+      const c = value / 255;
+      return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+    };
+    const luminance = (r, g, b) => 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b);
+    const [r, g, b] = color.match(/\d+/g).map(Number);
+    const fg = luminance(r, g, b);
+
+    let min = Infinity;
+    for (let i = 0; i < pixels.length; i += 4) {
+      const bg = luminance(pixels[i], pixels[i + 1], pixels[i + 2]);
+      min = Math.min(min, (Math.max(fg, bg) + 0.05) / (Math.min(fg, bg) + 0.05));
+    }
+    return min;
+  }, { base64: png.toString('base64'), color });
+}
+
+test('hero text over the photo meets WCAG AA contrast', async (t) => {
+  for (const viewport of [{ width: 1440, height: 900 }, { width: 768, height: 1024 }, { width: 360, height: 800 }]) {
+    const page = await browser.newPage({ viewport });
+    await page.goto(origin + '/', { waitUntil: 'networkidle' });
+
+    for (const selector of ['.hero .eyebrow', '.hero h1', '.hero .lead', '.hero .scroll-hint']) {
+      const ratio = await minContrastOverBackground(page, selector);
+      t.diagnostic(`${viewport.width}px ${selector}: ${ratio.toFixed(2)}:1`);
+      assert.ok(ratio >= 4.5, `${selector} at ${viewport.width}px: ${ratio.toFixed(2)}:1 < 4.5:1`);
+    }
+
+    await page.close();
+  }
+});
+
+test('Korean words are never split across lines', async () => {
+  for (const viewport of [{ width: 1440, height: 900 }, { width: 360, height: 800 }]) {
+    const page = await browser.newPage({ viewport });
+
+    for (const route of ['/', '/story.html', '/products.html']) {
+      await page.goto(origin + route);
+      const broken = await page.evaluate(() => {
+        const found = [];
+        for (const element of document.querySelectorAll('main :is(h1, h2, h3, p)')) {
+          const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+          for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+            for (const match of node.data.matchAll(/[가-힣]+/g)) {
+              const range = document.createRange();
+              range.setStart(node, match.index);
+              range.setEnd(node, match.index + match[0].length);
+              const tops = new Set([...range.getClientRects()].map((rect) => Math.round(rect.top)));
+              if (tops.size > 1) found.push(match[0]);
+            }
+          }
+        }
+        return found;
+      });
+      assert.deepEqual(broken, [], `${route} at ${viewport.width}px splits words`);
+    }
+
+    await page.close();
+  }
+});
+
+test('print output shows reveal content that was never scrolled into view', async () => {
+  const page = await browser.newPage();
+
+  for (const route of ['/', '/story.html']) {
+    await page.goto(origin + route);
+    await page.emulateMedia({ media: 'print' });
+    const hidden = await page.$$eval('.reveal', (elements) =>
+      elements.filter((element) => getComputedStyle(element).opacity !== '1').length);
+    assert.equal(hidden, 0, `${route} should print every .reveal element`);
+    await page.emulateMedia({ media: 'screen' });
+  }
+
+  await page.close();
+});
+
+test('print layout keeps the header in flow and the whole timeline on paper', async () => {
+  const page = await browser.newPage();
+  await page.goto(origin + '/story.html');
+  await page.emulateMedia({ media: 'print' });
+
+  assert.equal(await page.locator('.site-header').evaluate((element) => getComputedStyle(element).position), 'static');
+  const timeline = await page.locator('.timeline').evaluate((element) => ({
+    scrollWidth: element.scrollWidth,
+    clientWidth: element.clientWidth
+  }));
+  assert.ok(timeline.scrollWidth <= timeline.clientWidth, `timeline overflows: ${timeline.scrollWidth} > ${timeline.clientWidth}`);
+
+  await page.close();
+});
+
 test('mobile pages do not create document-level horizontal overflow', async () => {
   const page = await browser.newPage({ viewport: { width: 360, height: 800 } });
 
