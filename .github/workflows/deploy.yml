@@ -31,7 +31,24 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
 
-      - run: npm test
+      - name: Run smoke tests
+        run: |
+          set -o pipefail
+          npm test 2>&1 | tee test-output.txt
+
+      # 로그는 로그인해야 보이므로, 실패한 테스트는 공개로 보이는 주석(annotation)과 요약에 남긴다
+      - name: Report test failures
+        if: failure()
+        run: |
+          {
+            echo '## Smoke test output (tail)'
+            echo '```'
+            tail -n 150 test-output.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+          grep -E '^\s*(✖|AssertionError|TimeoutError|Error)' test-output.txt | awk '!seen[$0]++' | head -n 20 |
+            sed -e 's/%/%25/g' -e 's/^\s*//' |
+            while IFS= read -r line; do echo "::error title=Smoke test::${line}"; done
 
   deploy:
     needs: test
