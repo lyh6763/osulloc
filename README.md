@@ -28,12 +28,13 @@
 
 | 페이지 | Lighthouse (Perf/A11y/BP/SEO) | LCP | CLS | axe |
 |---|---|---|---|---|
-| index | 100 / 100 / 100 / 100 | 1.35s | 0 | Lighthouse 접근성 0건 |
-| story | 100 / 100 / 100 / 100 | 0.86s | 0 | Lighthouse 접근성 0건 |
-| products | 100 / 100 / 100 / 100 | 0.87s | 0 | Lighthouse 접근성 0건 |
+| index | 100 / 100 / 100 / 100 | 1.65s | 0 | Lighthouse 접근성 0건 |
+| story | 100 / 100 / 100 / 100 | 1.21s | 0.001 | Lighthouse 접근성 0건 |
+| products | 100 / 100 / 100 / 100 | 1.58s | 0 | Lighthouse 접근성 0건 |
 
-공개 URL에서 페이지당 3회 측정한 중앙값입니다. 메인은 히어로를 `<picture>` 아트 디렉션으로 바꿔
-모바일 이미지 전송량을 197KB → 70KB로 줄이며 90 → 100, LCP 2.0s → 1.35s로 개선했습니다.
+공개 URL에서 페이지당 3회 측정한 중앙값입니다 (제목 명조 웹폰트 적용 버전). 메인은 히어로를 `<picture>` 아트 디렉션으로 바꿔
+모바일 이미지 전송량을 197KB → 70KB로 줄이며 90 → 100으로 개선했습니다. 웹폰트 적용 후 Lighthouse 시뮬레이션 LCP는
+늘었지만, 같은 조건의 실제 브라우저 측정에서는 폰트 유무에 따른 LCP 차이가 없습니다(세부: METRICS.md).
 axe가 판정하지 못하는 사진 위 텍스트 대비는 스모크 테스트에서 픽셀 단위로 따로 검증합니다. 세부 수치와 로컬 기준값은
 [METRICS.md](METRICS.md), HTML·JSON 원본 보고서는 [`reports/lighthouse-live`](reports/lighthouse-live)에서 확인할 수 있습니다.
 
