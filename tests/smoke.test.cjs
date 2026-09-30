@@ -11,7 +11,8 @@ const mimeTypes = {
   '.html': 'text/html; charset=utf-8',
   '.js': 'text/javascript; charset=utf-8',
   '.svg': 'image/svg+xml',
-  '.webp': 'image/webp'
+  '.webp': 'image/webp',
+  '.woff2': 'font/woff2'
 };
 
 let browser;
@@ -117,7 +118,8 @@ test('timeline buttons move one card and reflect the scroll edges', async () => 
   await next.click();
   await page.waitForFunction(() => document.querySelector('.timeline').scrollLeft > 0);
   assert.ok(Math.abs(await timeline.evaluate((element) => element.scrollLeft) - step) <= 2, 'next should advance one card');
-  assert.equal(await prev.getAttribute('aria-disabled'), 'false');
+  // scroll 이벤트는 scrollLeft 변경 다음 프레임에 오므로 속성 갱신을 기다린다 (CI에서 경쟁 조건으로 실패했음)
+  await page.waitForFunction(() => document.querySelector('[aria-label="이전 연대"]').getAttribute('aria-disabled') === 'false');
 
   await timeline.press('End');
   await page.waitForFunction(() => {
@@ -283,6 +285,34 @@ test('hero picks one right-sized image per viewport', async () => {
 
     await context.close();
   }
+});
+
+test('serif subset font loads and covers every glyph rendered in the serif', async () => {
+  // 서브셋에 없는 글자는 시스템 명조로 섞여 보인다 — 제목에 새 글자를 쓰면 txt에 추가하고 `npm run fonts`
+  const subset = new Set(await fs.readFile(path.join(root, 'assets/fonts/noto-serif-kr-subset.txt'), 'utf8'));
+  const page = await browser.newPage();
+
+  for (const route of ['/', '/story.html', '/products.html']) {
+    await page.goto(origin + route, { waitUntil: 'networkidle' });
+    const { loaded, chars } = await page.evaluate(async () => {
+      await document.fonts.ready;
+      const loaded = [...document.fonts].some((face) => face.family.replace(/"/g, '') === 'Noto Serif KR' && face.status === 'loaded');
+      const chars = new Set();
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+        const element = node.parentElement;
+        if (!element || element.closest('svg')) continue;
+        if (!getComputedStyle(element).fontFamily.startsWith('"Noto Serif KR"')) continue;
+        for (const ch of node.data) if (!/\s/.test(ch)) chars.add(ch);
+      }
+      return { loaded, chars: [...chars] };
+    });
+
+    assert.ok(loaded, `${route}: Noto Serif KR subset should load`);
+    assert.deepEqual(chars.filter((ch) => !subset.has(ch)), [], `${route}: glyphs missing from assets/fonts/noto-serif-kr-subset.txt`);
+  }
+
+  await page.close();
 });
 
 test('Korean words are never split across lines', async () => {

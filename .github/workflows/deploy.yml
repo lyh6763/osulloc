@@ -46,7 +46,8 @@ jobs:
             tail -n 150 test-output.txt
             echo '```'
           } >> "$GITHUB_STEP_SUMMARY"
-          grep -E '^\s*(✖|AssertionError|TimeoutError|Error)' test-output.txt | awk '!seen[$0]++' | head -n 20 |
+          # 오류 줄 뒤 4줄(기댓값·실제값)까지 함께 남긴다
+          grep -E -A4 '^\s*(✖|AssertionError|TimeoutError|Error)' test-output.txt | grep -v '^--$' | awk 'NF && !seen[$0]++' | head -n 30 |
             sed -e 's/%/%25/g' -e 's/^\s*//' |
             while IFS= read -r line; do echo "::error title=Smoke test::${line}"; done
 
@@ -75,6 +76,7 @@ jobs:
             --exclude '/.gitignore' \
             --exclude '/node_modules' \
             --exclude '/tests' \
+            --exclude '/scripts' \
             --exclude '/package.json' \
             --exclude '/package-lock.json' \
             ./ _site/

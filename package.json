@@ -4,7 +4,8 @@
   "private": true,
   "description": "OSULLOC brand redesign portfolio site",
   "scripts": {
-    "test": "node --test --test-reporter=spec tests/smoke.test.cjs"
+    "test": "node --test --test-reporter=spec tests/smoke.test.cjs",
+    "fonts": "node scripts/build-serif-subset.mjs"
   },
   "devDependencies": {
     "lighthouse": "^13.5.0",

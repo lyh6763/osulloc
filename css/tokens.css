@@ -4,6 +4,15 @@
    라이트 단일 테마 (브랜드 사이트 — 다크 스코프 제외)
    ============================================================ */
 
+/* 제목용 명조 — 실제 쓰인 글자만 담은 자체 호스팅 가변 서브셋 (scripts/build-serif-subset.mjs) */
+@font-face {
+  font-family: "Noto Serif KR";
+  src: url("../assets/fonts/noto-serif-kr-subset.woff2") format("woff2");
+  font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* ---- Color · Green (브랜드 재해석) ---- */
   --green-950: #0D2620;
@@ -38,7 +47,10 @@
 
   /* ---- Typography ---- */
   --font-serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
-  --font-sans: "Pretendard Variable", Pretendard, -apple-system, system-ui, sans-serif;
+  /* 본문은 웹폰트 없이 OS 기본 한글 글꼴 — Pretendard 동적 서브셋(본문 기준 ~540KB)은
+     모바일 LCP를 2.0s → 2.8s로 늦춰 목표(2.5s)를 넘겨 제외 (2026-09-30 측정, METRICS.md) */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
+               "Noto Sans KR", system-ui, sans-serif;
 
   --fs-display: 2.25rem;
   --fs-h2:      1.625rem;
