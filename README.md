@@ -52,13 +52,26 @@ npx serve .
 
 Playwright 스모크 테스트가 페이지 로딩, 제품 필터, JS-off 폴백, 연대기 키보드 탐색,
 키보드 포커스 순서, 360px 모바일 오버플로, 히어로 텍스트 대비(픽셀 측정), 반응형 히어로 이미지 선택,
-한글 단어 줄바꿈, 인쇄 레이아웃, 연대기 버튼·정렬, 메인·제품 페이지 데이터 일치를 확인합니다.
+한글 단어 줄바꿈, 인쇄 레이아웃, 연대기 버튼·정렬, 메인·제품 페이지 데이터 일치, 제목 명조 서브셋 글자 범위,
+헤더 높이·앵커 위치를 확인합니다.
 
 ```bash
 npm install
 npx playwright install chromium
 npm test
 ```
+
+## 성능 측정
+
+[METRICS.md](METRICS.md)의 Lighthouse 수치는 아래 명령으로 재현합니다 (모바일 기본 프리셋, 페이지당 3회 중 LCP 중앙값 보고서 저장,
+METRICS.md에 붙여 넣을 수 있는 표 출력).
+
+```bash
+npm run lighthouse
+```
+
+`npm run lighthouse` 는 공개 URL을 측정해 `reports/lighthouse-live`에 저장합니다. 작업 트리를 측정하려면
+`npm run lighthouse:local`(→ `reports/lighthouse`)을 쓰고, `-- --runs 5 --pages index` 처럼 옵션을 넘길 수 있습니다.
 
 ## 배포
 

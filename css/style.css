@@ -31,8 +31,8 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   border-radius: 2px;
 }
 
-[id] { scroll-margin-top: 88px; }
-@media (max-width: 767px) { [id] { scroll-margin-top: 136px; } } /* 2줄 헤더 보정 */
+/* 앵커 이동 시 고정 헤더에 가리지 않도록 헤더 높이 + 여유 */
+[id] { scroll-margin-top: calc(var(--header-h) + var(--sp-4)); }
 
 .container {
   width: 100%;
@@ -98,7 +98,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 }
 .site-header .container {
   display: flex; align-items: center; gap: var(--sp-6);
-  min-height: 72px;
+  min-height: var(--header-h);
 }
 .brand {
   font-family: var(--font-serif);
@@ -118,7 +118,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 
 /* 모바일: 가로 스크롤 내비 (햄버거 대신 — 스코프 절제) */
 @media (max-width: 767px) {
-  .site-header .container { flex-wrap: wrap; row-gap: 0; padding-block: var(--sp-2); }
+  .site-header .container { flex-wrap: wrap; align-content: center; row-gap: 0; padding-block: var(--sp-2); }
   .gnb { margin-left: 0; width: 100%; overflow-x: auto; }
   .gnb ul { gap: var(--sp-4); padding-bottom: var(--sp-2); }
   .gnb a { white-space: nowrap; }
@@ -127,9 +127,11 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
+  /* svh: 모바일 주소창이 보이는 첫 화면 기준 — vh(가장 큰 뷰포트)면 스크롤 힌트가 화면 밖으로 밀린다 */
   min-height: 88vh;
+  min-height: 88svh;
   display: grid; place-items: center; text-align: center;
-  padding-block: calc(72px + var(--sp-8)) var(--sp-8);
+  padding-block: calc(var(--header-h) + var(--sp-8)) var(--sp-8);
   overflow: hidden;
   background: var(--bg);
 }
@@ -169,13 +171,15 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 }
 
 /* ---------- Journey (챕터 스토리텔링 — sticky scene, 하이재킹 없음) ---------- */
+/* 장면은 의도적으로 vh(= 가장 큰 뷰포트, lvh): 주소창이 접혀도 배경 아래로 빈 틈이 생기지 않는다.
+   챕터 길이·캡션 겹침 값도 장면 높이와 같은 단위로 맞춘다 */
 .chapter { position: relative; min-height: 170vh; }
 .chapter__scene {
   position: sticky; top: 0;
   height: 100vh; overflow: hidden;
   display: grid; place-items: center;
 }
-.chapter__scene svg { width: 100%; height: 100%; object-fit: cover; }
+.chapter__scene svg { width: 100%; height: 100%; }
 
 .chapter__caption {
   position: relative; z-index: 2;
@@ -275,10 +279,9 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 .tea-card .price { display: block; margin-top: var(--sp-3); font-weight: 700; color: var(--text-strong); }
 
 /* 티 비주얼 배경 변주 (사진 교체 슬롯 — ASSETS.md 참조) */
-.tv-green  { background: linear-gradient(160deg, #DFE9E2, #9DBFAB); }
-.tv-dark   { background: linear-gradient(160deg, #2E6B57, #12332B); }
-.tv-amber  { background: linear-gradient(160deg, #F1E4C8, #D8B26A); }
-.tv-blossom{ background: linear-gradient(160deg, #F6E9E4, #DCB8AC); }
+.tv-green  { background: linear-gradient(160deg, var(--green-100), #9DBFAB); }
+.tv-dark   { background: linear-gradient(160deg, var(--green-500), var(--green-900)); }
+.tv-amber  { background: linear-gradient(160deg, #F1E4C8, var(--amber-300)); }
 
 /* ---------- 티뮤지엄 ---------- */
 .museum {
@@ -326,7 +329,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
    Story 페이지
    ============================================================ */
 .page-hero {
-  padding-block: calc(72px + var(--sp-9)) var(--sp-8);
+  padding-block: calc(var(--header-h) + var(--sp-9)) var(--sp-8);
   text-align: center;
 }
 .page-hero .eyebrow { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.24em; color: var(--accent); }
@@ -426,7 +429,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   }
   .js .reveal { opacity: 1; transform: none; }
   .chapter { min-height: auto; }
-  .chapter__scene { position: static; height: 52vh; }
+  .chapter__scene { position: static; height: 52vh; height: 52svh; } /* 정적 배치 — 첫 화면 기준 높이 */
   .chapter__caption { margin-top: calc(-1 * var(--sp-7)); }
 }
 
