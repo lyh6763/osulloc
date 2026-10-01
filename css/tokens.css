@@ -79,12 +79,18 @@
 
   --measure: 62ch;
   --container: 1200px;
+
+  /* 고정 헤더 높이 — 헤더 자체(min-height)·히어로 상단 여백·앵커 scroll-margin이 함께 참조한다.
+     모바일은 로고·메뉴 2줄: 여백 8 + 로고 38.5 + 메뉴 36 + 여백 8 = 90.5px → 92px
+     (tests: header height matches --header-h) */
+  --header-h: 92px;
 }
 
 @media (min-width: 768px) {
   :root {
     --fs-display: 3.25rem;
     --fs-h2: 2rem;
+    --header-h: 72px;
   }
 }
 

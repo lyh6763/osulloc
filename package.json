@@ -5,9 +5,12 @@
   "description": "OSULLOC brand redesign portfolio site",
   "scripts": {
     "test": "node --test --test-reporter=spec tests/smoke.test.cjs",
-    "fonts": "node scripts/build-serif-subset.mjs"
+    "fonts": "node scripts/build-serif-subset.mjs",
+    "lighthouse": "node scripts/lighthouse.mjs",
+    "lighthouse:local": "node scripts/lighthouse.mjs --local"
   },
   "devDependencies": {
+    "chrome-launcher": "^1.2.2",
     "lighthouse": "^13.5.0",
     "playwright": "^1.61.1"
   }

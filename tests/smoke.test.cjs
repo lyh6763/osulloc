@@ -375,6 +375,38 @@ test('print layout keeps the header in flow and the whole timeline on paper', as
   await page.close();
 });
 
+test('header height matches --header-h and anchors clear the fixed header', async () => {
+  for (const viewport of [{ width: 360, height: 800 }, { width: 768, height: 1024 }, { width: 1440, height: 900 }]) {
+    const page = await browser.newPage({ viewport, reducedMotion: 'reduce' });
+
+    for (const route of ['/', '/story.html', '/products.html']) {
+      await page.goto(origin + route, { waitUntil: 'networkidle' });
+      const header = await page.evaluate(() => {
+        const element = document.querySelector('.site-header');
+        const container = element.querySelector('.container');
+        return {
+          height: element.getBoundingClientRect().height,
+          token: parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')),
+          overflow: container.scrollHeight - container.clientHeight
+        };
+      });
+      const label = `${route} at ${viewport.width}px`;
+      // 내용이 토큰보다 커지면 헤더가 늘어나 히어로 여백·앵커 위치가 어긋난다 → 토큰을 올려야 한다
+      assert.equal(header.height, header.token, `${label}: header ${header.height}px vs --header-h ${header.token}px`);
+      assert.ok(header.overflow <= 0, `${label}: header content overflows by ${header.overflow}px`);
+    }
+
+    for (const [route, id] of [['/index.html#museum', 'museum'], ['/story.html#visit', 'visit']]) {
+      await page.goto(origin + route, { waitUntil: 'networkidle' });
+      const gap = await page.evaluate((targetId) =>
+        document.getElementById(targetId).getBoundingClientRect().top - document.querySelector('.site-header').getBoundingClientRect().bottom, id);
+      assert.ok(gap >= 0, `${route} at ${viewport.width}px: target is ${-gap}px under the header`);
+    }
+
+    await page.close();
+  }
+});
+
 test('mobile pages do not create document-level horizontal overflow', async () => {
   const page = await browser.newPage({ viewport: { width: 360, height: 800 } });
 
