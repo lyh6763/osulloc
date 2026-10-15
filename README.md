@@ -5,55 +5,48 @@
 
 **Live**: https://lyh6763.github.io/osulloc/
 
-프로모션에 묻힌 브랜드 스토리를 전면으로 — 다원의 사계에서 찻잔까지의 여정을
-**스크롤 하이재킹 없이**, JS가 꺼져 있어도 서사가 성립하는 구조로 구현했습니다.
+프로모션에 묻혀 있던 브랜드 이야기를 앞으로 꺼내는 것이 목표였습니다. 메인은 제주 다원의 한 해를
+계절 순서로 따라가는 스크롤 페이지로 만들었고, 스크롤 동작은 브라우저 기본 그대로 두었습니다.
 
 ## 페이지
 
-| 페이지 | 내용 | 핵심 기술 |
+| 페이지 | 내용 | 구현 |
 |---|---|---|
-| `index.html` | 사계 챕터 스크롤 내러티브 · 시그니처 라인업 · 티뮤지엄 | sticky 장면 + 캡션 오버레이, IO `once` 리빌, `animation-timeline: view()` + 폴백 |
-| `story.html` | 1979~2026 브랜드 연대기 · 철학 | 네이티브 가로 스크롤 + `scroll-snap`, 키보드 접근 가능 스크롤러, 마우스용 이전/다음 버튼(JS 향상) |
-| `products.html` | 12제품 × 4카테고리 필터 | 점진적 향상 필터 (JS off 시 전 제품 노출), `aria-live` 결과 공지 |
+| `index.html` | 사계절 챕터, 시그니처 4종, 티뮤지엄 | sticky 장면 위로 캡션 스크롤, IntersectionObserver 리빌, `animation-timeline: view()` |
+| `story.html` | 1979~2026 연대기, 철학, 방문 안내 | 가로 스크롤 + `scroll-snap`, 방향키·Home·End 탐색, 이전/다음 버튼 |
+| `products.html` | 12개 제품, 카테고리 필터 | JS가 없으면 필터를 숨기고 전 제품 노출, `aria-live`로 결과 개수 안내 |
 
-## 원칙
+## 만들 때 정한 것
 
-- **0 프레임워크** — HTML·CSS·바닐라 JS
-- **점진적 향상** — 모든 콘텐츠는 정적 HTML에 존재, JS는 편의를 더할 뿐
-- **모션 배려** — `prefers-reduced-motion` 시 챕터가 정적 레이아웃으로 재구성
-- **애니메이션은 `transform`/`opacity`만** — 레이아웃 유발 속성 금지
-- **웹폰트는 제목 명조만** — 실제 쓰인 201자만 담은 자체 호스팅 서브셋(61KB), 본문은 OS 기본 한글 글꼴
+- 프레임워크 없이 HTML·CSS·바닐라 JS로 만든다.
+- 콘텐츠는 모두 정적 HTML에 두고, JS는 필터·버튼 같은 편의만 더한다.
+- `prefers-reduced-motion`이면 sticky 장면을 정적 배치로 바꾼다.
+- 애니메이션은 `transform`·`opacity`만 쓴다.
+- 웹폰트는 제목 명조 서브셋(61KB) 하나만 쓰고, 본문은 OS 기본 한글 글꼴을 쓴다.
 
-## 최신 측정 결과 (2026-09-30 · GitHub Pages 모바일 프리셋)
+## 측정 결과
 
-| 페이지 | Lighthouse (Perf/A11y/BP/SEO) | LCP | CLS | axe |
-|---|---|---|---|---|
-| index | 100 / 100 / 100 / 100 | 1.65s | 0 | Lighthouse 접근성 0건 |
-| story | 100 / 100 / 100 / 100 | 1.21s | 0.001 | Lighthouse 접근성 0건 |
-| products | 100 / 100 / 100 / 100 | 1.58s | 0 | Lighthouse 접근성 0건 |
+2026-09-30 라이브 사이트, Lighthouse 모바일 프리셋, 페이지당 3회 중앙값입니다.
 
-공개 URL에서 페이지당 3회 측정한 중앙값입니다 (제목 명조 웹폰트 적용 버전). 메인은 히어로를 `<picture>` 아트 디렉션으로 바꿔
-모바일 이미지 전송량을 197KB → 70KB로 줄이며 90 → 100으로 개선했습니다. 웹폰트 적용 후 Lighthouse 시뮬레이션 LCP는
-늘었지만, 같은 조건의 실제 브라우저 측정에서는 폰트 유무에 따른 LCP 차이가 없습니다(세부: METRICS.md).
-axe가 판정하지 못하는 사진 위 텍스트 대비는 스모크 테스트에서 픽셀 단위로 따로 검증합니다. 세부 수치와 로컬 기준값은
-[METRICS.md](METRICS.md), HTML·JSON 원본 보고서는 [`reports/lighthouse-live`](reports/lighthouse-live)에서 확인할 수 있습니다.
+| 페이지 | Perf / A11y / BP / SEO | LCP | CLS |
+|---|---|---|---|
+| index | 100 / 100 / 100 / 100 | 1.65s | 0 |
+| story | 100 / 100 / 100 / 100 | 1.21s | 0.001 |
+| products | 100 / 100 / 100 / 100 | 1.58s | 0 |
 
-이미지 자산 기록: [ASSETS.md](ASSETS.md)
+측정 조건과 성능·대비 문제를 해결한 과정은 [METRICS.md](METRICS.md),
+이미지 자산과 교체 계획은 [ASSETS.md](ASSETS.md)에 있습니다.
 
-## 로컬 실행
+## 실행과 검증
 
-정적 사이트입니다. 아무 정적 서버로 열면 됩니다:
+정적 사이트라 아무 정적 서버로 열면 됩니다.
 
 ```bash
 npx serve .
 ```
 
-## 자동 검증
-
-Playwright 스모크 테스트가 페이지 로딩, 제품 필터, JS-off 폴백, 연대기 키보드 탐색,
-키보드 포커스 순서, 360px 모바일 오버플로, 히어로 텍스트 대비(픽셀 측정), 반응형 히어로 이미지 선택,
-한글 단어 줄바꿈, 인쇄 레이아웃, 연대기 버튼·정렬, 메인·제품 페이지 데이터 일치, 제목 명조 서브셋 글자 범위,
-헤더 높이·앵커 위치를 확인합니다.
+Playwright 스모크 테스트 17개가 필터, JS가 꺼진 상태, 키보드 탐색, 360px 가로 넘침, 사진 위 텍스트 대비,
+명조 서브셋 글자 범위, 인쇄 레이아웃 등을 확인합니다.
 
 ```bash
 npm install
@@ -61,20 +54,10 @@ npx playwright install chromium
 npm test
 ```
 
-## 성능 측정
-
-[METRICS.md](METRICS.md)의 Lighthouse 수치는 아래 명령으로 재현합니다 (모바일 기본 프리셋, 페이지당 3회 중 LCP 중앙값 보고서 저장,
-METRICS.md에 붙여 넣을 수 있는 표 출력).
-
-```bash
-npm run lighthouse
-```
-
-`npm run lighthouse` 는 공개 URL을 측정해 `reports/lighthouse-live`에 저장합니다. 작업 트리를 측정하려면
-`npm run lighthouse:local`(→ `reports/lighthouse`)을 쓰고, `-- --runs 5 --pages index` 처럼 옵션을 넘길 수 있습니다.
+`npm run lighthouse`는 라이브 사이트를 재서 `reports/lighthouse-live`에 저장하고,
+`npm run lighthouse:local`은 작업 트리를 잽니다.
 
 ## 배포
 
-`main`에 push하면 GitHub Actions([`.github/workflows/deploy.yml`](.github/workflows/deploy.yml))가
-스모크 테스트를 실행하고, **통과한 경우에만** 개발 전용 파일(`tests/`, `package*.json` 등)을 뺀 사이트 파일을
-`gh-pages` 브랜치에 커밋해 GitHub Pages로 배포합니다. Actions 탭에서 수동 실행(`workflow_dispatch`)도 가능합니다.
+`main`에 push하면 GitHub Actions가 스모크 테스트를 돌리고, 통과했을 때만 사이트 파일을
+`gh-pages` 브랜치에 올려 GitHub Pages로 배포합니다.

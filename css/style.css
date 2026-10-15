@@ -1,6 +1,6 @@
 /* ============================================================
    OSULLOC Redesign — Styles
-   원칙: 스크롤 하이재킹 없음 · JS 없이 서사 성립 · transform/opacity만 애니메이션
+   애니메이션은 transform·opacity만 쓴다
    ============================================================ */
 
 /* ---------- Reset & Base ---------- */
@@ -116,7 +116,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 }
 .gnb a:hover, .gnb a[aria-current="page"] { border-bottom-color: var(--accent); }
 
-/* 모바일: 가로 스크롤 내비 (햄버거 대신 — 스코프 절제) */
+/* 모바일: 메뉴가 세 개뿐이라 햄버거 대신 가로 스크롤 내비 */
 @media (max-width: 767px) {
   .site-header .container { flex-wrap: wrap; align-content: center; row-gap: 0; padding-block: var(--sp-2); }
   .gnb { margin-left: 0; width: 100%; overflow-x: auto; }
@@ -159,7 +159,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   font-weight: 600;
   margin-top: var(--sp-4);
 }
-/* 사진 위 텍스트: --text-muted는 배경 밝기에 따라 2:1까지 떨어져 진한 잉크 사용 (tests: hero contrast) */
+/* 사진 위 텍스트는 --text-muted로는 대비가 부족해 진한 잉크를 쓴다 */
 .hero .lead {
   font-size: var(--fs-lead); color: var(--text-strong);
   max-width: 46ch; margin: var(--sp-5) auto 0;
@@ -170,7 +170,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   color: var(--text-strong);
 }
 
-/* ---------- Journey (챕터 스토리텔링 — sticky scene, 하이재킹 없음) ---------- */
+/* ---------- 사계 챕터 (sticky 장면 + 캡션) ---------- */
 /* 장면은 의도적으로 vh(= 가장 큰 뷰포트, lvh): 주소창이 접혀도 배경 아래로 빈 틈이 생기지 않는다.
    챕터 길이·캡션 겹침 값도 장면 높이와 같은 단위로 맞춘다 */
 .chapter { position: relative; min-height: 170vh; }
@@ -219,7 +219,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   .js .reveal.is-visible { opacity: 1; transform: none; }
 }
 
-/* scroll-timeline 지원 시: 장면 미세 줌 (점진적 향상, plan_C §5) */
+/* animation-timeline을 지원하는 브라우저에서만 장면을 살짝 줌 */
 @supports (animation-timeline: view()) {
   .chapter__scene svg {
     animation: scene-zoom linear both;
@@ -305,7 +305,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 .museum .btn { margin-top: var(--sp-6); }
 .museum.visit-panel { background: none; padding-block: 0; }
 
-/* ---------- Footer (다이어트 — AS-IS 중복 제거의 실증) ---------- */
+/* ---------- Footer ---------- */
 .site-footer {
   background: var(--green-950); color: var(--green-200);
   padding-block: var(--sp-7);
@@ -335,7 +335,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 .page-hero h1 { font-family: var(--font-serif); font-size: var(--fs-display); font-weight: 600; }
 .page-hero .lead { max-width: var(--measure); margin: var(--sp-5) auto 0; color: var(--text-muted); font-size: var(--fs-lead); }
 
-/* 가로 타임라인 — 네이티브 스크롤 + snap (하이재킹 없음, plan_C §5) */
+/* 가로 타임라인 — 브라우저 기본 스크롤 + scroll-snap */
 .timeline-section { padding-block: var(--sp-8) var(--sp-9); }
 .timeline {
   /* 첫 카드를 .container 안쪽 시작선(제목)과 맞춘다 — 넓은 화면에서도 좌측 끝에 붙지 않도록 */
@@ -408,7 +408,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
-  /* 상태(aria-pressed) 색 전환은 즉시 — 트랜지션 중 저대비 프레임 방지 (axe 실측으로 발견) */
+  /* 눌림 상태 색은 즉시 바꾼다 — 배경만 트랜지션되면 중간 프레임의 대비가 무너진다 */
   transition: border-color var(--dur-fast) var(--ease);
 }
 .filter-btn:hover { border-color: var(--accent); }
@@ -418,7 +418,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 .products-section { padding-block: var(--sp-4) var(--sp-9); }
 .product-count { font-size: var(--fs-sm); color: var(--text-muted); margin-bottom: var(--sp-4); }
 
-/* ---------- Reduced Motion (plan_C §5 — 모션 없이 서사 성립) ---------- */
+/* ---------- Reduced Motion: 장면을 정적 배치로 바꾼다 ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {

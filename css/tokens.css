@@ -1,10 +1,10 @@
 /* ============================================================
    OSULLOC Redesign — Design Tokens
-   plan_C_osulloc.md §8: 차분한 프리미엄 · 딥그린 + 웜 뉴트럴
-   라이트 단일 테마 (브랜드 사이트 — 다크 스코프 제외)
+   딥그린 + 웜 뉴트럴, 라이트 테마 하나만 쓴다
    ============================================================ */
 
-/* 제목용 명조 — 실제 쓰인 글자만 담은 자체 호스팅 가변 서브셋 (scripts/build-serif-subset.mjs) */
+/* 제목용 명조 — 실제 쓰인 글자만 담은 자체 호스팅 가변 서브셋 (scripts/build-serif-subset.mjs)
+   preload는 하지 않는다: 폰트를 기다리느라 첫 렌더가 오히려 늦어졌다 (METRICS.md) */
 @font-face {
   font-family: "Noto Serif KR";
   src: url("../assets/fonts/noto-serif-kr-subset.woff2") format("woff2");
@@ -47,8 +47,7 @@
 
   /* ---- Typography ---- */
   --font-serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
-  /* 본문은 웹폰트 없이 OS 기본 한글 글꼴 — Pretendard 동적 서브셋(본문 기준 ~540KB)은
-     모바일 LCP를 2.0s → 2.8s로 늦춰 목표(2.5s)를 넘겨 제외 (2026-09-30 측정, METRICS.md) */
+  /* 본문은 웹폰트 없이 OS 기본 한글 글꼴 — 본문용 웹폰트는 용량이 커서 LCP 목표를 넘겼다 (METRICS.md) */
   --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
                "Noto Sans KR", system-ui, sans-serif;
 
@@ -80,9 +79,8 @@
   --measure: 62ch;
   --container: 1200px;
 
-  /* 고정 헤더 높이 — 헤더 자체(min-height)·히어로 상단 여백·앵커 scroll-margin이 함께 참조한다.
-     모바일은 로고·메뉴 2줄: 여백 8 + 로고 38.5 + 메뉴 36 + 여백 8 = 90.5px → 92px
-     (tests: header height matches --header-h) */
+  /* 고정 헤더 높이 — 헤더·히어로 상단 여백·앵커 scroll-margin이 함께 참조한다.
+     모바일은 로고와 메뉴가 두 줄이라 더 높다 */
   --header-h: 92px;
 }
 
