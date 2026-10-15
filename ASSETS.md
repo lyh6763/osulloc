@@ -36,7 +36,7 @@
 
 | 파일 | 용도 | 크기 |
 |---|---|---|
-| `assets/fonts/noto-serif-kr-subset.woff2` | 제목 명조 (Noto Serif KR 가변 600–700, SIL OFL 1.1) | 62.6KB |
+| `assets/fonts/noto-serif-kr-subset.woff2` | 제목 명조 (Noto Serif KR 가변 600–700, SIL OFL 1.1) | 60.6KB |
 | `assets/fonts/noto-serif-kr-subset.txt` | 서브셋에 담을 글자 목록 (원본 데이터) | — |
 
 제목에 쓰인 글자만 담은 서브셋이다. 제목에 새 글자를 쓰면 스모크 테스트가 빠진 글자를 알려준다 →
