@@ -1,3 +1,5 @@
 node_modules/
 test-results/
 playwright-report/
+# 로컬 Lighthouse 보고서 (npm run lighthouse:local) — 기록용 보고서는 reports/lighthouse-live만 둔다
+reports/lighthouse/

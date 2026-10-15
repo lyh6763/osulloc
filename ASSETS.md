@@ -54,7 +54,7 @@ txt에 추가 → `npm run fonts`(Google Fonts `text=` API로 재생성) → wof
 | 티뮤지엄 | `index.html` #museum SVG | "osulloc museum" 은 저작권 주의 → "modern museum tea field" | 1200×825 |
 | 나머지 제품 카드 | `tv-*` 그라디언트 div | 각 차 제품 스타일 사진 또는 SVG 유지 | 800×600, lazy |
 
-## 교체 시 지켜야 할 것 (plan_C §5·§6)
+## 교체 시 지켜야 할 것
 1. `<picture>` + AVIF/WebP + `width`/`height` 명시 (CLS < 0.1 유지)
 2. 챕터 이미지는 `loading="eager"` 첫 장면만, 나머지 `lazy` + `fetchpriority` 관리
 3. 텍스트 오버레이 대비 4.5:1 재검증 (캡션 카드가 반투명 흰색이므로 대부분 안전)

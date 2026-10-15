@@ -21,8 +21,6 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 44C8 34 8 16 24 4c16 12 16 30 0 40Z' fill='%231D4B3F'/%3E%3C/svg%3E">
   <script>document.documentElement.classList.add('js');</script>
-  <!-- 웹폰트: 제목 명조만 — 쓰인 글자만 담은 자체 호스팅 서브셋(61KB, tokens.css). 본문은 OS 기본 한글 글꼴.
-       preload는 하지 않는다: Chrome이 preload 폰트를 기다리느라 첫 렌더가 ~150ms 늦어짐 (METRICS.md 실측) -->
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/style.css">
   <script src="js/main.js" defer></script>
@@ -45,8 +43,7 @@
 
   <main id="main">
 
-    <!-- Hero: 대표 이미지는 우선 로딩하고 텍스트 대비를 별도 레이어로 보장
-         세로 화면은 cover로 가운데만 보이므로 가운데 크롭본을, 가로 화면은 너비별 srcset을 사용 -->
+    <!-- Hero: 세로 화면에서는 가운데만 보이므로 가운데 크롭본을, 가로 화면은 너비별 srcset을 쓴다 -->
     <section class="hero" aria-labelledby="hero-title">
       <picture>
         <source media="(orientation: portrait)" srcset="assets/images/jeju-tea-field-portrait.webp" width="800" height="941">
@@ -63,7 +60,7 @@
       </div>
     </section>
 
-    <!-- Journey: 사계 챕터 (sticky 장면 + 스크롤 오버 캡션 — 하이재킹 없음) -->
+    <!-- 사계 챕터: 장면은 sticky로 고정되고 캡션이 그 위로 스크롤된다 -->
     <article class="chapter" aria-labelledby="ch1-title">
       <div class="chapter__scene">
         <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ch1-scene">

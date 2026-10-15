@@ -99,5 +99,5 @@ console.log(`\n보고서: ${path.relative(root, outDir)} (LCP 중앙값 실행)\
 console.log('| 페이지 | Performance | Accessibility | Best Practices | SEO | FCP | LCP | CLS | TBT |');
 console.log('|---|---:|---:|---:|---:|---:|---:|---:|---:|');
 for (const r of rows) {
-  console.log(`| ${r.name} | **${r.perf}** | **${r.a11y}** | **${r.bp}** | **${r.seo}** | ${r.fcp.toFixed(1)}s | ${r.lcp.toFixed(2)}s | ${+r.cls.toFixed(3)} | ${Math.round(r.tbt)}ms |`);
+  console.log(`| ${r.name} | ${r.perf} | ${r.a11y} | ${r.bp} | ${r.seo} | ${r.fcp.toFixed(1)}s | ${r.lcp.toFixed(2)}s | ${+r.cls.toFixed(3)} | ${Math.round(r.tbt)}ms |`);
 }
