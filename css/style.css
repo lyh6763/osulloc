@@ -30,6 +30,9 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   outline-offset: 3px;
   border-radius: 2px;
 }
+/* 어두운 구역에서는 --accent가 배경과 1.4~1.6:1이라 보이지 않는다 — 밝은 녹색으로 바꾼다(8.8:1 이상) */
+.story-teaser :focus-visible,
+.site-footer :focus-visible { outline-color: var(--green-200); }
 
 /* 앵커 이동 시 고정 헤더에 가리지 않도록 헤더 높이 + 여유 */
 [id] { scroll-margin-top: calc(var(--header-h) + var(--sp-4)); }
