@@ -1,7 +1,7 @@
 # 오설록 리디자인 — 이미지 교체 슬롯 가이드
 
-히어로와 카테고리 대표 제품은 프로젝트 전용 AI 생성 이미지를 WebP로 최적화해 적용했다.
-사계 챕터와 나머지 제품 비주얼은 인라인 SVG 아트 디렉션을 유지한다.
+히어로와 제품 카드 12개는 프로젝트 전용 AI 생성 이미지를 WebP로 최적화해 적용했다.
+사계 챕터와 티뮤지엄은 인라인 SVG 아트 디렉션을 유지한다.
 
 ## 적용된 이미지
 
@@ -16,6 +16,14 @@
 | `assets/images/black-tea.webp` | 홍차 대표 제품 | 1200×900 |
 | `assets/images/blended-tea.webp` | 블렌디드 티 대표 제품 | 1200×900 |
 | `assets/images/teaware-set.webp` | 티웨어 대표 제품 | 1200×900 |
+| `assets/images/first-flush-tea.webp` | 우전 | 1200×900 |
+| `assets/images/powdered-green-tea.webp` | 가루녹차 | 1200×900 |
+| `assets/images/fermented-teabags.webp` | 삼다연 티백 | 1200×900 |
+| `assets/images/citrus-blend.webp` | 제주 영귤 블렌드 | 1200×900 |
+| `assets/images/chamomile-blend.webp` | 안개 캐모마일 | 1200×900 |
+| `assets/images/cast-iron-teapot.webp` | 무쇠 다관 | 1200×900 |
+| `assets/images/bamboo-tea-spoon.webp` | 티 메저 스푼 | 1200×900 |
+| `assets/images/*-800.webp` | 위 제품 사진 12장의 작은 변형 (`srcset` 800w) | 800×600 |
 | `assets/images/og-home.jpg` | 메인·스토리 공유 미리보기 | 1200×630 |
 | `assets/images/og-products.jpg` | 제품 공유 미리보기 | 1200×630 |
 
@@ -31,6 +39,19 @@
   (세로 크롭 x=436, 800×941). 1672w 원본은 재인코딩하지 않는다.
 - 모바일(412×823 @1.75x) 히어로 전송량 196.9KB → 69.9KB, 로컬 Lighthouse 모바일 Perf 98 → 100, LCP 2.26s → 1.65s
 - 원본 소스가 생기면 원본에서 다시 생성해 재인코딩 손실을 없앨 것
+
+### 제품 카드 7장 추가 (2026-10-21)
+
+아이콘 자리표시였던 카드 7개를 기존 제품 사진 5장과 같은 톤(무로고 보관함·돌·찻잎·자연광 스틸 라이프)으로 채웠다.
+
+- Figma AI 이미지 생성(gemini-3.1-flash-image)으로 1200×896 PNG를 받아, Chromium canvas로 1200×900 cover 리사이즈 후 WebP 품질 0.85 인코딩
+- 파일당 54–98KB (기존 제품 사진 59–127KB)
+- 자리표시가 사진이 되자 모바일에서 첫 화면 근처 사진이 4장에서 7장으로 늘어, 로컬 Lighthouse(products, 모바일)가
+  Perf 99 → 98, LCP 2.12s → 2.34s로 나빠졌다. 카드는 최대 약 370px 폭이라 1200w는 과하다
+- 그래서 제품 사진 12장 모두 800w 변형을 두고 `srcset`(800w·1200w) + `sizes`로 제공한다 (홈 시그니처 카드 4개 포함).
+  800w는 새 7장은 생성 원본 PNG에서, 기존 5장은 원본이 없어 저장소 WebP에서 파생 (품질 0.8, 26–53KB)
+- 모바일 첫 화면에 들어오는 첫 카드(우전)가 LCP 요소가 되므로 이 한 장만 `lazy` 대신 `fetchpriority="high"`
+- 결과: 로컬 Perf 99, LCP 2.12s로 교체 전과 같음
 
 ## 웹폰트
 
@@ -52,7 +73,6 @@ txt에 추가 → `npm run fonts`(Google Fonts `text=` API로 재생성) → wof
 | 챕터3 가을 | ch3 SVG | "roasting tea leaves pan" | 동일 |
 | 챕터4 겨울 | ch4 SVG | "green tea cup steam minimal" | 동일 |
 | 티뮤지엄 | `index.html` #museum SVG | "osulloc museum" 은 저작권 주의 → "modern museum tea field" | 1200×825 |
-| 나머지 제품 카드 | `tv-*` 그라디언트 div | 각 차 제품 스타일 사진 또는 SVG 유지 | 800×600, lazy |
 
 ## 교체 시 지켜야 할 것
 1. `<picture>` + AVIF/WebP + `width`/`height` 명시 (CLS < 0.1 유지)
