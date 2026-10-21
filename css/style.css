@@ -274,17 +274,11 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   position: relative;
 }
 .tea-card__visual img { width: 100%; height: 100%; object-fit: cover; }
-.tea-card__visual .leaf-mark { width: 56px; height: 56px; opacity: 0.9; }
 .tea-card__body { padding: var(--sp-4) var(--sp-5) var(--sp-5); }
 .tea-card__cat { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.04em; color: var(--amber-600); }
 .tea-card h3 { font-size: var(--fs-h3); margin-top: var(--sp-2); font-family: var(--font-serif); font-weight: 600; }
 .tea-card .desc { font-size: var(--fs-sm); color: var(--text-muted); margin-top: var(--sp-2); }
 .tea-card .price { display: block; margin-top: var(--sp-3); font-weight: 700; color: var(--text-strong); }
-
-/* 티 비주얼 배경 변주 (사진 교체 슬롯 — ASSETS.md 참조) */
-.tv-green  { background: linear-gradient(160deg, var(--green-100), #9DBFAB); }
-.tv-dark   { background: linear-gradient(160deg, var(--green-500), var(--green-900)); }
-.tv-amber  { background: linear-gradient(160deg, #F1E4C8, var(--amber-300)); }
 
 /* ---------- 티뮤지엄 ---------- */
 .museum {
