@@ -89,12 +89,12 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   transition: background-color var(--dur-base) var(--ease),
               box-shadow var(--dur-base) var(--ease);
 }
-.js .site-header {
+.header-ready .site-header {
   background: transparent;
   backdrop-filter: none;
   box-shadow: none;
 }
-.js .site-header.is-scrolled {
+.header-ready .site-header.is-scrolled {
   background: rgb(249 246 240 / 0.92);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-1);
@@ -211,15 +211,15 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   .chapter__caption { margin-inline: 16px; margin-top: -30vh; padding: var(--sp-5); }
 }
 
-/* 스크롤 리빌 (JS 향상 — 실패 시에도 콘텐츠는 항상 보임)
+/* 스크롤 리빌 (초기화 완료 후에만 적용 — 기본 상태에서는 본문 표시)
    screen 한정: 인쇄 시 아직 스크롤되지 않은 요소가 빈칸으로 남지 않도록 */
 .reveal { opacity: 1; transform: none; }
 @media screen {
-  .js .reveal {
+  .reveal-ready .reveal {
     opacity: 0; transform: translateY(24px);
     transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
   }
-  .js .reveal.is-visible { opacity: 1; transform: none; }
+  .reveal-ready .reveal.is-visible { opacity: 1; transform: none; }
 }
 
 /* animation-timeline을 지원하는 브라우저에서만 장면을 살짝 줌 */
@@ -358,7 +358,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   cursor: pointer;
   transition: background-color var(--dur-fast) var(--ease);
 }
-.js .timeline-btn { display: inline-grid; }
+.timeline-ready .timeline-btn { display: inline-grid; }
 .timeline-btn svg { width: 20px; height: 20px; }
 .timeline-btn:hover { background: var(--green-100); }
 .timeline-btn[aria-disabled="true"] { opacity: 0.35; cursor: default; background: var(--surface); }
@@ -392,11 +392,20 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 /* ============================================================
    Products 페이지
    ============================================================ */
+.catalog-notice {
+  margin-bottom: var(--sp-5);
+  padding: var(--sp-3) var(--sp-4);
+  border-left: 3px solid var(--accent);
+  background: var(--surface-alt);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+}
 .filter-bar {
   display: none; gap: var(--sp-2); flex-wrap: wrap;
   margin-bottom: var(--sp-6);
 }
-.js .filter-bar { display: flex; }
+.filters-ready .filter-bar { display: flex; }
 .filter-btn {
   font: inherit; font-size: var(--fs-sm); font-weight: 600;
   padding: var(--sp-2) var(--sp-4);
@@ -423,7 +432,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  .js .reveal { opacity: 1; transform: none; }
+  .reveal-ready .reveal { opacity: 1; transform: none; }
   .chapter { min-height: auto; }
   .chapter__scene { position: static; height: 52vh; height: 52svh; } /* 정적 배치 — 첫 화면 기준 높이 */
   .chapter__caption { margin-top: calc(-1 * var(--sp-7)); }
@@ -436,7 +445,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   /* 가로 스크롤 연대기는 종이에서 잘리므로 줄바꿈 그리드로 펼친다 */
   .timeline { flex-wrap: wrap; overflow: visible; padding-inline: 20px; }
   .milestone { flex: 1 1 240px; break-inside: avoid; }
-  .js .timeline-btn, .scroll-hint { display: none; }
+  .timeline-ready .timeline-btn, .scroll-hint { display: none; }
   /* 흰 글자를 쓰는 배경은 인쇄 시 배경 생략으로 글자가 사라지므로 유지 */
   .site-footer, .btn--solid { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
