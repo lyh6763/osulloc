@@ -19,6 +19,8 @@
       header.classList.toggle('is-scrolled', shouldBeScrolled);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    document.documentElement.classList.add('header-ready');
   }
 
   /* ---------- 2. 스크롤 리빌 — IO 미지원 시 전부 노출 (방어적 폴백) ---------- */
@@ -27,15 +29,22 @@
     if (!('IntersectionObserver' in window) || prefersReduced.matches) {
       reveals.forEach(function (el) { el.classList.add('is-visible'); });
     } else {
-      var io = new IntersectionObserver(function (entries, observer) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target); // once — 리소스 즉시 해제
-          }
-        });
-      }, { threshold: 0.2, rootMargin: '0px 0px -40px 0px' });
-      reveals.forEach(function (el) { io.observe(el); });
+      var io;
+      try {
+        io = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target); // once — 리소스 즉시 해제
+            }
+          });
+        }, { threshold: 0.2, rootMargin: '0px 0px -40px 0px' });
+        reveals.forEach(function (el) { io.observe(el); });
+        document.documentElement.classList.add('reveal-ready');
+      } catch {
+        if (io) io.disconnect();
+        // 초기화에 실패하면 기본 상태의 본문을 그대로 보여 준다.
+      }
     }
   }
 
@@ -67,6 +76,7 @@
         countEl.textContent = btn.textContent.trim() + ' — ' + visible + '개 제품';
       }
     });
+    document.documentElement.classList.add('filters-ready');
   }
 
   /* ---------- 4. 연대기 탐색 — 키보드 + 이전/다음 버튼 ---------- */
@@ -114,5 +124,6 @@
         btn.setAttribute('aria-disabled', String(atEdge));
       });
     }, { passive: true });
+    document.documentElement.classList.add('timeline-ready');
   }
 })();
