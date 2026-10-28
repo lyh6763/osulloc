@@ -3,3 +3,5 @@ test-results/
 playwright-report/
 # 로컬 Lighthouse 보고서 (npm run lighthouse:local) — 기록용 보고서는 reports/lighthouse-live만 둔다
 reports/lighthouse/
+# Claude Code 개인 설정(허용 명령 목록 등) — 배포 브랜치로도 복사되므로 올리지 않는다
+.claude/settings.local.json
