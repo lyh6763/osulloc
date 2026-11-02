@@ -130,18 +130,33 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 /* ---------- Hero ---------- */
 .hero {
   position: relative;
-  /* svh: 모바일 주소창이 보이는 첫 화면 기준 — vh(가장 큰 뷰포트)면 스크롤 힌트가 화면 밖으로 밀린다 */
+  /* svh: 모바일 주소창이 보이는 첫 화면 기준 — 아래 계절 장면이 첫 화면 끝에 조금 보이도록 */
   min-height: 88vh;
   min-height: 88svh;
-  display: grid; place-items: center; text-align: center;
-  padding-block: calc(var(--header-h) + var(--sp-8)) var(--sp-8);
+  display: grid; align-items: start;  /* 글은 사진 위쪽 하늘에 둔다 */
+  padding-block: calc(var(--header-h) + var(--sp-6)) var(--sp-8);
   overflow: hidden;
   background: var(--bg);
 }
+/* 사진 전체를 덮던 막(62%) 대신 하늘 쪽에만 옅은 그러데이션을 깐다.
+   좁은 화면은 하늘이 낮아 소개 문장(360px에서 6줄, 첫 화면 높이의 약 61%까지)이 안개 아래 나무·차밭까지
+   내려가므로, 그 높이까지 진하게 두고 아래에서 빨리 걷는다 — 진하기는 대비 테스트로 맞춤 */
 .hero::after {
   content: "";
   position: absolute; inset: 0; z-index: 1;
-  background: rgb(249 246 240 / 0.62);
+  background: linear-gradient(180deg,
+    rgb(249 246 240 / 0.72) 0%,
+    rgb(249 246 240 / 0.62) 40%,
+    rgb(249 246 240 / 0.55) 62%,
+    rgb(249 246 240 / 0) 78%);
+}
+@media (min-width: 1024px) {
+  .hero::after {
+    background: linear-gradient(180deg,
+      rgb(249 246 240 / 0.5) 0%,
+      rgb(249 246 240 / 0.3) 32%,
+      rgb(249 246 240 / 0) 52%);
+  }
 }
 /* picture 래퍼(와 그 안의 source)가 그리드 행을 차지해 텍스트 중앙 정렬을 밀어내지 않도록
    흐름에서 빼낸다 — display: contents로는 source가 빈 그리드 항목으로 남는다 */
@@ -152,25 +167,22 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   object-fit: cover;
 }
 .hero .container { position: relative; z-index: 2; }
-.hero .eyebrow {
-  font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.24em;
-  color: var(--accent); text-transform: uppercase;
-}
 .hero h1 {
   font-family: var(--font-serif);
   font-size: var(--fs-display);
   font-weight: 600;
-  margin-top: var(--sp-4);
 }
 /* 사진 위 텍스트는 --text-muted로는 대비가 부족해 진한 잉크를 쓴다 */
 .hero .lead {
   font-size: var(--fs-lead); color: var(--text-strong);
-  max-width: 46ch; margin: var(--sp-5) auto 0;
+  max-width: 46ch; margin-top: var(--sp-5);
 }
-.hero .scroll-hint {
-  margin-top: var(--sp-7);
-  font-size: var(--fs-xs); letter-spacing: 0.18em;
-  color: var(--text-strong);
+/* 넓은 화면은 하늘이 낮아 제목을 한 줄로 펴고 소개를 넓혀, 둘 다 하늘 안에 둔다 */
+@media (min-width: 1024px) {
+  .hero { padding-top: calc(var(--header-h) + var(--sp-8)); }
+  .hero h1 { font-size: 3.25rem; }
+  .hero h1 br { display: none; }
+  .hero .lead { max-width: 40em; }
 }
 
 /* ---------- 사계 챕터 (sticky 사진 장면 + 왼쪽 글 판) ---------- */
@@ -463,7 +475,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   /* 가로 스크롤 연대기는 종이에서 잘리므로 줄바꿈 그리드로 펼친다 */
   .timeline { flex-wrap: wrap; overflow: visible; padding-inline: 20px; }
   .milestone { flex: 1 1 240px; break-inside: avoid; }
-  .timeline-ready .timeline-btn, .scroll-hint { display: none; }
+  .timeline-ready .timeline-btn { display: none; }
   /* 흰 글자를 쓰는 배경은 인쇄 시 배경 생략으로 글자가 사라지므로 유지 */
   .site-footer, .btn--solid { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
