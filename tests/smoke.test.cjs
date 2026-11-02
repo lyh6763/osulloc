@@ -139,6 +139,25 @@ test('timeline buttons stay hidden without JS', async () => {
   await context.close();
 });
 
+test('JS-enhanced controls hold their space before main.js runs', async () => {
+  // main.js(defer)가 첫 렌더 뒤에 돌면 버튼·필터가 늦게 나타나 아래 내용이 밀린다(CLS).
+  // main.js를 막은 페이지(= 아직 안 돈 첫 렌더)와 정상 페이지에서 아래 내용의 위치가 같아야 한다
+  for (const viewport of [{ width: 412, height: 823 }, { width: 1440, height: 900 }]) {
+    for (const [route, selectors] of [['/story.html', ['#timeline', '.philosophy']], ['/products.html', ['.product-count', '.tea-card']]]) {
+      const positions = [];
+      for (const blockMain of [true, false]) {
+        const page = await browser.newPage({ viewport, reducedMotion: 'reduce' });
+        if (blockMain) await page.route('**/js/main.js', (requestRoute) => requestRoute.abort());
+        await page.goto(origin + route, { waitUntil: 'networkidle' });
+        positions.push(await page.evaluate((list) => list.map((selector) =>
+          Math.round(document.querySelector(selector).getBoundingClientRect().top + scrollY)), selectors));
+        await page.close();
+      }
+      assert.deepEqual(positions[1], positions[0], `${route} at ${viewport.width}px: ${selectors.join(', ')} move when main.js runs`);
+    }
+  }
+});
+
 test('first timeline card lines up with the section heading', async () => {
   for (const viewport of [{ width: 1440, height: 900 }, { width: 1920, height: 1080 }, { width: 360, height: 800 }]) {
     const page = await browser.newPage({ viewport });
