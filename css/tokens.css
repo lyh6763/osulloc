@@ -47,7 +47,7 @@
 
   /* ---- Typography ---- */
   --font-serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
-  /* 본문은 웹폰트 없이 OS 기본 한글 글꼴 — 본문용 웹폰트는 용량이 커서 LCP 목표를 넘겼다 (METRICS.md) */
+  /* 본문은 웹폰트 없이 OS 기본 한글 글꼴 — 본문용 웹폰트는 59KB 서브셋으로도 LCP·CLS 목표를 넘겼다 (METRICS.md 1·5절) */
   --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
                "Noto Sans KR", system-ui, sans-serif;
 
