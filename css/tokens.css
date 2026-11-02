@@ -3,12 +3,19 @@
    딥그린 + 웜 뉴트럴, 라이트 테마 하나만 쓴다
    ============================================================ */
 
-/* 제목용 명조 — 실제 쓰인 글자만 담은 자체 호스팅 가변 서브셋 (scripts/build-serif-subset.mjs)
+/* 제목 명조·본문 고딕 — 실제 쓰인 글자만 담은 자체 호스팅 가변 서브셋 (scripts/build-font-subsets.mjs)
    preload는 하지 않는다: 폰트를 기다리느라 첫 렌더가 오히려 늦어졌다 (METRICS.md) */
 @font-face {
   font-family: "Noto Serif KR";
   src: url("../assets/fonts/noto-serif-kr-subset.woff2") format("woff2");
   font-weight: 600 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Noto Sans KR";
+  src: url("../assets/fonts/noto-sans-kr-subset.woff2") format("woff2");
+  font-weight: 400 700;
   font-style: normal;
   font-display: swap;
 }
@@ -47,9 +54,9 @@
 
   /* ---- Typography ---- */
   --font-serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
-  /* 본문은 웹폰트 없이 OS 기본 한글 글꼴 — 본문용 웹폰트는 용량이 커서 LCP 목표를 넘겼다 (METRICS.md) */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
-               "Noto Sans KR", system-ui, sans-serif;
+  /* 본문은 제목 명조와 같은 가족의 고딕 서브셋 — 서브셋에 없는 글자는 OS 기본 한글 글꼴로 */
+  --font-sans: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
+               system-ui, sans-serif;
 
   --fs-display: 2.25rem;
   --fs-h2:      1.625rem;

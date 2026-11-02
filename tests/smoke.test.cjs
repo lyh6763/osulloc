@@ -285,29 +285,32 @@ test('hero picks one right-sized image per viewport', async () => {
   }
 });
 
-test('serif subset font loads and covers every glyph rendered in the serif', async () => {
-  // 서브셋에 없는 글자는 시스템 명조로 섞여 보인다 — 제목에 새 글자를 쓰면 txt에 추가하고 `npm run fonts`
-  const subset = new Set(await fs.readFile(path.join(root, 'assets/fonts/noto-serif-kr-subset.txt'), 'utf8'));
+test('subset fonts load and cover every glyph rendered in them', async () => {
+  // 서브셋에 없는 글자는 시스템 글꼴로 섞여 보인다 — 새 글자를 쓰면 해당 txt에 추가하고 `npm run fonts`
   const page = await browser.newPage();
 
-  for (const route of ['/', '/story.html', '/products.html']) {
-    await page.goto(origin + route, { waitUntil: 'networkidle' });
-    const { loaded, chars } = await page.evaluate(async () => {
-      await document.fonts.ready;
-      const loaded = [...document.fonts].some((face) => face.family.replace(/"/g, '') === 'Noto Serif KR' && face.status === 'loaded');
-      const chars = new Set();
-      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-      for (let node = walker.nextNode(); node; node = walker.nextNode()) {
-        const element = node.parentElement;
-        if (!element || element.closest('svg')) continue;
-        if (!getComputedStyle(element).fontFamily.startsWith('"Noto Serif KR"')) continue;
-        for (const ch of node.data) if (!/\s/.test(ch)) chars.add(ch);
-      }
-      return { loaded, chars: [...chars] };
-    });
+  for (const [family, file] of [['Noto Serif KR', 'noto-serif-kr-subset'], ['Noto Sans KR', 'noto-sans-kr-subset']]) {
+    const subset = new Set(await fs.readFile(path.join(root, `assets/fonts/${file}.txt`), 'utf8'));
 
-    assert.ok(loaded, `${route}: Noto Serif KR subset should load`);
-    assert.deepEqual(chars.filter((ch) => !subset.has(ch)), [], `${route}: glyphs missing from assets/fonts/noto-serif-kr-subset.txt`);
+    for (const route of ['/', '/story.html', '/products.html']) {
+      await page.goto(origin + route, { waitUntil: 'networkidle' });
+      const { loaded, chars } = await page.evaluate(async (name) => {
+        await document.fonts.ready;
+        const loaded = [...document.fonts].some((face) => face.family.replace(/"/g, '') === name && face.status === 'loaded');
+        const chars = new Set();
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+        for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+          const element = node.parentElement;
+          if (!element || element.closest('svg')) continue;
+          if (!getComputedStyle(element).fontFamily.startsWith(`"${name}"`)) continue;
+          for (const ch of node.data) if (!/\s/.test(ch)) chars.add(ch);
+        }
+        return { loaded, chars: [...chars] };
+      }, family);
+
+      assert.ok(loaded, `${route}: ${family} subset should load`);
+      assert.deepEqual(chars.filter((ch) => !subset.has(ch)), [], `${route}: glyphs missing from assets/fonts/${file}.txt`);
+    }
   }
 
   await page.close();
