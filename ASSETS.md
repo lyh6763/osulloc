@@ -1,7 +1,7 @@
 # 오설록 리디자인 — 이미지 교체 슬롯 가이드
 
-히어로와 제품 카드 12개는 프로젝트 전용 AI 생성 이미지를 WebP로 최적화해 적용했다.
-사계 챕터와 티뮤지엄은 인라인 SVG 아트 디렉션을 유지한다.
+히어로, 사계 챕터 4장면, 제품 카드 12개는 프로젝트 전용 AI 생성 이미지를 WebP로 최적화해 적용했다.
+티뮤지엄만 인라인 SVG를 유지한다.
 
 ## 적용된 이미지
 
@@ -11,6 +11,9 @@
 | `assets/images/jeju-tea-field-1280.webp` | 메인 히어로 (가로 화면 1280w) | 1280×720 |
 | `assets/images/jeju-tea-field-960.webp` | 메인 히어로 (가로 화면 960w) | 960×540 |
 | `assets/images/jeju-tea-field-portrait.webp` | 메인 히어로 (세로 화면 · 가운데 크롭) | 800×941 |
+| `assets/images/season-{spring,summer,autumn,winter}.webp` | 사계 챕터 장면 (가로 화면 1376w) | 1376×768 |
+| `assets/images/season-*-960.webp` | 사계 챕터 장면 (가로 화면 960w) | 960×536 |
+| `assets/images/season-*-portrait.webp` | 사계 챕터 장면 (세로 화면 · 주인공 쪽 크롭) | 653×768 |
 | `assets/images/tea-collection.webp` | 녹차 대표 제품 | 1200×900 |
 | `assets/images/fermented-tea.webp` | 발효차 대표 제품 | 1200×900 |
 | `assets/images/black-tea.webp` | 홍차 대표 제품 | 1200×900 |
@@ -53,6 +56,19 @@
 - 모바일 첫 화면에 들어오는 첫 카드(우전)가 LCP 요소가 되므로 이 한 장만 `lazy` 대신 `fetchpriority="high"`
 - 결과: 로컬 Perf 99, LCP 2.12s로 교체 전과 같음
 
+### 사계 챕터 사진 (2026-11-02)
+
+도형 SVG 4개가 첫 화면·제품의 사진과 그림 언어가 맞지 않아 사진으로 바꿨다.
+
+- Figma AI 이미지 생성(gemini-3.1-flash-image)으로 1376×768 PNG를 받았다. 제품 사진과 같은 톤(자연광, 차분한 흙빛,
+  글자·로고·사람 없음)에, 주인공을 오른쪽 절반에 두고 왼쪽은 글 판이 올라가도록 흐리게 요청
+  - 봄: 안개 낀 이른 아침 차밭의 새순 · 여름: 현무암 돌담 위 대나무 채반에 시들리는 찻잎
+  - 가을: 차나무에 핀 흰 차꽃 · 겨울: 현무암 위 김 오르는 녹차 한 잔과 붉은 동백
+  - 가을 첫 생성은 사진 두 장을 이어 붙인 모양이라 버리고 다시 만들었다. 노을빛이 진해 채도를 0.85로 낮췄다
+- Chromium canvas로 가로 원본(품질 0.78)·960w(0.78)·세로 크롭 653×768(0.74)을 WebP로 만들었다. 세로 크롭은
+  주인공이 있는 오른쪽에서 잘랐다(x = 봄 640, 여름 723, 가을 723, 겨울 680). 파일당 37–99KB
+- 그대로 lazy로 두면 첫 화면 사진과 받는 순서를 다툰다. 받는 시점은 METRICS.md 4절
+
 ## 웹폰트
 
 | 파일 | 용도 | 크기 |
@@ -68,10 +84,6 @@ txt에 추가 → `npm run fonts`(Google Fonts `text=` API로 재생성) → wof
 
 | 슬롯 | 위치 | 권장 소재 (검색어) | 권장 스펙 |
 |---|---|---|---|
-| 챕터1 봄 | `index.html` ch1 SVG | "jeju green tea field mist" | 1920×1200, AVIF/WebP, `<picture>` 모바일 세로 크롭 |
-| 챕터2 여름 | ch2 SVG | "tea leaf macro" | 동일 |
-| 챕터3 가을 | ch3 SVG | "roasting tea leaves pan" | 동일 |
-| 챕터4 겨울 | ch4 SVG | "green tea cup steam minimal" | 동일 |
 | 티뮤지엄 | `index.html` #museum SVG | "osulloc museum" 은 저작권 주의 → "modern museum tea field" | 1200×825 |
 
 ## 교체 시 지켜야 할 것

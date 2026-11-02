@@ -16,7 +16,7 @@ AI 코딩 도구 Claude Code와 함께 만들었습니다. 소재와 방향(프�
 
 | 페이지 | 내용 | 구현 |
 |---|---|---|
-| `index.html` | 사계절 챕터, 시그니처 4종, 티뮤지엄 | sticky 장면 위로 캡션 스크롤, IntersectionObserver 리빌, `animation-timeline: view()` |
+| `index.html` | 사계절 챕터(계절마다 차 한 가지), 시그니처 4종, 티뮤지엄 | sticky 사진 장면 위로 글 판 스크롤, IntersectionObserver 리빌, `animation-timeline: view()`, 먼 챕터는 `content-visibility: auto` |
 | `story.html` | 1979~2026 연대기, 철학, 방문 안내 | 가로 스크롤 + `scroll-snap`, 방향키·Home·End 탐색, 이전/다음 버튼 |
 | `products.html` | 12개 제품, 카테고리 필터 | JS가 없으면 필터를 숨기고 전 제품 노출, `aria-live`로 결과 개수 안내 |
 
