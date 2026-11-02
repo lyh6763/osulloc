@@ -1,7 +1,6 @@
 # 오설록 리디자인 — 이미지 교체 슬롯 가이드
 
-히어로, 사계 챕터 4장면, 제품 카드 12개는 프로젝트 전용 AI 생성 이미지를 WebP로 최적화해 적용했다.
-티뮤지엄만 인라인 SVG를 유지한다.
+히어로, 사계 챕터 4장면, 제품 카드 12개, 티뮤지엄은 프로젝트 전용 AI 생성 이미지를 WebP로 최적화해 적용했다.
 
 ## 적용된 이미지
 
@@ -14,6 +13,8 @@
 | `assets/images/season-{spring,summer,autumn,winter}.webp` | 사계 챕터 장면 (가로 화면 1376w) | 1376×768 |
 | `assets/images/season-*-960.webp` | 사계 챕터 장면 (가로 화면 960w) | 960×536 |
 | `assets/images/season-*-portrait.webp` | 사계 챕터 장면 (세로 화면 · 주인공 쪽 크롭) | 653×768 |
+| `assets/images/tea-museum.webp` | 티뮤지엄 (1200w) | 1200×825 |
+| `assets/images/tea-museum-800.webp` | 티뮤지엄 (800w) | 800×550 |
 | `assets/images/tea-collection.webp` | 녹차 대표 제품 | 1200×900 |
 | `assets/images/fermented-tea.webp` | 발효차 대표 제품 | 1200×900 |
 | `assets/images/black-tea.webp` | 홍차 대표 제품 | 1200×900 |
@@ -69,6 +70,15 @@
   주인공이 있는 오른쪽에서 잘랐다(x = 봄 640, 여름 723, 가을 723, 겨울 680). 파일당 37–99KB
 - 그대로 lazy로 두면 첫 화면 사진과 받는 순서를 다툰다. 받는 시점은 METRICS.md 4절
 
+### 티뮤지엄 사진 (2026-11-02)
+
+메인에서 마지막으로 남은 도형 SVG였다. 실제 건물을 흉내 내지 않도록 '차밭 너머의 낮은 현대식 전시관'으로 요청했다.
+
+- Figma AI 이미지 생성(gemini-3.1-flash-image)으로 1264×848 PNG를 받았다. 계절 사진과 같은 톤(부드러운 낮빛,
+  차분한 흙빛, 사람·글자·간판·로고 없음)에 곡선 차밭 이랑, 현무암, 오름 능선을 넣었다
+- 자리 비율 16:11에 맞춰 가로 가운데를 1233×848로 자르고, Chromium canvas로 1200w(138KB)·800w(79KB) WebP(품질 0.8)
+- 페이지 아래쪽이라 `lazy`. 데스크톱에서는 약 590px 폭이라 `sizes`로 800w를 먼저 고르게 했다
+
 ## 웹폰트
 
 | 파일 | 용도 | 크기 |
@@ -80,14 +90,8 @@
 txt에 추가 → `npm run fonts`(Google Fonts `text=` API로 재생성) → woff2와 txt를 함께 커밋.
 본문은 웹폰트 없이 OS 기본 한글 글꼴을 쓴다 (선택 근거: [METRICS.md](METRICS.md)).
 
-## 남은 교체 슬롯
-
-| 슬롯 | 위치 | 권장 소재 (검색어) | 권장 스펙 |
-|---|---|---|---|
-| 티뮤지엄 | `index.html` #museum SVG | "osulloc museum" 은 저작권 주의 → "modern museum tea field" | 1200×825 |
-
 ## 교체 시 지켜야 할 것
 1. `<picture>` + AVIF/WebP + `width`/`height` 명시 (CLS < 0.1 유지)
 2. 챕터 이미지는 `loading="eager"` 첫 장면만, 나머지 `lazy` + `fetchpriority` 관리
 3. 텍스트 오버레이 대비 4.5:1 재검증 (캡션 카드가 반투명 흰색이므로 대부분 안전)
-4. `role="img"` + 구체적 `aria-label`/`<title>` 유지
+4. 사진이 보여 주는 장면을 구체적으로 적은 `alt` 유지
