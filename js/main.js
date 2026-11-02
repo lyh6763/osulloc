@@ -76,7 +76,6 @@
         countEl.textContent = btn.textContent.trim() + ' — ' + visible + '개 제품';
       }
     });
-    document.documentElement.classList.add('filters-ready');
   }
 
   /* ---------- 4. 연대기 탐색 — 키보드 + 이전/다음 버튼 ---------- */
@@ -124,6 +123,5 @@
         btn.setAttribute('aria-disabled', String(atEdge));
       });
     }, { passive: true });
-    document.documentElement.classList.add('timeline-ready');
   }
 })();

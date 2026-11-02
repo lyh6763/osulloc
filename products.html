@@ -22,6 +22,9 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath d='M24 44C8 34 8 16 24 4c16 12 16 30 0 40Z' fill='%231D4B3F'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/style.css">
+  <!-- JS로 켜는 필터 막대의 자리를 첫 렌더부터 잡는다: main.js(defer)가 돈 뒤에 나타나면
+       그 아래 상품 카드가 밀린다(CLS). JS가 없으면 이 줄도 돌지 않으므로 필터는 숨은 채로 남는다 -->
+  <script>document.documentElement.classList.add('js');</script>
   <script src="js/main.js" defer></script>
 </head>
 <body>

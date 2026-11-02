@@ -389,7 +389,8 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   cursor: pointer;
   transition: background-color var(--dur-fast) var(--ease);
 }
-.timeline-ready .timeline-btn { display: inline-grid; }
+/* .js는 <head>의 한 줄 스크립트가 첫 렌더 전에 붙인다 — main.js를 기다리지 않아 버튼이 늦게 나타나며 밀지 않는다 */
+.js .timeline-btn { display: inline-grid; }
 .timeline-btn svg { width: 20px; height: 20px; }
 .timeline-btn:hover { background: var(--green-100); }
 .timeline-btn[aria-disabled="true"] { opacity: 0.35; cursor: default; background: var(--surface); }
@@ -431,7 +432,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   display: none; gap: var(--sp-2); flex-wrap: wrap;
   margin-bottom: var(--sp-6);
 }
-.filters-ready .filter-bar { display: flex; }
+.js .filter-bar { display: flex; }
 .filter-btn {
   font: inherit; font-size: var(--fs-sm); font-weight: 600;
   padding: var(--sp-2) var(--sp-4);
@@ -473,7 +474,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   /* 가로 스크롤 연대기는 종이에서 잘리므로 줄바꿈 그리드로 펼친다 */
   .timeline { flex-wrap: wrap; overflow: visible; padding-inline: 20px; }
   .milestone { flex: 1 1 240px; break-inside: avoid; }
-  .timeline-ready .timeline-btn { display: none; }
+  .js .timeline-btn { display: none; }
   /* 흰 글자를 쓰는 배경은 인쇄 시 배경 생략으로 글자가 사라지므로 유지 */
   .site-footer, .btn--solid { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
