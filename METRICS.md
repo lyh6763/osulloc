@@ -4,8 +4,21 @@
 
 ## 최신 라이브 측정
 
-2026-11-02, `36eb2c9` 배포본(디자인 정리·모바일 머리글 한 줄·티뮤지엄 사진). Lighthouse 13.5.0 모바일 기본 프리셋으로
-페이지당 3번 재고 LCP 중앙값을 적었다. 보고서 원본은 [`reports/lighthouse-live`](reports/lighthouse-live)에 있다.
+2026-11-02, `25ad9ca` 배포본(JS로 켜는 버튼 자리를 첫 렌더부터 잡기, 6절). Lighthouse 13.5.0 모바일 기본 프리셋으로
+LCP 중앙값을 적었다. 보고서 원본은 [`reports/lighthouse-live`](reports/lighthouse-live)에 있다.
+이 배포에서 바뀐 story·products는 회차마다 흔들리던 CLS를 보려고 5번씩 쟀다. index는 이 배포로 바뀐 것이 없어
+바로 아래 `36eb2c9` 측정(3회)을 그대로 옮겼다.
+
+| 페이지 | Performance | Accessibility | Best Practices | SEO | FCP | LCP | CLS | TBT |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| index | 100 | 100 | 100 | 100 | 1.2s | 1.66s | 0 | 0ms |
+| story | 100 | 100 | 100 | 100 | 1.2s | 1.19s | 0.001 | 0ms |
+| products | 100 | 100 | 100 | 100 | 1.0s | 1.51s | 0 | 0ms |
+
+- story: 5회 모두 Perf 100, CLS 0.001 이하(LCP 0.96~1.36s). 고치기 전에는 3회 중 1회꼴로 0.085~0.101이었다
+- products: 5회 Perf 99·100·99·100·100(LCP 1.21~1.71s), CLS는 5회 모두 0
+
+### 이전 라이브 측정 (2026-11-02, `36eb2c9` 디자인 정리·모바일 머리글 한 줄·티뮤지엄 사진)
 
 | 페이지 | Performance | Accessibility | Best Practices | SEO | FCP | LCP | CLS | TBT |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
