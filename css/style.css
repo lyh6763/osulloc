@@ -173,27 +173,27 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   color: var(--text-strong);
 }
 
-/* ---------- 사계 챕터 (sticky 장면 + 캡션) ---------- */
+/* ---------- 사계 챕터 (sticky 사진 장면 + 왼쪽 글 판) ---------- */
 /* 장면은 의도적으로 vh(= 가장 큰 뷰포트, lvh): 주소창이 접혀도 배경 아래로 빈 틈이 생기지 않는다.
-   챕터 길이·캡션 겹침 값도 장면 높이와 같은 단위로 맞춘다 */
-.chapter { position: relative; min-height: 170vh; }
+   챕터 길이·글 판 겹침 값도 장면 높이와 같은 단위로 맞춘다 */
+.chapter { position: relative; min-height: 130vh; }
 .chapter__scene {
   position: sticky; top: 0;
   height: 100vh; overflow: hidden;
-  display: grid; place-items: center;
+  background: var(--surface-alt);  /* 사진을 불러오기 전 자리 */
 }
-.chapter__scene svg { width: 100%; height: 100%; }
+.chapter__scene picture { position: absolute; inset: 0; }
+.chapter__scene img { width: 100%; height: 100%; object-fit: cover; }
 
+/* 글 판은 불투명 크림이라 사진 밝기와 상관없이 대비가 유지된다(본문 9.4:1, 계절 라벨 4.8:1).
+   사진의 주인공은 오른쪽에 있으므로 판은 본문 시작선(.container 안쪽)에 맞춰 왼쪽에 둔다 */
 .chapter__caption {
   position: relative; z-index: 2;
-  margin: -38vh auto 0;  /* 장면 위로 카드가 스크롤되어 올라옴 */
-  max-width: 560px;
-  background: rgb(255 255 255 / 0.94);
-  backdrop-filter: blur(6px);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-2);
-  padding: var(--sp-6) var(--sp-6) var(--sp-7);
-  text-align: center;
+  margin-top: -56vh;  /* 장면 위로 글 판이 스크롤되어 올라옴 */
+  margin-left: max(20px, calc((100% - var(--container)) / 2 + 24px));
+  max-width: 440px;
+  background: var(--bg);
+  padding: var(--sp-6);
 }
 .chapter__caption .season {
   font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.04em;
@@ -205,10 +205,21 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   margin-top: var(--sp-3);
 }
 .chapter__caption p { margin-top: var(--sp-4); color: var(--text); }
+/* 계절과 이어지는 차 한 가지(겨울은 우리는 온도) */
+.chapter__caption .chapter__tea {
+  margin-top: var(--sp-5); padding-top: var(--sp-4);
+  border-top: 1px solid var(--border);
+  font-size: var(--fs-sm);
+}
+.chapter__tea-label {
+  display: block; margin-bottom: var(--sp-1);
+  font-size: var(--fs-xs); font-weight: 700; color: var(--text-muted);
+}
+.chapter__tea a { font-weight: 700; }
 
 @media (max-width: 767px) {
-  .chapter { min-height: 150vh; }
-  .chapter__caption { margin-inline: 16px; margin-top: -30vh; padding: var(--sp-5); }
+  .chapter { min-height: 120vh; }
+  .chapter__caption { margin: -46vh 16px 0; max-width: none; padding: var(--sp-5); }
 }
 
 /* 스크롤 리빌 (초기화 완료 후에만 적용 — 기본 상태에서는 본문 표시)
@@ -224,7 +235,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 
 /* animation-timeline을 지원하는 브라우저에서만 장면을 살짝 줌 */
 @supports (animation-timeline: view()) {
-  .chapter__scene svg {
+  .chapter__scene img {
     animation: scene-zoom linear both;
     animation-timeline: view(block);
     animation-range: entry 0% exit 100%;

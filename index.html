@@ -59,106 +59,79 @@
       </div>
     </section>
 
-    <!-- 사계 챕터: 장면은 sticky로 고정되고 캡션이 그 위로 스크롤된다 -->
+    <!-- 사계 챕터: 사진 장면은 sticky로 고정되고, 왼쪽 글 판이 그 위로 스크롤된다.
+         사진은 첫 화면 아래에 있으므로 모두 늦게 불러오고, 세로 화면에는 주인공 쪽 크롭본을 준다 -->
     <article class="chapter" aria-labelledby="ch1-title">
       <div class="chapter__scene">
-        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ch1-scene">
-          <title id="ch1-scene">봄 안개가 내려앉은 제주 차밭의 능선</title>
-          <rect width="1440" height="900" fill="#E9F0E6"/>
-          <circle cx="1080" cy="220" r="110" fill="#F6EFD9"/>
-          <path d="M0 520 Q 360 430 720 500 T 1440 480 V900 H0 Z" fill="#9DBFAB"/>
-          <path d="M0 620 Q 400 540 800 610 T 1440 590 V900 H0 Z" fill="#6E9C82"/>
-          <path d="M0 730 Q 380 660 760 720 T 1440 700 V900 H0 Z" fill="#3E6E56"/>
-          <path d="M0 830 Q 420 780 840 820 T 1440 810 V900 H0 Z" fill="#24503D"/>
-          <g fill="none" stroke="#1D4B3F" stroke-width="3" opacity="0.35">
-            <path d="M60 858 q 40 -18 80 0 M200 862 q 40 -18 80 0 M340 858 q 40 -18 80 0 M480 864 q 40 -18 80 0"/>
-          </g>
-          <ellipse cx="420" cy="560" rx="380" ry="60" fill="#FFFFFF" opacity="0.45"/>
-          <ellipse cx="980" cy="640" rx="420" ry="70" fill="#FFFFFF" opacity="0.35"/>
-        </svg>
+        <picture>
+          <source media="(orientation: portrait)" srcset="assets/images/season-spring-portrait.webp" width="653" height="768">
+          <img src="assets/images/season-spring.webp"
+               srcset="assets/images/season-spring-960.webp 960w, assets/images/season-spring.webp 1376w"
+               sizes="100vw" alt="안개 낀 이른 아침 차밭에서 막 올라온 연둣빛 새순" width="1376" height="768" loading="lazy" decoding="async">
+        </picture>
       </div>
       <div class="chapter__caption reveal">
         <p class="season">봄</p>
         <h2 id="ch1-title">곡우 무렵, 첫물차를 땁니다</h2>
         <p>겨울을 난 차나무에 새순이 올라오면 한 해 첫 수확을 합니다. 곡우(4월 20일 무렵) 전에 딴 잎은 우전,
         곡우부터 입하 사이에 딴 잎은 세작이 됩니다. 딴 잎은 그날 바로 솥에서 덖어 산화를 멈춥니다.</p>
+        <p class="chapter__tea"><span class="chapter__tea-label">이 계절의 차</span>
+        <a href="products.html#ujeon">우전</a>, 곡우 전에 딴 첫 잎으로 만듭니다.</p>
       </div>
     </article>
 
     <article class="chapter" aria-labelledby="ch2-title">
       <div class="chapter__scene">
-        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ch2-scene">
-          <title id="ch2-scene">여름 햇살 아래 어린 찻잎의 잎맥</title>
-          <rect width="1440" height="900" fill="#1D4B3F"/>
-          <circle cx="240" cy="160" r="180" fill="#2E6B57" opacity="0.6"/>
-          <path d="M720 780 C 430 640 400 330 720 130 C 1040 330 1010 640 720 780 Z" fill="#8FBE9F"/>
-          <path d="M720 760 V 170" stroke="#2E6B57" stroke-width="10" fill="none" stroke-linecap="round"/>
-          <g stroke="#2E6B57" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.85">
-            <path d="M720 640 Q 620 600 560 520 M720 640 Q 820 600 880 520"/>
-            <path d="M720 500 Q 630 460 585 390 M720 500 Q 810 460 855 390"/>
-            <path d="M720 370 Q 650 340 620 280 M720 370 Q 790 340 820 280"/>
-          </g>
-          <circle cx="1180" cy="700" r="10" fill="#D8B26A"/>
-          <circle cx="1240" cy="640" r="6" fill="#D8B26A" opacity="0.7"/>
-        </svg>
+        <picture>
+          <source media="(orientation: portrait)" srcset="assets/images/season-summer-portrait.webp" width="653" height="768">
+          <img src="assets/images/season-summer.webp"
+               srcset="assets/images/season-summer-960.webp 960w, assets/images/season-summer.webp 1376w"
+               sizes="100vw" alt="현무암 돌담 위 대나무 채반에 펼쳐 시들리는 찻잎" width="1376" height="768" loading="lazy" decoding="async">
+        </picture>
       </div>
       <div class="chapter__caption reveal">
         <p class="season">여름</p>
         <h2 id="ch2-title">두물차는 발효차가 됩니다</h2>
         <p>초여름이 되면 차나무가 다시 새순을 올립니다. 이때 딴 두물차는 햇빛을 오래 받아
         잎이 크고 떫은맛이 강합니다. 그래서 녹차로 덖기보다 비비고 발효시켜 홍차와 발효차를 만듭니다.</p>
+        <p class="chapter__tea"><span class="chapter__tea-label">이 계절의 차</span>
+        <a href="products.html#jeju-black-tea">제주숲홍차</a>, 진하게 우러나서 우유를 넣어 밀크티로 마셔도 좋습니다.</p>
       </div>
     </article>
 
     <article class="chapter" aria-labelledby="ch3-title">
       <div class="chapter__scene">
-        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ch3-scene">
-          <title id="ch3-scene">가을, 찻잎이 담긴 그릇 위로 오르는 온기</title>
-          <rect width="1440" height="900" fill="#2A1E12"/>
-          <circle cx="1150" cy="180" r="90" fill="#D8B26A" opacity="0.5"/>
-          <path d="M300 620 A 420 300 0 0 0 1140 620 L 1080 700 A 360 240 0 0 1 360 700 Z" fill="#4A3826"/>
-          <path d="M340 620 A 380 260 0 0 0 1100 620" fill="#1A1108"/>
-          <g fill="#8FBE9F">
-            <ellipse cx="620" cy="600" rx="26" ry="10" transform="rotate(-15 620 600)"/>
-            <ellipse cx="720" cy="585" rx="26" ry="10" transform="rotate(10 720 585)"/>
-            <ellipse cx="820" cy="600" rx="26" ry="10" transform="rotate(-8 820 600)"/>
-            <ellipse cx="700" cy="620" rx="24" ry="9" transform="rotate(18 700 620)"/>
-          </g>
-          <g stroke="#D8B26A" stroke-width="8" fill="none" stroke-linecap="round" opacity="0.8">
-            <path d="M560 460 q 24 -50 0 -100 q -24 -50 0 -100"/>
-            <path d="M720 440 q 24 -50 0 -100 q -24 -50 0 -100"/>
-            <path d="M880 460 q 24 -50 0 -100 q -24 -50 0 -100"/>
-          </g>
-        </svg>
+        <picture>
+          <source media="(orientation: portrait)" srcset="assets/images/season-autumn-portrait.webp" width="653" height="768">
+          <img src="assets/images/season-autumn.webp"
+               srcset="assets/images/season-autumn-960.webp 960w, assets/images/season-autumn.webp 1376w"
+               sizes="100vw" alt="늦은 오후 햇빛 속 차나무 가지에 핀 흰 차꽃" width="1376" height="768" loading="lazy" decoding="async">
+        </picture>
       </div>
       <div class="chapter__caption reveal">
         <p class="season">가을</p>
         <h2 id="ch3-title">차꽃이 피고, 발효차가 익어갑니다</h2>
         <p>10월 무렵 차나무에 작고 흰 꽃이 핍니다. 여름에 만든 발효차는 이 계절 내내 숙성되며
         떫은맛이 줄고 맛이 부드러워집니다. 삼다연은 삼나무 통에 담아 숙성합니다.</p>
+        <p class="chapter__tea"><span class="chapter__tea-label">이 계절의 차</span>
+        <a href="products.html#samdayeon">삼다연</a>, 녹차보다 떫은맛이 적고 구수합니다.</p>
       </div>
     </article>
 
     <article class="chapter" aria-labelledby="ch4-title">
       <div class="chapter__scene">
-        <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="ch4-scene">
-          <title id="ch4-scene">겨울, 김이 오르는 따뜻한 찻잔</title>
-          <rect width="1440" height="900" fill="#F1EBDF"/>
-          <ellipse cx="720" cy="760" rx="360" ry="36" fill="#E4DBC9"/>
-          <path d="M500 480 L 540 700 A 60 40 0 0 0 900 700 L 940 480 Z" fill="#FFFFFF" stroke="#E4DBC9" stroke-width="3"/>
-          <ellipse cx="720" cy="480" rx="220" ry="42" fill="#B98A3D"/>
-          <ellipse cx="720" cy="474" rx="196" ry="34" fill="#96621F"/>
-          <path d="M950 520 q 80 10 70 80 q -8 56 -90 60" fill="none" stroke="#E4DBC9" stroke-width="16"/>
-          <g stroke="#C9BFA8" stroke-width="7" fill="none" stroke-linecap="round" opacity="0.8">
-            <path d="M640 400 q 20 -46 0 -92 q -20 -46 0 -92"/>
-            <path d="M760 380 q 20 -46 0 -92 q -20 -46 0 -92"/>
-          </g>
-        </svg>
+        <picture>
+          <source media="(orientation: portrait)" srcset="assets/images/season-winter-portrait.webp" width="653" height="768">
+          <img src="assets/images/season-winter.webp"
+               srcset="assets/images/season-winter-960.webp 960w, assets/images/season-winter.webp 1376w"
+               sizes="100vw" alt="현무암 위에 놓인 김 오르는 녹차 한 잔과 붉은 동백꽃" width="1376" height="768" loading="lazy" decoding="async">
+        </picture>
       </div>
       <div class="chapter__caption reveal">
         <p class="season">겨울</p>
         <h2 id="ch4-title">차나무가 쉬는 겨울</h2>
-        <p>겨울에는 차나무가 새순을 내지 않고 쉽니다. 제주에 동백이 피는 이 계절에는 한 해 동안 만든 차를 우려 마십니다.
+        <p>겨울에는 차나무가 새순을 내지 않고 쉽니다. 제주에 동백이 피는 이 계절에는 한 해 동안 만든 차를 우려 마십니다.</p>
+        <p class="chapter__tea"><span class="chapter__tea-label">우리는 온도</span>
         녹차는 70~80도로 식힌 물에, 발효차와 홍차는 막 끓인 물에 우리면 됩니다.</p>
       </div>
     </article>
