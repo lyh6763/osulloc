@@ -239,7 +239,7 @@ test('hero text over the photo meets WCAG AA contrast', async (t) => {
     const page = await browser.newPage({ viewport });
     await page.goto(origin + '/', { waitUntil: 'networkidle' });
 
-    for (const selector of ['.hero .eyebrow', '.hero h1', '.hero .lead', '.hero .scroll-hint']) {
+    for (const selector of ['.hero h1', '.hero .lead']) {
       const ratio = await minContrastOverBackground(page, selector);
       t.diagnostic(`${viewport.width}px ${selector}: ${ratio.toFixed(2)}:1`);
       assert.ok(ratio >= 4.5, `${selector} at ${viewport.width}px: ${ratio.toFixed(2)}:1 < 4.5:1`);
@@ -273,15 +273,13 @@ test('hero picks one right-sized image per viewport', async () => {
     assert.deepEqual(heroRequests.map((request) => request.file), [expected], `${label} should download exactly one hero image`);
     assert.ok(heroRequests[0].bytes <= maxKB * 1024, `${label}: ${(heroRequests[0].bytes / 1024).toFixed(1)}KB > ${maxKB}KB`);
 
-    // <picture> 래퍼가 그리드 행을 차지하면 히어로 텍스트가 중앙에서 밀려난다
+    // <picture> 래퍼가 그리드 행을 차지하면 히어로 텍스트가 하늘 자리(위쪽 패딩 바로 아래)에서 밀려난다
     const offset = await page.locator('.hero').evaluate((hero) => {
       const box = hero.getBoundingClientRect();
-      const style = getComputedStyle(hero);
-      const contentCenter = (box.top + parseFloat(style.paddingTop) + box.bottom - parseFloat(style.paddingBottom)) / 2;
       const text = hero.querySelector('.container').getBoundingClientRect();
-      return Math.abs((text.top + text.bottom) / 2 - contentCenter);
+      return Math.abs(text.top - (box.top + parseFloat(getComputedStyle(hero).paddingTop)));
     });
-    assert.ok(offset <= 1, `${label}: hero text is ${offset.toFixed(1)}px off center`);
+    assert.ok(offset <= 1, `${label}: hero text starts ${offset.toFixed(1)}px off the top padding`);
 
     await context.close();
   }

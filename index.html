@@ -45,7 +45,8 @@
 
   <main id="main">
 
-    <!-- Hero: 세로 화면에서는 가운데만 보이므로 가운데 크롭본을, 가로 화면은 너비별 srcset을 쓴다 -->
+    <!-- Hero: 세로 화면에서는 가운데만 보이므로 가운데 크롭본을, 가로 화면은 너비별 srcset을 쓴다.
+         사진은 덮지 않고, 글은 위쪽 하늘에 둔다 -->
     <section class="hero" aria-labelledby="hero-title">
       <picture>
         <source media="(orientation: portrait)" srcset="assets/images/jeju-tea-field-portrait.webp" width="800" height="941">
@@ -54,11 +55,10 @@
              sizes="100vw" alt="아침 안개가 내려앉은 제주 녹차밭" width="1672" height="941" fetchpriority="high">
       </picture>
       <div class="container">
-        <p class="eyebrow">Tea from Jeju Island</p>
-        <h1 id="hero-title">제주에서 찻잔까지,<br>차 한 잔의 여정</h1>
+        <!-- 넓은 화면에서는 줄바꿈을 숨겨 제목을 한 줄로 편다 — 쉼표 뒤 공백은 그때 단어 사이를 띄운다 -->
+        <h1 id="hero-title">제주에서 찻잔까지, <br>차 한 잔의 여정</h1>
         <p class="lead">한라산 남서쪽 자락, 안개가 잦은 화산 토양에서 차나무가 자랍니다.
         봄에 첫 잎을 따는 날부터 겨울에 차를 우리는 날까지, 다원의 한 해를 계절 순서로 따라갑니다.</p>
-        <p class="scroll-hint" aria-hidden="true">SCROLL ↓</p>
       </div>
     </section>
 
