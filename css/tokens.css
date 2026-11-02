@@ -80,8 +80,8 @@
   --container: 1200px;
 
   /* 고정 헤더 높이 — 헤더·히어로 상단 여백·앵커 scroll-margin이 함께 참조한다.
-     모바일은 로고와 메뉴가 두 줄이라 더 높다 */
-  --header-h: 92px;
+     모바일은 짧은 메뉴 이름으로 로고 옆 한 줄이라 데스크톱보다 낮다 */
+  --header-h: 64px;
 }
 
 @media (min-width: 768px) {

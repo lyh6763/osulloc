@@ -35,9 +35,9 @@
       <a href="index.html" class="brand" aria-label="OSULLOC 오설록 홈">OSULLOC</a>
       <nav class="gnb" aria-label="주요 메뉴">
         <ul>
-          <li><a href="story.html">브랜드 스토리</a></li>
-          <li><a href="products.html">티 컬렉션</a></li>
-          <li><a href="#museum">티뮤지엄</a></li>
+          <li><a href="story.html"><span class="gnb__long">브랜드 </span>스토리</a></li>
+          <li><a href="products.html"><span class="gnb__long">티 </span>컬렉션</a></li>
+          <li><a href="#museum"><span class="gnb__long">티</span>뮤지엄</a></li>
         </ul>
       </nav>
     </div>
@@ -212,19 +212,11 @@
     <!-- 티뮤지엄 -->
     <section id="museum" class="museum" aria-labelledby="museum-title">
       <div class="container split">
-        <div class="museum__visual reveal" >
-          <svg viewBox="0 0 800 550" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="museum-scene">
-            <title id="museum-scene">차밭 사이에 자리한 오설록 티뮤지엄 건물</title>
-            <rect width="800" height="550" fill="#DFE9E2"/>
-            <path d="M0 380 Q 200 330 400 370 T 800 360 V550 H0 Z" fill="#9DBFAB"/>
-            <path d="M0 450 Q 240 410 480 445 T 800 440 V550 H0 Z" fill="#6E9C82"/>
-            <rect x="250" y="220" width="300" height="180" rx="8" fill="#F9F6F0"/>
-            <rect x="250" y="220" width="300" height="180" rx="8" fill="none" stroke="#E4DBC9" stroke-width="3"/>
-            <ellipse cx="400" cy="220" rx="150" ry="46" fill="#12332B"/>
-            <rect x="330" y="300" width="60" height="100" fill="#12332B" opacity="0.85"/>
-            <rect x="420" y="300" width="52" height="64" fill="#12332B" opacity="0.35"/>
-            <circle cx="640" cy="150" r="52" fill="#F6EFD9"/>
-          </svg>
+        <div class="museum__visual reveal">
+          <img src="assets/images/tea-museum.webp"
+               srcset="assets/images/tea-museum-800.webp 800w, assets/images/tea-museum.webp 1200w"
+               sizes="(min-width: 1200px) 590px, (min-width: 1024px) 50vw, 100vw"
+               alt="곡선으로 이어진 차밭 이랑 너머에 낮게 자리한 유리 벽 전시관" width="1200" height="825" loading="lazy" decoding="async">
         </div>
         <div class="reveal">
           <h2 id="museum-title">오설록 티뮤지엄</h2>

@@ -63,7 +63,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   display: inline-flex; align-items: center; gap: var(--sp-2);
   font: inherit; font-size: var(--fs-sm); font-weight: 600;
   padding: var(--sp-3) var(--sp-5);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);  /* 알약 모양 대신 조금만 깎은 모서리 */
   border: 1.5px solid var(--accent);
   color: var(--accent);
   background: transparent;
@@ -119,12 +119,17 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 }
 .gnb a:hover, .gnb a[aria-current="page"] { border-bottom-color: var(--accent); }
 
-/* 모바일: 메뉴가 세 개뿐이라 햄버거 대신 가로 스크롤 내비 */
+/* 모바일: 메뉴가 세 개뿐이라 햄버거 대신 앞말(브랜드·티)을 숨긴 짧은 이름으로 로고 옆 한 줄 */
 @media (max-width: 767px) {
-  .site-header .container { flex-wrap: wrap; align-content: center; row-gap: 0; padding-block: var(--sp-2); }
-  .gnb { margin-left: 0; width: 100%; overflow-x: auto; }
-  .gnb ul { gap: var(--sp-4); padding-bottom: var(--sp-2); }
+  .site-header .container { gap: var(--sp-4); }
+  .gnb ul { gap: var(--sp-4); }
   .gnb a { white-space: nowrap; }
+  .gnb__long { display: none; }
+}
+/* 360px 미만(구형 소형 폰)은 로고와 간격을 조금 줄여야 한 줄에 들어간다 */
+@media (max-width: 359px) {
+  .site-header .container, .gnb ul { gap: var(--sp-3); }
+  .brand { font-size: 1.25rem; }
 }
 
 /* ---------- Hero ---------- */
@@ -267,13 +272,12 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 .story-teaser {
   background: var(--accent-deep); color: var(--green-100);
   padding-block: var(--sp-9);
-  text-align: center;
 }
 .story-teaser h2 {
   font-family: var(--font-serif); font-size: var(--fs-h2);
-  color: #fff; font-weight: 600; max-width: 24ch; margin-inline: auto;
+  color: #fff; font-weight: 600; max-width: 24ch;
 }
-.story-teaser p { max-width: var(--measure); margin: var(--sp-5) auto 0; }
+.story-teaser p { max-width: var(--measure); margin-top: var(--sp-5); }
 .story-teaser .btn { margin-top: var(--sp-6); }
 
 /* ---------- 시그니처 라인업 ---------- */
@@ -281,7 +285,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 .section-head { display: flex; align-items: end; justify-content: space-between; gap: var(--sp-4); margin-bottom: var(--sp-6); flex-wrap: wrap; }
 .section-head h2 { font-family: var(--font-serif); font-size: var(--fs-h2); font-weight: 600; }
 .section-head .sub { color: var(--text-muted); font-size: var(--fs-sm); }
-.lineup__cta { margin-top: var(--sp-6); text-align: center; }
+.lineup__cta { margin-top: var(--sp-6); }
 
 .card-grid {
   display: grid; gap: var(--sp-5);
@@ -290,19 +294,16 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 @media (min-width: 600px)  { .card-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .card-grid { grid-template-columns: repeat(4, 1fr); } }
 
-.tea-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
+/* 흰 바탕·테두리·둥근 모서리를 두른 카드 대신, 사진 바로 아래에 글이 오는 카탈로그 모양 */
 .tea-card__visual {
   aspect-ratio: 4 / 3;
   display: grid; place-items: center;
   position: relative;
+  overflow: hidden;
+  background: var(--surface-alt);  /* 사진을 불러오기 전 자리 */
 }
 .tea-card__visual img { width: 100%; height: 100%; object-fit: cover; }
-.tea-card__body { padding: var(--sp-4) var(--sp-5) var(--sp-5); }
+.tea-card__body { padding-top: var(--sp-4); }
 .tea-card__cat { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.04em; color: var(--amber-600); }
 .tea-card h3 { font-size: var(--fs-h3); margin-top: var(--sp-2); font-family: var(--font-serif); font-weight: 600; }
 .tea-card .desc { font-size: var(--fs-sm); color: var(--text-muted); margin-top: var(--sp-2); }
@@ -320,10 +321,9 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 @media (min-width: 1024px) { .museum .split { grid-template-columns: 1.1fr 1fr; } }
 .museum__visual {
   aspect-ratio: 16 / 11;
-  border-radius: var(--radius-lg);
   overflow: hidden;
 }
-.museum__visual svg { width: 100%; height: 100%; }
+.museum__visual img { width: 100%; height: 100%; object-fit: cover; }
 .museum h2 { font-family: var(--font-serif); font-size: var(--fs-h2); font-weight: 600; }
 .museum .body { margin-top: var(--sp-4); max-width: var(--measure); }
 .museum .meta { margin-top: var(--sp-5); list-style: none; font-size: var(--fs-sm); color: var(--text-muted); display: grid; gap: var(--sp-2); }
@@ -355,10 +355,13 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
    ============================================================ */
 .page-hero {
   padding-block: calc(var(--header-h) + var(--sp-9)) var(--sp-8);
-  text-align: center;
 }
 .page-hero h1 { font-family: var(--font-serif); font-size: var(--fs-display); font-weight: 600; }
-.page-hero .lead { max-width: var(--measure); margin: var(--sp-5) auto 0; color: var(--text-muted); font-size: var(--fs-lead); }
+.page-hero .lead { max-width: var(--measure); margin-top: var(--sp-5); color: var(--text-muted); font-size: var(--fs-lead); }
+/* 왼쪽 정렬이라 좁은 화면에서는 위 여백이 휑해 보인다 */
+@media (max-width: 767px) {
+  .page-hero { padding-block: calc(var(--header-h) + var(--sp-7)) var(--sp-7); }
+}
 
 /* 가로 타임라인 — 브라우저 기본 스크롤 + scroll-snap */
 .timeline-section { padding-block: var(--sp-8) var(--sp-9); }
@@ -390,13 +393,12 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 .timeline-btn svg { width: 20px; height: 20px; }
 .timeline-btn:hover { background: var(--green-100); }
 .timeline-btn[aria-disabled="true"] { opacity: 0.35; cursor: default; background: var(--surface); }
+/* 카드 대신 연도 위에 굵은 선 하나 — 가로로 이어지는 연대기의 눈금처럼 */
 .milestone {
   scroll-snap-align: start;
   flex: 0 0 min(320px, 78vw);
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: var(--sp-6) var(--sp-5);
+  border-top: 2px solid var(--accent);
+  padding-top: var(--sp-5);
 }
 .milestone .year {
   font-family: var(--font-serif);
@@ -409,23 +411,19 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 .philosophy { background: var(--surface-alt); padding-block: var(--sp-9); }
 .philosophy .grid { display: grid; gap: var(--sp-5); grid-template-columns: 1fr; }
 @media (min-width: 768px) { .philosophy .grid { grid-template-columns: repeat(3, 1fr); } }
-.philosophy article {
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius-md); padding: var(--sp-6) var(--sp-5);
-}
+/* 순서가 없는 세 가지라 번호 없이, 카드 대신 위쪽 가는 선으로 나눈다 */
+.philosophy article { border-top: 1px solid var(--ink-500); padding-top: var(--sp-5); }
 .philosophy article h3 { font-family: var(--font-serif); font-size: var(--fs-h3); font-weight: 600; }
 .philosophy article p { font-size: var(--fs-sm); color: var(--text-muted); margin-top: var(--sp-3); }
-.philosophy .num { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.2em; color: var(--amber-600); display: block; margin-bottom: var(--sp-3); }
 
 /* ============================================================
    Products 페이지
    ============================================================ */
+/* 학습용 고지: 상품보다 먼저 눈에 띄지 않도록 띠·바탕 없이 작은 보조 글자로 (대비 4.9:1) */
 .catalog-notice {
   margin-bottom: var(--sp-5);
-  padding: var(--sp-3) var(--sp-4);
-  border-left: 3px solid var(--accent);
-  background: var(--surface-alt);
-  color: var(--text);
+  max-width: var(--measure);
+  color: var(--text-muted);
   font-size: var(--fs-sm);
   line-height: 1.7;
 }
@@ -437,7 +435,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 .filter-btn {
   font: inherit; font-size: var(--fs-sm); font-weight: 600;
   padding: var(--sp-2) var(--sp-4);
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   border: 1.5px solid var(--border);
   background: var(--surface);
   color: var(--text);
