@@ -119,12 +119,17 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 }
 .gnb a:hover, .gnb a[aria-current="page"] { border-bottom-color: var(--accent); }
 
-/* 모바일: 메뉴가 세 개뿐이라 햄버거 대신 가로 스크롤 내비 */
+/* 모바일: 메뉴가 세 개뿐이라 햄버거 대신 앞말(브랜드·티)을 숨긴 짧은 이름으로 로고 옆 한 줄 */
 @media (max-width: 767px) {
-  .site-header .container { flex-wrap: wrap; align-content: center; row-gap: 0; padding-block: var(--sp-2); }
-  .gnb { margin-left: 0; width: 100%; overflow-x: auto; }
-  .gnb ul { gap: var(--sp-4); padding-bottom: var(--sp-2); }
+  .site-header .container { gap: var(--sp-4); }
+  .gnb ul { gap: var(--sp-4); }
   .gnb a { white-space: nowrap; }
+  .gnb__long { display: none; }
+}
+/* 360px 미만(구형 소형 폰)은 로고와 간격을 조금 줄여야 한 줄에 들어간다 */
+@media (max-width: 359px) {
+  .site-header .container, .gnb ul { gap: var(--sp-3); }
+  .brand { font-size: 1.25rem; }
 }
 
 /* ---------- Hero ---------- */
