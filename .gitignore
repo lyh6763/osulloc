@@ -5,3 +5,9 @@ playwright-report/
 reports/lighthouse/
 # Claude Code 개인 설정(허용 명령 목록 등) — 배포 브랜치로도 복사되므로 올리지 않는다
 .claude/settings.local.json
+# 환경 변수(비밀 값)·로그·OS가 만드는 임시 파일
+.env*
+!.env.example
+*.log
+.DS_Store
+Thumbs.db
