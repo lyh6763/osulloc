@@ -90,8 +90,11 @@ try {
     rows.push({ name, ...median.summary });
   }
 } finally {
-  // Windows에서 chrome-launcher가 임시 프로필 삭제에 실패(EPERM)해도 측정 결과에는 영향 없음
-  try { await chrome.kill(); } catch {}
+  try {
+    await chrome.kill();
+  } catch {
+    // Windows에서 chrome-launcher가 임시 프로필 삭제에 실패(EPERM)해도 측정 결과에는 영향 없음
+  }
   server?.close();
 }
 
