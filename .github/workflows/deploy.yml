@@ -71,8 +71,11 @@ jobs:
 
       # 개발 전용 파일을 제외한 저장소 전체를 gh-pages 작업 트리에 동기화 (삭제된 파일도 반영)
       # 패턴은 '/'로 저장소 루트에 고정 — 하위 폴더의 같은 이름 파일은 배포에 포함된다
+      # /reports(Lighthouse 보고서 약 3.8MB)는 METRICS.md가 저장소 상대 경로로 링크하므로 GitHub에서만 본다.
+      # --delete는 제외한 경로를 받는 쪽에서 지우지 않으므로, 예전에 배포된 보고서는 먼저 직접 지운다
       - name: Sync site files
         run: |
+          rm -rf _site/reports
           rsync -a --delete \
             --exclude '/.git' \
             --exclude '/_site' \
@@ -85,6 +88,7 @@ jobs:
             --exclude '/package-lock.json' \
             --exclude '/eslint.config.mjs' \
             --exclude '/stylelint.config.mjs' \
+            --exclude '/reports' \
             ./ _site/
 
       - name: Commit & push
