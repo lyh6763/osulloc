@@ -59,7 +59,7 @@ test('all pages load without browser errors', async () => {
   });
   page.on('pageerror', (error) => errors.push(error.message));
 
-  for (const route of ['/', '/story.html', '/products.html']) {
+  for (const route of ['/', '/story.html', '/products.html', '/404.html']) {
     const response = await page.goto(origin + route, { waitUntil: 'networkidle' });
     assert.equal(response.status(), 200, `${route} should return 200`);
   }
@@ -311,7 +311,7 @@ test('serif subset font loads and covers every glyph rendered in the serif', asy
   const subset = new Set(await fs.readFile(path.join(root, 'assets/fonts/noto-serif-kr-subset.txt'), 'utf8'));
   const page = await browser.newPage();
 
-  for (const route of ['/', '/story.html', '/products.html']) {
+  for (const route of ['/', '/story.html', '/products.html', '/404.html']) {
     await page.goto(origin + route, { waitUntil: 'networkidle' });
     const { loaded, chars } = await page.evaluate(async () => {
       await document.fonts.ready;
