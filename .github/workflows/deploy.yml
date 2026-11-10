@@ -1,4 +1,4 @@
-# main에 push하면 스모크 테스트를 통과한 경우에만 gh-pages 브랜치로 사이트 파일을 배포한다.
+# main에 push하면 린트와 스모크 테스트를 통과한 경우에만 gh-pages 브랜치로 사이트 파일을 배포한다.
 # GitHub Pages 소스는 기존 그대로 gh-pages 브랜치 — 저장소 설정 변경 불필요.
 name: Test & Deploy
 
@@ -27,6 +27,10 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      # 브라우저를 받기 전에 정적 분석부터 — 경고 1건이라도 있으면 테스트·배포로 넘어가지 않는다
+      - name: Lint (ESLint · Stylelint)
+        run: npm run lint
 
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
@@ -79,6 +83,8 @@ jobs:
             --exclude '/scripts' \
             --exclude '/package.json' \
             --exclude '/package-lock.json' \
+            --exclude '/eslint.config.mjs' \
+            --exclude '/stylelint.config.mjs' \
             ./ _site/
 
       - name: Commit & push
