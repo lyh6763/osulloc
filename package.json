@@ -10,7 +10,8 @@
     "lighthouse:local": "node scripts/lighthouse.mjs --local",
     "lint": "npm run lint:js && npm run lint:css",
     "lint:js": "eslint --max-warnings 0 .",
-    "lint:css": "stylelint --max-warnings 0 --cache --cache-location node_modules/.cache/stylelintcache \"css/**/*.css\""
+    "lint:css": "stylelint --max-warnings 0 --cache --cache-location node_modules/.cache/stylelintcache \"css/**/*.css\"",
+    "icons": "node scripts/build-icons.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

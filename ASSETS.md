@@ -90,6 +90,17 @@
 txt에 추가 → `npm run fonts`(Google Fonts `text=` API로 재생성) → woff2와 txt를 함께 커밋.
 본문은 웹폰트 없이 OS 기본 한글 글꼴을 쓴다 (선택 근거: [METRICS.md](METRICS.md)).
 
+## 아이콘
+
+| 파일 | 용도 | 크기 |
+|---|---|---|
+| (HTML `<head>`의 data-URI SVG) | 파비콘 — 찻잎 한 장, `--green-700` | — |
+| `assets/icons/favicon-32.png` | SVG 파비콘을 못 쓰는 브라우저용, 투명 바탕 | 32×32 |
+| `assets/icons/apple-touch-icon.png` | iOS 홈 화면 아이콘, `--cream-50` 바탕(iOS는 투명한 곳을 검게 채운다) | 180×180 |
+
+PNG 두 장은 SVG와 같은 도형을 Playwright Chromium으로 그린 것이다(`npm run icons`, `scripts/build-icons.mjs`).
+도형이나 색을 바꾸면 모든 HTML의 data-URI와 스크립트를 함께 고친 뒤 다시 만든다. (2026-11-10)
+
 ## 교체 시 지켜야 할 것
 1. `<picture>` + AVIF/WebP + `width`/`height` 명시 (CLS < 0.1 유지)
 2. 챕터 이미지는 `loading="eager"` 첫 장면만, 나머지 `lazy` + `fetchpriority` 관리
