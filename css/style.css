@@ -193,10 +193,12 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 /* ---------- 사계 챕터 (sticky 사진 장면 + 왼쪽 글 판) ---------- */
 /* 장면은 의도적으로 vh(= 가장 큰 뷰포트, lvh): 주소창이 접혀도 배경 아래로 빈 틈이 생기지 않는다.
    챕터 길이·글 판 겹침 값도 장면 높이와 같은 단위로 맞춘다 */
-.chapter { position: relative; min-height: 130vh; }
-/* 화면에서 먼 챕터는 그리지 않고 건너뛴다. lazy만으로는 브라우저가 수천 px 앞의 사진까지 미리 받아
-   첫 화면 사진·제목 글꼴과 받는 순서를 다퉜다(로컬 Lighthouse LCP 1.96s → 2.71s) */
-.chapter { content-visibility: auto; contain-intrinsic-block-size: auto 130vh; }
+.chapter {
+  position: relative; min-height: 130vh;
+  /* 화면에서 먼 챕터는 그리지 않고 건너뛴다. lazy만으로는 브라우저가 수천 px 앞의 사진까지 미리 받아
+     첫 화면 사진·제목 글꼴과 받는 순서를 다퉜다(로컬 Lighthouse LCP 1.96s → 2.71s) */
+  content-visibility: auto; contain-intrinsic-block-size: auto 130vh;
+}
 .chapter__scene {
   position: sticky; top: 0;
   height: 100vh; overflow: hidden;
@@ -450,6 +452,24 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 }
 .products-section { padding-block: var(--sp-4) var(--sp-9); }
 .product-count { font-size: var(--fs-sm); color: var(--text-muted); margin-bottom: var(--sp-4); }
+
+/* ============================================================
+   404 페이지
+   ============================================================ */
+/* 내용이 짧아도 푸터가 화면 가운데로 올라오지 않게 첫 화면 대부분을 채운다 */
+.not-found { min-height: 72vh; min-height: 72svh; }
+/* 제목 명조 서브셋에는 사이트에 쓰인 글자만 들어 있어, 숫자만 명조로 크게 쓰고 안내 제목은 본문 글꼴로 둔다 */
+.not-found__code {
+  font-family: var(--font-serif);
+  font-size: calc(var(--fs-display) * 2); font-weight: 700; line-height: 1;
+  color: var(--accent);
+}
+.not-found h1 {
+  font-family: var(--font-sans);
+  font-size: var(--fs-h2); font-weight: 700;
+  margin-top: var(--sp-5);
+}
+.not-found__actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-top: var(--sp-6); }
 
 /* ---------- Reduced Motion: 장면을 정적 배치로 바꾼다 ---------- */
 @media (prefers-reduced-motion: reduce) {

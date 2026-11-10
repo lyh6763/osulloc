@@ -19,6 +19,7 @@ AI 코딩 도구 Claude Code와 함께 만들었습니다. 소재와 방향(프�
 | `index.html` | 사계절 챕터(계절마다 차 한 가지), 시그니처 4종, 티뮤지엄 | sticky 사진 장면 위로 글 판 스크롤, IntersectionObserver 리빌, `animation-timeline: view()`, 먼 챕터는 `content-visibility: auto` |
 | `story.html` | 1979~2026 연대기, 철학, 방문 안내 | 가로 스크롤 + `scroll-snap`, 방향키·Home·End 탐색, 이전/다음 버튼 |
 | `products.html` | 12개 제품, 카테고리 필터 | JS가 없으면 필터를 숨기고 전 제품 노출, `aria-live`로 결과 개수 안내 |
+| `404.html` | 없는 페이지 안내, 홈·컬렉션 복귀 | `noindex`, 깊은 주소에서도 `/osulloc/` 기준 자산·링크 제공 |
 
 ## 만들 때 정한 것
 
@@ -57,19 +58,47 @@ story는 전에 3회 중 1회꼴로 연대기가 밀려 CLS 0.085~0.101이 나�
 npx serve .
 ```
 
-Playwright 스모크 테스트 18개가 필터, JS가 꺼진 상태, JS가 돌 때 내용이 밀리지 않는지, 키보드 탐색, 360px 가로 넘침,
+Playwright 스모크 테스트 19개가 자산 내용 해시, 필터, JS가 꺼진 상태, JS가 돌 때 내용이 밀리지 않는지, 키보드 탐색, 360px 가로 넘침,
 사진 위 텍스트 대비, 명조 서브셋 글자 범위, 인쇄 레이아웃 등을 확인합니다.
 
 ```bash
 npm install
 npx playwright install chromium
+npm run lint
 npm test
+npm run assets:stamp # CSS·JS 수정 후 HTML의 ?v= 갱신
+npm run fonts        # 제목 명조 서브셋 다시 만들기
+npm run icons        # PNG 파비콘·apple-touch-icon 다시 만들기
 ```
 
 `npm run lighthouse`는 라이브 사이트를 재서 `reports/lighthouse-live`에 저장하고,
 `npm run lighthouse:local`은 작업 트리를 잽니다.
 
+린트는 ESLint와 Stylelint의 recommended 규칙을 사용하며 경고도 실패로 처리합니다. 포매터와 TypeScript·번들 빌드 단계는 없습니다.
+Lighthouse 스크립트의 선택 환경 변수는 `CHROME_PATH`(Chrome 실행 파일 경로)와 `HEADED=1`(측정 브라우저 표시)입니다. 일반 실행에는 환경 변수 파일이 필요하지 않습니다.
+
+## 파일 구조와 스타일
+
+```text
+index.html · story.html · products.html · 404.html
+css/tokens.css        색·서체·간격·레이아웃 토큰
+css/style.css         페이지와 공통 컴포넌트 스타일
+js/main.js            필터·연대기·리빌·헤더의 점진적 향상
+assets/images/        다원·차·티뮤지엄 이미지
+assets/fonts/         제목 명조 서브셋과 글자 목록
+assets/icons/         PNG 파비콘·홈 화면 아이콘
+scripts/              글꼴·아이콘 생성, 자산 해시, Lighthouse 측정
+tests/smoke.test.cjs   Playwright 스모크 테스트
+docs/                 접근성·디자인·작업 기록
+reports/              측정 보고서(사이트 배포에서 제외)
+```
+
+토큰은 `css/tokens.css`의 CSS Custom Properties로 관리합니다. 기존 사이트의 캐스케이드 구조를 유지하며, `@layer` 전면 도입은 별도 검토 대상으로 남겨 두었습니다.
+2026-11-02에는 첫 화면 사진과 화면 크기별 크롭, 히어로 타이포·배치, 티뮤지엄 이미지를 정리했습니다. 당시 성능 수치는 위 측정 결과와 [METRICS.md](METRICS.md)에 날짜·조건과 함께 남겼습니다.
+
+CSS·JS의 `?v=`는 SHA-256 앞 8자입니다. `.gitattributes`가 두 파일 형식의 줄바꿈을 LF로 고정하며, 해시를 갱신하지 않으면 `npm test`가 실패합니다.
+
 ## 배포
 
-`main`에 push하면 GitHub Actions가 스모크 테스트를 돌리고, 통과했을 때만 사이트 파일을
+워크플로는 `main`에 push하면 GitHub Actions가 lint와 스모크 테스트를 돌리고, 통과했을 때만 사이트 파일을
 `gh-pages` 브랜치에 올려 GitHub Pages로 배포합니다.
