@@ -24,7 +24,8 @@ let server;
 before(async () => {
   server = http.createServer(async (request, response) => {
     try {
-      const requestPath = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
+      const rawPath = decodeURIComponent(new URL(request.url, 'http://localhost').pathname);
+      const requestPath = rawPath.startsWith('/osulloc/') ? rawPath.slice('/osulloc'.length) : rawPath;
       const relativePath = requestPath === '/' ? 'index.html' : requestPath.replace(/^\//, '');
       const filePath = path.resolve(root, relativePath);
 
@@ -49,6 +50,11 @@ before(async () => {
 after(async () => {
   await browser?.close();
   await new Promise((resolve) => server?.close(resolve));
+});
+
+test('CSS and JS versions match their file contents', async () => {
+  const { findAssetVersionProblems } = await import('../scripts/stamp-assets.mjs');
+  assert.deepEqual(findAssetVersionProblems(root), []);
 });
 
 test('all pages load without browser errors', async () => {
@@ -149,7 +155,7 @@ test('JS-enhanced controls hold their space before main.js runs', async () => {
       const positions = [];
       for (const blockMain of [true, false]) {
         const page = await browser.newPage({ viewport, reducedMotion: 'reduce' });
-        if (blockMain) await page.route('**/js/main.js', (requestRoute) => requestRoute.abort());
+        if (blockMain) await page.route(/\/js\/main\.js(?:\?|$)/, (requestRoute) => requestRoute.abort());
         await page.goto(origin + route, { waitUntil: 'networkidle' });
         positions.push(await page.evaluate((list) => list.map((selector) =>
           Math.round(document.querySelector(selector).getBoundingClientRect().top + scrollY)), selectors));
