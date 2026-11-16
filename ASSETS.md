@@ -13,13 +13,13 @@
 | `assets/images/season-{spring,summer,autumn,winter}.webp` | 사계 챕터 장면 (가로 화면 1376w) | 1376×768 |
 | `assets/images/season-*-960.webp` | 사계 챕터 장면 (가로 화면 960w) | 960×536 |
 | `assets/images/season-*-portrait.webp` | 사계 챕터 장면 (세로 화면 · 주인공 쪽 크롭) | 653×768 |
-| `assets/images/tea-museum.webp` | 티뮤지엄 (1200w) | 1200×825 |
-| `assets/images/tea-museum-800.webp` | 티뮤지엄 (800w) | 800×550 |
-| `assets/images/tea-collection.webp` | 녹차 대표 제품 | 1200×900 |
+| `assets/images/tea-museum.webp` | 티뮤지엄 영역의 차밭 풍경 (1200w) | 1200×825 |
+| `assets/images/tea-museum-800.webp` | 티뮤지엄 영역의 차밭 풍경 (800w) | 800×550 |
+| `assets/images/tea-collection.webp` | 세작 | 1200×900 |
 | `assets/images/fermented-tea.webp` | 발효차 대표 제품 | 1200×900 |
 | `assets/images/black-tea.webp` | 홍차 대표 제품 | 1200×900 |
-| `assets/images/blended-tea.webp` | 블렌디드 티 대표 제품 | 1200×900 |
-| `assets/images/teaware-set.webp` | 티웨어 대표 제품 | 1200×900 |
+| `assets/images/blended-tea.webp` | 동백꽃 블렌드 | 1200×900 |
+| `assets/images/teaware-set.webp` | 백자 찻잔 세트 | 1200×900 |
 | `assets/images/first-flush-tea.webp` | 우전 | 1200×900 |
 | `assets/images/powdered-green-tea.webp` | 가루녹차 | 1200×900 |
 | `assets/images/fermented-teabags.webp` | 삼다연 티백 | 1200×900 |
@@ -70,7 +70,7 @@
   주인공이 있는 오른쪽에서 잘랐다(x = 봄 640, 여름 723, 가을 723, 겨울 680). 파일당 37–99KB
 - 그대로 lazy로 두면 첫 화면 사진과 받는 순서를 다툰다. 받는 시점은 METRICS.md 4절
 
-### 티뮤지엄 사진 (2026-11-02)
+### 초기 티뮤지엄 사진 (2026-11-02)
 
 메인에서 마지막으로 남은 도형 SVG였다. 실제 건물을 흉내 내지 않도록 '차밭 너머의 낮은 현대식 전시관'으로 요청했다.
 
@@ -78,6 +78,12 @@
   차분한 흙빛, 사람·글자·간판·로고 없음)에 곡선 차밭 이랑, 현무암, 오름 능선을 넣었다
 - 자리 비율 16:11에 맞춰 가로 가운데를 1233×848로 자르고, Chromium canvas로 1200w(138KB)·800w(79KB) WebP(품질 0.8)
 - 페이지 아래쪽이라 `lazy`. 데스크톱에서는 약 590px 폭이라 `sizes`로 800w를 먼저 고르게 했다
+
+### 제품 카드 3장과 차밭 풍경 교체 (2026-11-16)
+
+- 동백꽃 블렌드는 동백꽃잎과 우린 차, 백자 찻잔 세트는 잔 두 개, 세작은 찻잎과 차통 하나가 보이도록 OpenAI ImageGen으로 만들었다.
+- 티뮤지엄 영역에는 건물 없이 차밭 이랑 사이의 산책길만 담았다. 이미지 아래에 ‘차밭 풍경 연출 이미지’를 표시한다.
+- 생성 원본에서 800w와 1200w WebP를 각각 만들었다. 제품 카드는 4:3, 차밭 풍경은 16:11 비율로 제공한다.
 
 ## 웹폰트
 
