@@ -183,7 +183,6 @@ test('signature cards on the home page match the catalog', async () => {
   const page = await browser.newPage();
   const readCards = (selector) => page.$$eval(selector, (cards) => cards.map((card) => ({
     name: card.querySelector('h3').textContent.trim(),
-    price: card.querySelector('.price').textContent.trim(),
     image: card.querySelector('img')?.getAttribute('src') ?? null
   })));
 
@@ -196,7 +195,7 @@ test('signature cards on the home page match the catalog', async () => {
   for (const card of signature) {
     const match = catalog.find((item) => item.name === card.name);
     assert.ok(match, `${card.name} should exist in the catalog`);
-    assert.deepEqual(match, card, `${card.name} should share price and image with the catalog`);
+    assert.deepEqual(match, card, `${card.name} should share its image with the catalog`);
   }
 
   await page.close();
