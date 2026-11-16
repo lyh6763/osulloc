@@ -309,7 +309,6 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 .tea-card__cat { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.04em; color: var(--amber-600); }
 .tea-card h3 { font-size: var(--fs-h3); margin-top: var(--sp-2); font-family: var(--font-serif); font-weight: 600; }
 .tea-card .desc { font-size: var(--fs-sm); color: var(--text-muted); margin-top: var(--sp-2); }
-.tea-card .price { display: block; margin-top: var(--sp-3); font-weight: 700; color: var(--text-strong); }
 
 /* ---------- 티뮤지엄 ---------- */
 .museum {
