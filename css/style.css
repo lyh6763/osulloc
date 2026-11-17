@@ -88,6 +88,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   box-shadow: var(--shadow-1);
   transition: background-color var(--dur-base) var(--ease),
               box-shadow var(--dur-base) var(--ease);
+  view-transition-name: site-header; /* 페이지 전환 때 본문과 떼어 둔다(아래 Page transition) */
 }
 .header-ready .site-header {
   background: transparent;
@@ -130,6 +131,19 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 @media (max-width: 359px) {
   .site-header .container, .gnb ul { gap: var(--sp-3); }
   .brand { font-size: 1.25rem; }
+}
+
+/* ---------- Page transition: 사이트 안에서 페이지를 옮길 때 교차 페이드 ----------
+   문서 간 View Transitions. 지원하지 않는 브라우저는 이 at-rule을 무시하고 평소처럼 이동하고,
+   동작 줄이기 설정이면 켜지 않는다. 머리글은 이름(site-header)으로 본문과 따로 잡는다.
+   두 페이지에서 위치·크기가 같아 움직이지 않고, 현재 메뉴 밑줄과 배경만 본문과 같은 속도로 겹쳐 바뀐다.
+   (그룹에 animation: none을 주면 안쪽 이미지의 시간도 0이 돼 밑줄이 첫 프레임에 툭 옮겨진다) */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+}
+::view-transition-group(*) {
+  animation-duration: var(--dur-base);
+  animation-timing-function: var(--ease);
 }
 
 /* ---------- Hero ---------- */

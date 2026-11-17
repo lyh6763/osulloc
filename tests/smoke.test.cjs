@@ -74,6 +74,38 @@ test('all pages load without browser errors', async () => {
   await page.close();
 });
 
+test('same-site navigation crossfades only when motion is allowed, header stays named', async () => {
+  for (const [reducedMotion, expected] of [['no-preference', 'yes'], ['reduce', 'no']]) {
+    const context = await browser.newContext({ reducedMotion });
+    // pagereveal은 새 문서가 처음 그려지기 직전에 오고, 문서 간 전환이 있으면 viewTransition을 들고 온다
+    await context.addInitScript(() => {
+      addEventListener('pagereveal', (event) => { window.__viewTransition = event.viewTransition ? 'yes' : 'no'; });
+    });
+    const page = await context.newPage();
+    await page.goto(`${origin}/`, { waitUntil: 'networkidle' });
+    assert.equal(await page.evaluate(() => window.__viewTransition), 'no', 'first load has no transition');
+
+    await page.click('.gnb a[href="story.html"]');
+    await page.waitForURL('**/story.html');
+    await page.waitForLoadState('networkidle');
+    assert.equal(await page.evaluate(() => window.__viewTransition), expected, `link, reducedMotion=${reducedMotion}`);
+    assert.equal(
+      await page.evaluate(() => getComputedStyle(document.querySelector('.site-header')).viewTransitionName),
+      'site-header'
+    );
+
+    await page.click('.gnb a[href="products.html"]');
+    await page.waitForURL('**/products.html');
+    // 뒤로 가기는 주소가 바뀐 뒤에 pagereveal이 오므로 값이 생길 때까지 기다린다
+    await page.evaluate(() => { window.__viewTransition = undefined; });
+    await page.goBack();
+    await page.waitForURL('**/story.html');
+    await page.waitForFunction(() => window.__viewTransition !== undefined);
+    assert.equal(await page.evaluate(() => window.__viewTransition), expected, `back, reducedMotion=${reducedMotion}`);
+    await context.close();
+  }
+});
+
 test('product filters update cards, count and pressed state', async () => {
   const page = await browser.newPage();
   await page.goto(origin + '/products.html');
