@@ -53,7 +53,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 
 .skip-link {
   position: absolute; left: -9999px; top: 0; z-index: 200;
-  background: var(--accent-deep); color: #fff;
+  background: var(--accent-deep); color: var(--text-on-dark);
   padding: var(--sp-3) var(--sp-5); border-radius: 0 0 var(--radius-sm) 0;
 }
 .skip-link:focus { left: 0; }
@@ -75,15 +75,15 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 }
 .btn:hover { background: var(--green-100); }
 .btn:active { transform: scale(0.98); }
-.btn--solid { background: var(--accent); color: #fff; }
-.btn--solid:hover { background: var(--accent-deep); color: #fff; }
-.btn--ghost-light { border-color: #fff; color: #fff; }
-.btn--ghost-light:hover { background: rgb(255 255 255 / 0.15); }
+.btn--solid { background: var(--accent); color: var(--text-on-dark); }
+.btn--solid:hover { background: var(--accent-deep); color: var(--text-on-dark); }
+.btn--ghost-light { border-color: var(--text-on-dark); color: var(--text-on-dark); }
+.btn--ghost-light:hover { background: var(--tint-on-dark); }
 
 /* ---------- Header ---------- */
 .site-header {
   position: fixed; inset: 0 0 auto 0; z-index: 100;
-  background: rgb(249 246 240 / 0.96);
+  background: rgb(var(--bg-rgb) / 0.96);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-1);
   transition: background-color var(--dur-base) var(--ease),
@@ -96,7 +96,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   box-shadow: none;
 }
 .header-ready .site-header.is-scrolled {
-  background: rgb(249 246 240 / 0.92);
+  background: rgb(var(--bg-rgb) / 0.92);
   backdrop-filter: blur(10px);
   box-shadow: var(--shadow-1);
 }
@@ -164,17 +164,17 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   content: "";
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(180deg,
-    rgb(249 246 240 / 0.72) 0%,
-    rgb(249 246 240 / 0.62) 40%,
-    rgb(249 246 240 / 0.55) 62%,
-    rgb(249 246 240 / 0) 78%);
+    rgb(var(--bg-rgb) / 0.72) 0%,
+    rgb(var(--bg-rgb) / 0.62) 40%,
+    rgb(var(--bg-rgb) / 0.55) 62%,
+    rgb(var(--bg-rgb) / 0) 78%);
 }
 @media (min-width: 1024px) {
   .hero::after {
     background: linear-gradient(180deg,
-      rgb(249 246 240 / 0.5) 0%,
-      rgb(249 246 240 / 0.3) 32%,
-      rgb(249 246 240 / 0) 52%);
+      rgb(var(--bg-rgb) / 0.5) 0%,
+      rgb(var(--bg-rgb) / 0.3) 32%,
+      rgb(var(--bg-rgb) / 0) 52%);
   }
 }
 /* picture 래퍼(와 그 안의 source)가 그리드 행을 차지해 텍스트 중앙 정렬을 밀어내지 않도록
@@ -291,7 +291,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 }
 .story-teaser h2 {
   font-family: var(--font-serif); font-size: var(--fs-h2);
-  color: #fff; font-weight: 600; max-width: 24ch;
+  color: var(--text-on-dark); font-weight: 600; max-width: 24ch;
 }
 .story-teaser p { max-width: var(--measure); margin-top: var(--sp-5); }
 .story-teaser .btn { margin-top: var(--sp-6); }
@@ -356,12 +356,12 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
   justify-content: space-between; align-items: start;
 }
 .site-footer nav ul { display: flex; gap: var(--sp-5); list-style: none; flex-wrap: wrap; }
-.site-footer a { color: #fff; text-decoration: none; }
+.site-footer a { color: var(--text-on-dark); text-decoration: none; }
 .site-footer a:hover { text-decoration: underline; }
-.site-footer .footer-brand { color: #fff; }
+.site-footer .footer-brand { color: var(--text-on-dark); }
 .site-footer .disclaimer {
   margin-top: var(--sp-5); padding-top: var(--sp-5);
-  border-top: 1px solid rgb(255 255 255 / 0.15);
+  border-top: 1px solid var(--tint-on-dark);
   color: var(--green-200); font-size: var(--fs-xs); line-height: 1.7;
 }
 
@@ -461,7 +461,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 }
 .filter-btn:hover { border-color: var(--accent); }
 .filter-btn[aria-pressed="true"] {
-  background: var(--accent); border-color: var(--accent); color: #fff;
+  background: var(--accent); border-color: var(--accent); color: var(--text-on-dark);
 }
 .products-section { padding-block: var(--sp-4) var(--sp-9); }
 .product-count { font-size: var(--fs-sm); color: var(--text-muted); margin-bottom: var(--sp-4); }
