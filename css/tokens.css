@@ -23,7 +23,8 @@
   --green-100: #DFE9E2;   /* subtle 배경 */
 
   /* ---- Color · Warm Neutral ---- */
-  --cream-50:  #F9F6F0;   /* 기본 배경 */
+  --cream-50-rgb: 249 246 240;              /* 반투명 배경용 채널 값(#F9F6F0) */
+  --cream-50:  rgb(var(--cream-50-rgb));   /* 기본 배경 */
   --cream-100: #F1EBDF;   /* 카드·교차 섹션 */
   --cream-200: #E4DBC9;   /* 보더 */
   --ink-900:   #26231F;   /* 헤딩 */
@@ -44,6 +45,11 @@
   --text-muted:  var(--ink-500);
   --accent:      var(--green-700);
   --accent-deep: var(--green-900);
+  --text-on-dark: #FFFFFF;                 /* 딥그린 바탕·사진 위의 글자와 테두리 */
+  --tint-on-dark: rgb(255 255 255 / 0.15); /* 어두운 바탕 위 옅은 흰 막: 테두리 버튼 hover, 푸터 구분선 */
+  /* 반투명 배경은 rgb(var(--bg-rgb) / 0.N)으로 쓴다(머리글·히어로 그러데이션).
+     color-mix()를 그러데이션 색으로 쓰면 브라우저가 sRGB 대신 Oklab으로 섞어 대비 테스트로 맞춘 진하기가 미세하게 바뀐다 */
+  --bg-rgb: var(--cream-50-rgb);
 
   /* ---- Typography ---- */
   --font-serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
