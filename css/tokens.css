@@ -85,6 +85,10 @@
 
   --measure: 62ch;
   --container: 1200px;
+  /* 카드 그리드 컨테이너 분기 기준 — @container 조건에는 var()를 쓸 수 없어
+     style.css에서 대응하는 명시값(35rem · 61rem)을 함께 쓴다 */
+  --card-grid-bp-2col: 35rem;  /* 560px (뷰포트 600px - .container 좌우 패딩 40px) */
+  --card-grid-bp-4col: 61rem;  /* 976px (뷰포트 1024px - .container 좌우 패딩 48px) */
 
   /* 고정 헤더 높이 — 헤더·히어로 상단 여백·앵커 scroll-margin이 함께 참조한다.
      모바일은 짧은 메뉴 이름으로 로고 옆 한 줄이라 데스크톱보다 낮다 */
