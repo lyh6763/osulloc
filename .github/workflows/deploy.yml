@@ -89,6 +89,8 @@ jobs:
             --exclude '/eslint.config.mjs' \
             --exclude '/stylelint.config.mjs' \
             --exclude '/reports' \
+            --exclude '/AGENTS.md' \
+            --exclude '/CLAUDE.md' \
             ./ _site/
 
       - name: Commit & push
