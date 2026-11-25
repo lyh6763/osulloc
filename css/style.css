@@ -312,7 +312,7 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 @media (min-width: 1024px) { .card-grid { grid-template-columns: repeat(4, 1fr); } }
 
 /* 카드가 놓이는 부모 폭 기준으로 열 수를 정한다 (좁은 영역에서도 재사용 가능).
-   분기 기준은 tokens.css의 --card-grid-bp-2col(35rem)·--card-grid-bp-4col(61rem)과 맞춘다 */
+   분기 기준은 tokens.css의 --card-grid-bp-2col(34rem)·--card-grid-bp-4col(60rem)과 맞춘다(스크롤바를 뺀 폭이라 예전 @media보다 작다) */
 @supports (container-type: inline-size) {
   .lineup > .container,
   .products-section > .container {
@@ -321,11 +321,11 @@ h1, h2, h3 { color: var(--text-strong); line-height: 1.25; text-wrap: balance; }
 
   .card-grid { grid-template-columns: 1fr; }
 
-  @container (min-width: 35rem) {
+  @container (min-width: 34rem) {
     .card-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
-  @container (min-width: 61rem) {
+  @container (min-width: 60rem) {
     .card-grid { grid-template-columns: repeat(4, 1fr); }
   }
 }
