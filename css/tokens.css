@@ -3,6 +3,8 @@
    딥그린 + 웜 뉴트럴, 라이트 테마 하나만 쓴다
    ============================================================ */
 
+@layer reset, tokens, base, components, utilities;
+
 /* 제목용 명조 — 실제 쓰인 글자만 담은 자체 호스팅 가변 서브셋 (scripts/build-serif-subset.mjs)
    preload는 하지 않는다: 폰트를 기다리느라 첫 렌더가 오히려 늦어졌다 (METRICS.md) */
 @font-face {
@@ -13,102 +15,104 @@
   font-display: swap;
 }
 
-:root {
-  /* ---- Color · Green (브랜드 재해석) ---- */
-  --green-950: #0D2620;
-  --green-900: #12332B;   /* 다크 섹션 배경 */
-  --green-700: #1D4B3F;   /* 주 액센트 — cream 배경 대비 8.8:1 */
-  --green-500: #2E6B57;   /* 보조 — 대비 5.6:1 */
-  --green-200: #BFD5C9;
-  --green-100: #DFE9E2;   /* subtle 배경 */
-
-  /* ---- Color · Warm Neutral ---- */
-  --cream-50-rgb: 249 246 240;              /* 반투명 배경용 채널 값(#F9F6F0) */
-  --cream-50:  rgb(var(--cream-50-rgb));   /* 기본 배경 */
-  --cream-100: #F1EBDF;   /* 카드·교차 섹션 */
-  --cream-200: #E4DBC9;   /* 보더 */
-  --ink-900:   #26231F;   /* 헤딩 */
-  --ink-700:   #423E38;   /* 본문 — 대비 9.4:1 */
-  --ink-500:   #6E675E;   /* 보조 텍스트 — 대비 4.9:1 */
-
-  /* ---- Color · Amber (우린 찻물 — 포인트 한정) ---- */
-  --amber-600: #96621F;   /* 소형 텍스트 가능 — 대비 4.8:1 */
-  --amber-300: #D8B26A;   /* 장식·대형 요소 전용 */
-
-  /* ---- Semantic ---- */
-  --bg:          var(--cream-50);
-  --surface:     #FFFFFF;
-  --surface-alt: var(--cream-100);
-  --border:      var(--cream-200);
-  --text:        var(--ink-700);
-  --text-strong: var(--ink-900);
-  --text-muted:  var(--ink-500);
-  --accent:      var(--green-700);
-  --accent-deep: var(--green-900);
-  --text-on-dark: #FFFFFF;                 /* 딥그린 바탕·사진 위의 글자와 테두리 */
-  --tint-on-dark: rgb(255 255 255 / 0.15); /* 어두운 바탕 위 옅은 흰 막: 테두리 버튼 hover, 푸터 구분선 */
-  /* 반투명 배경은 원래 값과 같은 공백 표기로 rgb(var(--bg-rgb) / 0.N)처럼 쓴다(머리글·히어로 그러데이션).
-     color-mix()로 바꾸면 그러데이션 픽셀이 미세하게 달라져 대비 테스트로 맞춘 진하기가 바뀐다.
-     쉼표 표기 rgba()는 레거시 색이라 그러데이션 보간 방식이 달라질 수 있어 쓰지 않는다 */
-  --bg-rgb: var(--cream-50-rgb);
-
-  /* ---- Typography ---- */
-  --font-serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
-  /* 본문은 웹폰트 없이 OS 기본 한글 글꼴 — 본문용 웹폰트는 59KB 서브셋으로도 LCP·CLS 목표를 넘겼다 (METRICS.md 1·5절) */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
-               "Noto Sans KR", system-ui, sans-serif;
-
-  --fs-display: 2.25rem;
-  --fs-h2:      1.625rem;
-  --fs-h3:      1.375rem;
-  --fs-lead:    1.125rem;
-  --fs-body:    1rem;
-  --fs-sm:      0.875rem;
-  --fs-xs:      0.75rem;
-
-  /* ---- Spacing (4px) ---- */
-  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
-  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
-  --sp-9: 96px; --sp-10: 128px;
-
-  /* ---- Shape · Motion ---- */
-  --radius-sm: 6px;
-  --radius-md: 14px;
-  --radius-lg: 24px;
-  --shadow-1: 0 1px 3px rgb(38 35 31 / 0.07);
-  --shadow-2: 0 10px 30px rgb(38 35 31 / 0.12);
-
-  --dur-fast: 150ms;
-  --dur-base: 250ms;
-  --dur-slow: 600ms;
-  --ease: cubic-bezier(0.2, 0, 0, 1);
-
-  --measure: 62ch;
-  --container: 1200px;
-  /* 카드 그리드 컨테이너 분기 기준 — @container 조건에는 var()를 쓸 수 없어
-     style.css에서 대응하는 명시값(34rem · 60rem)을 함께 쓴다.
-     예전 @media(600px · 1024px)는 스크롤바를 포함한 뷰포트 폭을 쟀고, @container는 스크롤바를 뺀 내용 폭을 잰다.
-     그래서 예전 화면에서 그 열 수가 나오던 가장 좁은 내용 폭(Windows 스크롤바 15px이 있을 때)을 기준으로 삼는다.
-     35rem · 61rem(스크롤바 없는 계산)으로 두면 Windows의 1024~1038px 창에서 4열이 2열로 보였다(2026-11-24 확인) */
-  --card-grid-bp-2col: 34rem;  /* 544px ≈ 600px - 스크롤바 15px - .container 좌우 패딩 40px(545px) */
-  --card-grid-bp-4col: 60rem;  /* 960px ≈ 1024px - 스크롤바 15px - .container 좌우 패딩 48px(961px) */
-
-  /* 고정 헤더 높이 — 헤더·히어로 상단 여백·앵커 scroll-margin이 함께 참조한다.
-     모바일은 짧은 메뉴 이름으로 로고 옆 한 줄이라 데스크톱보다 낮다 */
-  --header-h: 64px;
-}
-
-@media (min-width: 768px) {
+@layer tokens {
   :root {
-    --fs-display: 3.25rem;
-    --fs-h2: 2rem;
-    --header-h: 72px;
+    /* ---- Color · Green (브랜드 재해석) ---- */
+    --green-950: #0D2620;
+    --green-900: #12332B;   /* 다크 섹션 배경 */
+    --green-700: #1D4B3F;   /* 주 액센트 — cream 배경 대비 8.8:1 */
+    --green-500: #2E6B57;   /* 보조 — 대비 5.6:1 */
+    --green-200: #BFD5C9;
+    --green-100: #DFE9E2;   /* subtle 배경 */
+
+    /* ---- Color · Warm Neutral ---- */
+    --cream-50-rgb: 249 246 240;              /* 반투명 배경용 채널 값(#F9F6F0) */
+    --cream-50:  rgb(var(--cream-50-rgb));   /* 기본 배경 */
+    --cream-100: #F1EBDF;   /* 카드·교차 섹션 */
+    --cream-200: #E4DBC9;   /* 보더 */
+    --ink-900:   #26231F;   /* 헤딩 */
+    --ink-700:   #423E38;   /* 본문 — 대비 9.4:1 */
+    --ink-500:   #6E675E;   /* 보조 텍스트 — 대비 4.9:1 */
+
+    /* ---- Color · Amber (우린 찻물 — 포인트 한정) ---- */
+    --amber-600: #96621F;   /* 소형 텍스트 가능 — 대비 4.8:1 */
+    --amber-300: #D8B26A;   /* 장식·대형 요소 전용 */
+
+    /* ---- Semantic ---- */
+    --bg:          var(--cream-50);
+    --surface:     #FFFFFF;
+    --surface-alt: var(--cream-100);
+    --border:      var(--cream-200);
+    --text:        var(--ink-700);
+    --text-strong: var(--ink-900);
+    --text-muted:  var(--ink-500);
+    --accent:      var(--green-700);
+    --accent-deep: var(--green-900);
+    --text-on-dark: #FFFFFF;                 /* 딥그린 바탕·사진 위의 글자와 테두리 */
+    --tint-on-dark: rgb(255 255 255 / 0.15); /* 어두운 바탕 위 옅은 흰 막: 테두리 버튼 hover, 푸터 구분선 */
+    /* 반투명 배경은 원래 값과 같은 공백 표기로 rgb(var(--bg-rgb) / 0.N)처럼 쓴다(머리글·히어로 그러데이션).
+       color-mix()로 바꾸면 그러데이션 픽셀이 미세하게 달라져 대비 테스트로 맞춘 진하기가 바뀐다.
+       쉼표 표기 rgba()는 레거시 색이라 그러데이션 보간 방식이 달라질 수 있어 쓰지 않는다 */
+    --bg-rgb: var(--cream-50-rgb);
+
+    /* ---- Typography ---- */
+    --font-serif: "Noto Serif KR", "Nanum Myeongjo", Georgia, serif;
+    /* 본문은 웹폰트 없이 OS 기본 한글 글꼴 — 본문용 웹폰트는 59KB 서브셋으로도 LCP·CLS 목표를 넘겼다 (METRICS.md 1·5절) */
+    --font-sans: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕",
+                 "Noto Sans KR", system-ui, sans-serif;
+
+    --fs-display: 2.25rem;
+    --fs-h2:      1.625rem;
+    --fs-h3:      1.375rem;
+    --fs-lead:    1.125rem;
+    --fs-body:    1rem;
+    --fs-sm:      0.875rem;
+    --fs-xs:      0.75rem;
+
+    /* ---- Spacing (4px) ---- */
+    --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+    --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+    --sp-9: 96px; --sp-10: 128px;
+
+    /* ---- Shape · Motion ---- */
+    --radius-sm: 6px;
+    --radius-md: 14px;
+    --radius-lg: 24px;
+    --shadow-1: 0 1px 3px rgb(38 35 31 / 0.07);
+    --shadow-2: 0 10px 30px rgb(38 35 31 / 0.12);
+
+    --dur-fast: 150ms;
+    --dur-base: 250ms;
+    --dur-slow: 600ms;
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+
+    --measure: 62ch;
+    --container: 1200px;
+    /* 카드 그리드 컨테이너 분기 기준 — @container 조건에는 var()를 쓸 수 없어
+       style.css에서 대응하는 명시값(34rem · 60rem)을 함께 쓴다.
+       예전 @media(600px · 1024px)는 스크롤바를 포함한 뷰포트 폭을 쟀고, @container는 스크롤바를 뺀 내용 폭을 잰다.
+       그래서 예전 화면에서 그 열 수가 나오던 가장 좁은 내용 폭(Windows 스크롤바 15px이 있을 때)을 기준으로 삼는다.
+       35rem · 61rem(스크롤바 없는 계산)으로 두면 Windows의 1024~1038px 창에서 4열이 2열로 보였다(2026-11-24 확인) */
+    --card-grid-bp-2col: 34rem;  /* 544px ≈ 600px - 스크롤바 15px - .container 좌우 패딩 40px(545px) */
+    --card-grid-bp-4col: 60rem;  /* 960px ≈ 1024px - 스크롤바 15px - .container 좌우 패딩 48px(961px) */
+
+    /* 고정 헤더 높이 — 헤더·히어로 상단 여백·앵커 scroll-margin이 함께 참조한다.
+       모바일은 짧은 메뉴 이름으로 로고 옆 한 줄이라 데스크톱보다 낮다 */
+    --header-h: 64px;
   }
-}
 
-@media (min-width: 1200px) {
-  :root {
-    --fs-display: 4rem;
-    --fs-h2: 2.25rem;
+  @media (min-width: 768px) {
+    :root {
+      --fs-display: 3.25rem;
+      --fs-h2: 2rem;
+      --header-h: 72px;
+    }
+  }
+
+  @media (min-width: 1200px) {
+    :root {
+      --fs-display: 4rem;
+      --fs-h2: 2.25rem;
+    }
   }
 }
